@@ -193,10 +193,10 @@ void DIE_Widget::on_pushButtonSignatures_clicked()
 
 void DIE_Widget::on_pushButtonExtraInformation_clicked()
 {
-
+    // TODO
 }
 
 void DIE_Widget::on_pushButtonLog_clicked()
 {
-
+    // TODO
 }
