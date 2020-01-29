@@ -171,6 +171,8 @@ void DIE_Widget::onScanFinished()
     ui->tableWidgetResult->setColumnWidth(3,20);
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(false);
+    ui->progressBarProgress->setMaximum(100);
+    ui->progressBarProgress->setValue(100);
     ui->pushButtonScan->setText(tr("Scan"));
 }
 
