@@ -135,6 +135,7 @@ void DialogSignatures::on_pushButtonRun_clicked()
 {
     DiE_Script::SCAN_OPTIONS scanOptions={};
 
+    scanOptions.bShowType=ui->checkBoxShowType->isChecked();
     scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
     scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
 
@@ -144,6 +145,16 @@ void DialogSignatures::on_pushButtonRun_clicked()
 }
 
 void DialogSignatures::on_pushButtonDebug_clicked()
+{
+
+}
+
+void DialogSignatures::on_pushButtonClearResult_clicked()
+{
+
+}
+
+void DialogSignatures::on_pushButtonSaveResult_clicked()
 {
 
 }

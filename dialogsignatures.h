@@ -45,6 +45,8 @@ private slots:
     void save();
     void on_pushButtonRun_clicked();
     void on_pushButtonDebug_clicked();
+    void on_pushButtonClearResult_clicked();
+    void on_pushButtonSaveResult_clicked();
 
 private:
     Ui::DialogSignatures *ui;
