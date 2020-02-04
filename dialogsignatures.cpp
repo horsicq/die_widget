@@ -55,6 +55,7 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
     bCurrentEdited=false;
     ui->pushButtonSave->setEnabled(false);
 
+    ui->checkBoxShowType->setChecked(true);
     ui->checkBoxShowOptions->setChecked(true);
     ui->checkBoxShowVersion->setChecked(true);
 }
