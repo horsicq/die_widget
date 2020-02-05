@@ -48,6 +48,7 @@ public:
         bool bShowVersion;
         bool bShowOptions;
         QString sDatabasePath;
+        QString sInfoPath; // TODO make zip
     };
 
     explicit DIE_Widget(QWidget *parent=nullptr);
