@@ -36,7 +36,6 @@ class DialogSignatures : public QDialog
 public:
     explicit DialogSignatures(QWidget *parent,DiE_Script *pDieScript,QString sFileName);
     ~DialogSignatures();
-    int handleTreeItems(QTreeWidgetItem *pParent, XBinary::FT fileType);
 
 private slots:
     void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
@@ -47,6 +46,9 @@ private slots:
     void on_pushButtonDebug_clicked();
     void on_pushButtonClearResult_clicked();
     void on_pushButtonSaveResult_clicked();
+
+    int handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText);
+    int _handleTreeItems(QTreeWidgetItem *pParent, XBinary::FT fileType);
 
 private:
     Ui::DialogSignatures *ui;

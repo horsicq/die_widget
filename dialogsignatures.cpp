@@ -34,23 +34,14 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 
     QTreeWidgetItem *pRootItem=new QTreeWidgetItem(ui->treeWidgetSignatures);
     pRootItem->setText(0,tr("Database"));
-    QTreeWidgetItem *pBinaryItem=new QTreeWidgetItem(pRootItem);
-    pBinaryItem->setText(0,"Binary");
-    QTreeWidgetItem *pMsDosItem=new QTreeWidgetItem(pRootItem);
-    pMsDosItem->setText(0,"MSDOS");
-    QTreeWidgetItem *pMachItem=new QTreeWidgetItem(pRootItem);
-    pMachItem->setText(0,"MACH");
-    QTreeWidgetItem *pElfItem=new QTreeWidgetItem(pRootItem);
-    pElfItem->setText(0,"ELF");
-    QTreeWidgetItem *pPeItem=new QTreeWidgetItem(pRootItem);
-    pPeItem->setText(0,"PE");
 
-    handleTreeItems(pRootItem,XBinary::FT_UNKNOWN);
-    handleTreeItems(pBinaryItem,XBinary::FT_BINARY);
-    handleTreeItems(pMsDosItem,XBinary::FT_MSDOS);
-    handleTreeItems(pMachItem,XBinary::FT_MACH);
-    handleTreeItems(pElfItem,XBinary::FT_ELF);
-    handleTreeItems(pPeItem,XBinary::FT_PE);
+    _handleTreeItems(pRootItem,XBinary::FT_UNKNOWN);
+
+    handleTreeItems(pRootItem,XBinary::FT_BINARY,"Binary");
+    handleTreeItems(pRootItem,XBinary::FT_MSDOS,"MSDOS");
+    handleTreeItems(pRootItem,XBinary::FT_MACH,"MACH");
+    handleTreeItems(pRootItem,XBinary::FT_ELF,"ELF");
+    handleTreeItems(pRootItem,XBinary::FT_PE,"PE");
 
     bCurrentEdited=false;
     ui->pushButtonSave->setEnabled(false);
@@ -65,7 +56,21 @@ DialogSignatures::~DialogSignatures()
     delete ui;
 }
 
-int DialogSignatures::handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType)
+int DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText)
+{
+    int nResult=0;
+
+    if(pDieScript->isSignaturesPresent(fileType))
+    {
+        QTreeWidgetItem *pItem=new QTreeWidgetItem(pRootItem);
+        pItem->setText(0,sText);
+        nResult=_handleTreeItems(pItem,fileType);
+    }
+
+    return nResult;
+}
+
+int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType)
 {
     int nResult=0;
 
