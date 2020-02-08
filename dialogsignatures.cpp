@@ -90,6 +90,8 @@ int DialogSignatures::handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileT
 
 void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
+
     QString sSignatureFilePath=current->data(0,Qt::UserRole).toString();
 
     if(sSignatureFilePath!=sCurrentSignatureFilePath)

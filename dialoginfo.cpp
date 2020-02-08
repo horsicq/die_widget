@@ -32,3 +32,8 @@ DialogInfo::~DialogInfo()
 {
     delete ui;
 }
+
+void DialogInfo::on_pushButtonClose_clicked()
+{
+    this->close();
+}

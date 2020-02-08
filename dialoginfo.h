@@ -35,6 +35,9 @@ public:
     explicit DialogInfo(QWidget *parent=nullptr);
     ~DialogInfo();
 
+private slots:
+    void on_pushButtonClose_clicked();
+
 private:
     Ui::DialogInfo *ui;
 };
