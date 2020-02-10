@@ -32,7 +32,7 @@ class DialogInfo : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogInfo(QWidget *parent=nullptr);
+    explicit DialogInfo(QWidget *parent, QString sText);
     ~DialogInfo();
 
 private slots:

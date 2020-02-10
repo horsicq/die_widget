@@ -21,11 +21,13 @@
 #include "dialoginfo.h"
 #include "ui_dialoginfo.h"
 
-DialogInfo::DialogInfo(QWidget *parent) :
+DialogInfo::DialogInfo(QWidget *parent,QString sText) :
     QDialog(parent),
     ui(new Ui::DialogInfo)
 {
     ui->setupUi(this);
+
+    ui->textEditInfo->append(sText);
 }
 
 DialogInfo::~DialogInfo()
