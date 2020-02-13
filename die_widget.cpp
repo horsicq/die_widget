@@ -197,6 +197,14 @@ void DIE_Widget::on_pushButtonExtraInformation_clicked()
 {
     // TODO
     // TODO Dialog
+    // TODO Zip or folder
+    QString sText="TODO";
+
+    if(sText!="")
+    {
+        DialogInfo dialogInfo(this,sText); // TODO
+        dialogInfo.exec();
+    }
 }
 
 void DIE_Widget::on_pushButtonLog_clicked()
