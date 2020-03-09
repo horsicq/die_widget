@@ -93,6 +93,19 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
     return nResult;
 }
 
+void DialogSignatures::runScript(bool bIsDebug)
+{
+    DiE_Script::SCAN_OPTIONS scanOptions={};
+
+    scanOptions.bShowType=ui->checkBoxShowType->isChecked();
+    scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
+    scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
+
+    pDieScript->scanFile(sFileName,&scanOptions);
+
+    // TODO is debug
+}
+
 void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     Q_UNUSED(previous)
@@ -141,20 +154,12 @@ void DialogSignatures::save()
 
 void DialogSignatures::on_pushButtonRun_clicked()
 {
-    DiE_Script::SCAN_OPTIONS scanOptions={};
-
-    scanOptions.bShowType=ui->checkBoxShowType->isChecked();
-    scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
-    scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
-
-    pDieScript->scanFile(sFileName,&scanOptions);
-
-    // TODO !!!
+    runScript(false);
 }
 
 void DialogSignatures::on_pushButtonDebug_clicked()
 {
-    // TODO
+    runScript(true);
 }
 
 void DialogSignatures::on_pushButtonClearResult_clicked()

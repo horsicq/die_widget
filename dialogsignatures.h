@@ -50,6 +50,8 @@ private slots:
     int handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText);
     int _handleTreeItems(QTreeWidgetItem *pParent, XBinary::FT fileType);
 
+    void runScript(bool bIsDebug);
+
 private:
     Ui::DialogSignatures *ui;
     DiE_Script *pDieScript;
