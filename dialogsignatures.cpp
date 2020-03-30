@@ -27,6 +27,8 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::Window);
+
     this->pDieScript=pDieScript;
     this->sFileName=sFileName;
 
