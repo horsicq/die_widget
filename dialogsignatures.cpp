@@ -102,10 +102,13 @@ void DialogSignatures::runScript(bool bIsDebug)
     scanOptions.bShowType=ui->checkBoxShowType->isChecked();
     scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
     scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
+    scanOptions.bDeepScan=ui->checkBoxDeepscan->isChecked();
 
-    pDieScript->scanFile(sFileName,&scanOptions);
+    DiE_Script::SCAN_RESULT scanResult=pDieScript->scanFile(sFileName,&scanOptions);
 
     // TODO is debug
+    // TODO only scripts for this type if not messagebox
+    // Save before run
 }
 
 void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
