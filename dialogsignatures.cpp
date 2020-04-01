@@ -86,7 +86,9 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
         {
             QTreeWidgetItem *pRootItem=new QTreeWidgetItem(pParent);
             pRootItem->setText(0,pSignatures->at(i).sName);
-            pRootItem->setData(0,Qt::UserRole,pSignatures->at(i).sFilePath);
+            pRootItem->setData(0,Qt::UserRole+UD_FILEPATH,pSignatures->at(i).sFilePath);
+            pRootItem->setData(0,Qt::UserRole+UD_FILETYPE,pSignatures->at(i).fileType);
+            pRootItem->setData(0,Qt::UserRole+UD_NAME,pSignatures->at(i).sName);
 
             nResult++;
         }
@@ -103,6 +105,9 @@ void DialogSignatures::runScript(bool bIsDebug)
     scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
     scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
     scanOptions.bDeepScan=ui->checkBoxDeepscan->isChecked();
+
+    scanOptions.sSignatureName=ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_NAME).toString();
+    scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();
 
     DiE_Script::SCAN_RESULT scanResult=pDieScript->scanFile(sFileName,&scanOptions);
 

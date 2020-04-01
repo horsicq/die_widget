@@ -33,6 +33,13 @@ class DialogSignatures : public QDialog
 {
     Q_OBJECT
 
+    enum UD
+    {
+        UD_FILEPATH=0,
+        UD_FILETYPE,
+        UD_NAME
+    };
+
 public:
     explicit DialogSignatures(QWidget *parent,DiE_Script *pDieScript,QString sFileName);
     ~DialogSignatures();
