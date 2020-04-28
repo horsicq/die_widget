@@ -99,6 +99,9 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
 
 void DialogSignatures::runScript(bool bIsDebug)
 {
+    save();
+    ui->plainTextEditResult->clear();
+
     DiE_Script::SCAN_OPTIONS scanOptions={};
 
     scanOptions.bShowType=ui->checkBoxShowType->isChecked();
@@ -111,9 +114,10 @@ void DialogSignatures::runScript(bool bIsDebug)
 
     DiE_Script::SCAN_RESULT scanResult=pDieScript->scanFile(sFileName,&scanOptions);
 
+    ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToString(&scanResult));
+
     // TODO is debug
     // TODO only scripts for this type if not messagebox
-    // Save before run
 }
 
 void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
