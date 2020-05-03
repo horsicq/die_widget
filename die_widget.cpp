@@ -215,7 +215,7 @@ void DIE_Widget::on_pushButtonLog_clicked()
 
     if(nErrorCount)
     {
-        DialogLog dialogLog(this,"TODO"); // TODO
+        DialogLog dialogLog(this,DiE_Script::getErrorsString(&scanResult)); // TODO
         dialogLog.exec();
     }
 }
