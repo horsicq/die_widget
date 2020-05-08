@@ -32,7 +32,7 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
     this->pDieScript=pDieScript;
     this->sFileName=sFileName;
 
-    ui->textEditSignature->setLineWrapMode(QTextEdit::NoWrap);
+    ui->plainTextEditSignature->setLineWrapMode(QPlainTextEdit::NoWrap);
 
     QTreeWidgetItem *pRootItem=new QTreeWidgetItem(ui->treeWidgetSignatures);
     pRootItem->setText(0,tr("Database"));
@@ -128,7 +128,7 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
 
     if(sSignatureFilePath!=sCurrentSignatureFilePath)
     {
-        QSignalBlocker blocker(ui->textEditSignature);
+        QSignalBlocker blocker(ui->plainTextEditSignature);
 
         if(bCurrentEdited)
         {
@@ -138,7 +138,7 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
         sCurrentSignatureFilePath=sSignatureFilePath;
         DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord=pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
 
-        ui->textEditSignature->setText(signatureRecord.sText);
+        ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
     }
 }
 
@@ -155,7 +155,7 @@ void DialogSignatures::on_pushButtonSave_clicked()
 
 void DialogSignatures::save()
 {
-    if(pDieScript->updateSignature(sCurrentSignatureFilePath,ui->textEditSignature->toPlainText()))
+    if(pDieScript->updateSignature(sCurrentSignatureFilePath,ui->plainTextEditSignature->toPlainText()))
     {
         bCurrentEdited=false;
         ui->pushButtonSave->setEnabled(false);

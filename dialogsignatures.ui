@@ -160,7 +160,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QTextEdit" name="textEditSignature"/>
+        <widget class="DIE_SignatureEdit" name="plainTextEditSignature"/>
        </item>
        <item>
         <widget class="QPlainTextEdit" name="plainTextEditResult">
@@ -222,6 +222,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DIE_SignatureEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>die_signatureedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
