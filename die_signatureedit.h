@@ -31,6 +31,9 @@ class DIE_SignatureEdit : public QPlainTextEdit
     Q_OBJECT
 public:
     explicit DIE_SignatureEdit(QWidget *parent=nullptr);
+
+private:
+    DIE_Highlighter *pHighlighter;
 };
 
 #endif // DIE_SIGNATUREEDIT_H

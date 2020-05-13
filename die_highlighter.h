@@ -30,8 +30,26 @@ class DIE_Highlighter : public QSyntaxHighlighter
 public:
     explicit DIE_Highlighter(QObject *parent=nullptr);
 
-signals:
+protected:
+    void highlightBlock(const QString &text);
 
+private:
+    struct HighlightingRule
+    {
+        QRegExp pattern;
+        QTextCharFormat format;
+    };
+    QVector<HighlightingRule> highlightingRules;
+
+    QRegExp commentStartExpression;
+    QRegExp commentEndExpression;
+
+    QTextCharFormat keywordFormat;
+    QTextCharFormat classFormat;
+    QTextCharFormat singleLineCommentFormat;
+    QTextCharFormat multiLineCommentFormat;
+    QTextCharFormat quotationFormat;
+    QTextCharFormat functionFormat;
 };
 
 #endif // DIE_HIGHLIGHTER_H

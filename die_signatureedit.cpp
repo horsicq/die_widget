@@ -23,5 +23,7 @@
 DIE_SignatureEdit::DIE_SignatureEdit(QWidget *parent) :
     QPlainTextEdit(parent)
 {
+    pHighlighter=new DIE_Highlighter(this->document());
 
+    pHighlighter->setDocument(this->document());
 }
