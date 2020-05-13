@@ -18,19 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-#ifndef DIE_SIGNATUREEDIT_H
-#define DIE_SIGNATUREEDIT_H
+#ifndef DIE_HIGHLIGHTER_H
+#define DIE_HIGHLIGHTER_H
 
 #include <QObject>
-#include <QWidget>
-#include <QPlainTextEdit>
-#include "die_highlighter.h"
+#include <QSyntaxHighlighter>
 
-class DIE_SignatureEdit : public QPlainTextEdit
+class DIE_Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 public:
-    explicit DIE_SignatureEdit(QWidget *parent=nullptr);
+    explicit DIE_Highlighter(QObject *parent=nullptr);
+
+signals:
+
 };
 
-#endif // DIE_SIGNATUREEDIT_H
+#endif // DIE_HIGHLIGHTER_H
