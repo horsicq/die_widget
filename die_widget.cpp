@@ -88,6 +88,7 @@ void DIE_Widget::process()
         scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
         scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
         scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
+        scanOptions.bShowType=true;
         //    scanOptions.bDebug=true;
 
         QFuture<void> future=QtConcurrent::run(this,&DIE_Widget::scan);
@@ -157,6 +158,14 @@ void DIE_Widget::onScanFinished()
         QTableWidgetItem *pWidgetString=new QTableWidgetItem;
         pWidgetString->setText(scanResult.listRecords.at(i).sString);
         ui->tableWidgetResult->setItem(i,1,pWidgetString);
+
+        QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
+        pWidgetSignature->setText("S");
+        ui->tableWidgetResult->setItem(i,2,pWidgetSignature);
+
+        QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
+        pWidgetInfo->setText("?");
+        ui->tableWidgetResult->setItem(i,3,pWidgetInfo);
     }
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(true);
