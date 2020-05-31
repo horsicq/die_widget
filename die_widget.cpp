@@ -153,31 +153,31 @@ void DIE_Widget::onScanFinished()
     {
         QTableWidgetItem *pWidgetType=new QTableWidgetItem;
         pWidgetType->setText(scanResult.listRecords.at(i).sType);
-        ui->tableWidgetResult->setItem(i,0,pWidgetType);
+        ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
 
         QTableWidgetItem *pWidgetString=new QTableWidgetItem;
         pWidgetString->setText(scanResult.listRecords.at(i).sString);
-        ui->tableWidgetResult->setItem(i,1,pWidgetString);
+        ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
 
         QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
         pWidgetSignature->setText("S");
-        ui->tableWidgetResult->setItem(i,2,pWidgetSignature);
+        ui->tableWidgetResult->setItem(i,COLUMN_SIGNATURE,pWidgetSignature);
 
         QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
         pWidgetInfo->setText("?");
-        ui->tableWidgetResult->setItem(i,3,pWidgetInfo);
+        ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
     }
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(true);
 //        ui->tableWidgetResult->horizontalHeader()->setFixedHeight(0);
 
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeToContents);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Interactive);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Interactive);
+    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_TYPE,QHeaderView::ResizeToContents);
+    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_STRING,QHeaderView::Stretch);
+    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_SIGNATURE,QHeaderView::Interactive);
+    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_INFO,QHeaderView::Interactive);
 
-    ui->tableWidgetResult->setColumnWidth(2,20);
-    ui->tableWidgetResult->setColumnWidth(3,20);
+    ui->tableWidgetResult->setColumnWidth(COLUMN_SIGNATURE,20);
+    ui->tableWidgetResult->setColumnWidth(COLUMN_INFO,20);
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(false);
     ui->progressBarProgress->setMaximum(100);
@@ -226,5 +226,17 @@ void DIE_Widget::on_pushButtonLog_clicked()
     {
         DialogLog dialogLog(this,DiE_Script::getErrorsString(&scanResult)); // TODO
         dialogLog.exec();
+    }
+}
+
+void DIE_Widget::on_tableWidgetResult_cellClicked(int row, int column)
+{
+    if(column==COLUMN_SIGNATURE)
+    {
+        // TODO
+    }
+    else if(column==COLUMN_INFO)
+    {
+        // TODO
     }
 }

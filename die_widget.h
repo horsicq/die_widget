@@ -53,6 +53,14 @@ public:
         QString sInfoPath; // TODO make zip
     };
 
+    enum COLUMN
+    {
+        COLUMN_TYPE=0,
+        COLUMN_STRING,
+        COLUMN_SIGNATURE,
+        COLUMN_INFO
+    };
+
     explicit DIE_Widget(QWidget *parent=nullptr);
     ~DIE_Widget();
 
@@ -71,6 +79,8 @@ private slots:
     void on_pushButtonSignatures_clicked();
     void on_pushButtonExtraInformation_clicked();
     void on_pushButtonLog_clicked();
+
+    void on_tableWidgetResult_cellClicked(int row, int column);
 
 private:
     Ui::DIE_Widget *ui;
