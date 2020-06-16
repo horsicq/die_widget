@@ -81,6 +81,8 @@ private slots:
     void on_pushButtonLog_clicked();
 
     void on_tableWidgetResult_cellClicked(int row, int column);
+    void showInfo(QString sName);
+    void showSignature(QString sName);
 
 private:
     Ui::DIE_Widget *ui;

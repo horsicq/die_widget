@@ -231,12 +231,25 @@ void DIE_Widget::on_pushButtonLog_clicked()
 
 void DIE_Widget::on_tableWidgetResult_cellClicked(int row, int column)
 {
-    if(column==COLUMN_SIGNATURE)
+    if(row<scanResult.listRecords.count())
     {
-        // TODO
+        if(column==COLUMN_SIGNATURE)
+        {
+            // TODO
+        }
+        else if(column==COLUMN_INFO)
+        {
+            // TODO
+        }
     }
-    else if(column==COLUMN_INFO)
-    {
-        // TODO
-    }
+}
+
+void DIE_Widget::showInfo(QString sName)
+{
+    qDebug("showInfo");
+}
+
+void DIE_Widget::showSignature(QString sName)
+{
+    qDebug("showSignature");
 }
