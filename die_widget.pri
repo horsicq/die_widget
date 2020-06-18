@@ -1,4 +1,4 @@
-QT       += concurrent
+QT       += concurrent scripttools
 
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD

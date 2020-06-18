@@ -99,7 +99,11 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
 
 void DialogSignatures::runScript(bool bIsDebug)
 {
-    save();
+    if(ui->pushButtonSave->isEnabled())
+    {
+        save();
+    }
+
     ui->plainTextEditResult->clear();
 
     DiE_Script::SCAN_OPTIONS scanOptions={};
@@ -112,9 +116,25 @@ void DialogSignatures::runScript(bool bIsDebug)
     scanOptions.sSignatureName=ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_NAME).toString();
     scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();
 
-    DiE_Script::SCAN_RESULT scanResult=pDieScript->scanFile(sFileName,&scanOptions);
+    DiE_Script::SCAN_RESULT scanResult;
 
-    ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToString(&scanResult));
+    if(bIsDebug)
+    {
+        QScriptEngineDebugger debugger(this);
+        QMainWindow *debugWindow=debugger.standardWindow();
+        debugWindow->setWindowModality(Qt::ApplicationModal);
+        debugWindow->setWindowTitle("Signature debugger"); // TODO mb tr
+        //        debugWindow->resize(600,350);
+        pDieScript->setDebugger(&debugger);
+
+        scanResult=pDieScript->scanFile(sFileName,&scanOptions);
+    }
+    else
+    {
+        scanResult=pDieScript->scanFile(sFileName,&scanOptions);
+    }
+
+    ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToPlainString(&scanResult));
 
     // TODO is debug
     // TODO only scripts for this type if not messagebox

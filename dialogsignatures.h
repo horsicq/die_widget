@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QTreeWidgetItem>
 #include "die_script.h"
+#include <QMainWindow>
 
 namespace Ui {
 class DialogSignatures;
