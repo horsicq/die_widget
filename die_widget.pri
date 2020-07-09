@@ -24,3 +24,8 @@ SOURCES += \
     $$PWD/die_highlighter.cpp \
     $$PWD/die_signatureedit.cpp \
     $$PWD/die_widget.cpp
+
+!contains(XCONFIG, die_script) {
+    XCONFIG += die_script
+    include($$PWD/../die_script/die_script.pri)
+}
