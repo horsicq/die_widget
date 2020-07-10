@@ -205,3 +205,8 @@ void DialogSignatures::on_pushButtonSaveResult_clicked()
 {
     // TODO
 }
+
+void DialogSignatures::on_pushButtonClose_clicked()
+{
+    this->close();
+}

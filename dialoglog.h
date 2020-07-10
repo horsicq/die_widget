@@ -35,6 +35,9 @@ public:
     explicit DialogLog(QWidget *parent,QString sText);
     ~DialogLog();
 
+private slots:
+    void on_pushButtonClose_clicked();
+
 private:
     Ui::DialogLog *ui;
 };

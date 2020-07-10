@@ -32,3 +32,8 @@ DialogLog::~DialogLog()
 {
     delete ui;
 }
+
+void DialogLog::on_pushButtonClose_clicked()
+{
+    this->close();
+}
