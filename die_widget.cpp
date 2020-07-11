@@ -220,6 +220,7 @@ void DIE_Widget::on_pushButtonLog_clicked()
 {
     // TODO
     // TODO Dialog
+    // TODO disable if no errors
     int nErrorCount=scanResult.listErrors.count();
 
     if(nErrorCount)

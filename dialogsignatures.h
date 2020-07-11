@@ -47,7 +47,6 @@ public:
 
 private slots:
     void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void on_textEditSignature_textChanged();
     void on_pushButtonSave_clicked();
     void save();
     void on_pushButtonRun_clicked();
@@ -60,6 +59,10 @@ private slots:
     int _handleTreeItems(QTreeWidgetItem *pParent, XBinary::FT fileType);
 
     void runScript(bool bIsDebug);
+
+    void on_plainTextEditSignature_textChanged();
+
+    void on_checkBoxReadOnly_toggled(bool checked);
 
 private:
     Ui::DialogSignatures *ui;
