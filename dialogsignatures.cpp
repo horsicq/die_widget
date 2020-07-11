@@ -39,11 +39,11 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 
     _handleTreeItems(pRootItem,XBinary::FT_UNKNOWN);
 
-    handleTreeItems(pRootItem,XBinary::FT_BINARY,"Binary");
-    handleTreeItems(pRootItem,XBinary::FT_MSDOS,"MSDOS");
-    handleTreeItems(pRootItem,XBinary::FT_MACH,"MACH");
-    handleTreeItems(pRootItem,XBinary::FT_ELF,"ELF");
-    handleTreeItems(pRootItem,XBinary::FT_PE,"PE");
+    handleTreeItems(pRootItem,XBinary::FT_BINARY,   "Binary");
+    handleTreeItems(pRootItem,XBinary::FT_MSDOS,    "MSDOS");
+    handleTreeItems(pRootItem,XBinary::FT_MACH,     "MACH");
+    handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
+    handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
 
     bCurrentEdited=false;
     ui->pushButtonSave->setEnabled(false);
