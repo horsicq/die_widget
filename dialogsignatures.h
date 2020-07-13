@@ -62,7 +62,7 @@ private slots:
 
     void on_plainTextEditSignature_textChanged();
 
-    void on_checkBoxReadOnly_toggled(bool checked);
+    void on_checkBoxReadOnly_toggled(bool bChecked);
 
 private:
     Ui::DialogSignatures *ui;

@@ -219,7 +219,7 @@ void DialogSignatures::on_plainTextEditSignature_textChanged()
     ui->pushButtonSave->setEnabled(true);
 }
 
-void DialogSignatures::on_checkBoxReadOnly_toggled(bool checked)
+void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked)
 {
-    ui->plainTextEditSignature->setReadOnly(checked);
+    ui->plainTextEditSignature->setReadOnly(bChecked);
 }
