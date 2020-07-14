@@ -30,6 +30,9 @@ DIE_Widget::DIE_Widget(QWidget *parent) :
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
     connect(&dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
     connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
+
+    ui->checkBoxShowVersion->setChecked(true);
+    ui->checkBoxShowOptions->setChecked(true);
 }
 
 DIE_Widget::~DIE_Widget()
@@ -60,6 +63,11 @@ void DIE_Widget::setData(QString sFileName, bool bScan)
     {
         process();
     }
+}
+
+void DIE_Widget::setDatabase(QString sDatabasePath)
+{
+    dieScript.loadDatabase(sDatabasePath);
 }
 
 void DIE_Widget::on_pushButtonScan_clicked()

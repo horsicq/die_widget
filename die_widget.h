@@ -66,6 +66,7 @@ public:
 
     void setOptions(OPTIONS *pOptions);
     void setData(QString sFileName,bool bScan=false);
+    void setDatabase(QString sDatabasePath);
 
 private slots:
     void on_pushButtonScan_clicked();
