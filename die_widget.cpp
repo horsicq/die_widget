@@ -30,6 +30,8 @@ DIE_Widget::DIE_Widget(QWidget *parent) :
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
     connect(&dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
     connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
+
+    ui->pushButtonLog->setEnabled(false);
 }
 
 DIE_Widget::~DIE_Widget()
@@ -140,6 +142,7 @@ void DIE_Widget::onScanFinished()
     }
 
     ui->pushButtonLog->setText(sLogButtonText);
+    ui->pushButtonLog->setEnabled(nErrorCount);
 
     ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
@@ -221,9 +224,6 @@ void DIE_Widget::on_pushButtonExtraInformation_clicked()
 
 void DIE_Widget::on_pushButtonLog_clicked()
 {
-    // TODO
-    // TODO Dialog
-    // TODO disable if no errors
     int nErrorCount=scanResult.listErrors.count();
 
     if(nErrorCount)

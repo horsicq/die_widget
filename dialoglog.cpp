@@ -26,6 +26,8 @@ DialogLog::DialogLog(QWidget *parent,QString sText) :
     ui(new Ui::DialogLog)
 {
     ui->setupUi(this);
+
+    ui->plainTextEditLog->appendPlainText(sText);
 }
 
 DialogLog::~DialogLog()
