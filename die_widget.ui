@@ -81,20 +81,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxShowVersion">
-           <property name="text">
-            <string>Show version</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxShowOptions">
-           <property name="text">
-            <string>Show options</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QCheckBox" name="checkBoxDeepScan">
            <property name="text">
             <string>Deep scan</string>

@@ -30,9 +30,6 @@ DIE_Widget::DIE_Widget(QWidget *parent) :
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
     connect(&dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
     connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
-
-    ui->checkBoxShowVersion->setChecked(true);
-    ui->checkBoxShowOptions->setChecked(true);
 }
 
 DIE_Widget::~DIE_Widget()
@@ -42,8 +39,6 @@ DIE_Widget::~DIE_Widget()
 
 void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
 {
-    ui->checkBoxShowVersion->setChecked(pOptions->bShowVersion);
-    ui->checkBoxShowOptions->setChecked(pOptions->bShowOptions);
     ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
 
     if(dieScript.getDatabasePath()!=pOptions->sDatabasePath)
@@ -93,8 +88,8 @@ void DIE_Widget::process()
 
         ui->pushButtonScan->setText(tr("Stop"));
 
-        scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
-        scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
+        scanOptions.bShowVersion=true;
+        scanOptions.bShowOptions=true;
         scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
         scanOptions.bShowType=true;
         //    scanOptions.bDebug=true;
