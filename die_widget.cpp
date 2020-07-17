@@ -159,7 +159,7 @@ void DIE_Widget::onScanFinished()
         ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
 
         QTableWidgetItem *pWidgetString=new QTableWidgetItem;
-        pWidgetString->setText(scanResult.listRecords.at(i).sString);
+        pWidgetString->setText(scanResult.listRecords.at(i).sResult);
         ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
 
         QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
