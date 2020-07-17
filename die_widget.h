@@ -78,7 +78,7 @@ private slots:
     void on_pushButtonSignatures_clicked();
     void on_pushButtonExtraInformation_clicked();
     void on_pushButtonLog_clicked();
-    void on_tableWidgetResult_cellClicked(int row, int column);
+    void on_tableWidgetResult_cellClicked(int nRow, int nColumn);
     void showInfo(QString sName);
     void showSignature(QString sName);
 

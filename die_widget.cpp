@@ -222,17 +222,17 @@ void DIE_Widget::on_pushButtonLog_clicked()
     dialogLog.exec();
 }
 
-void DIE_Widget::on_tableWidgetResult_cellClicked(int row, int column)
+void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
 {
-    if(row<scanResult.listRecords.count())
+    if(nRow<scanResult.listRecords.count())
     {
-        if(column==COLUMN_SIGNATURE)
+        if(nColumn==COLUMN_SIGNATURE)
         {
-            // TODO
+            showSignature(scanResult.listRecords.at(nRow).sName);
         }
-        else if(column==COLUMN_INFO)
+        else if(nColumn==COLUMN_INFO)
         {
-            // TODO
+            showInfo(scanResult.listRecords.at(nRow).sName);
         }
     }
 }
