@@ -210,27 +210,16 @@ void DIE_Widget::on_pushButtonSignatures_clicked()
 
 void DIE_Widget::on_pushButtonExtraInformation_clicked()
 {
-    // TODO
-    // TODO Dialog
-    // TODO Zip or folder
-    QString sText="TODO";
+    DialogInfo dialogInfo(this,DiE_Script::scanResultToPlainString(&scanResult));
 
-    if(sText!="")
-    {
-        DialogInfo dialogInfo(this,sText); // TODO
-        dialogInfo.exec();
-    }
+    dialogInfo.exec();
 }
 
 void DIE_Widget::on_pushButtonLog_clicked()
 {
-    int nErrorCount=scanResult.listErrors.count();
+    DialogLog dialogLog(this,DiE_Script::getErrorsString(&scanResult));
 
-    if(nErrorCount)
-    {
-        DialogLog dialogLog(this,DiE_Script::getErrorsString(&scanResult)); // TODO
-        dialogLog.exec();
-    }
+    dialogLog.exec();
 }
 
 void DIE_Widget::on_tableWidgetResult_cellClicked(int row, int column)
