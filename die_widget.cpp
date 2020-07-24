@@ -36,6 +36,12 @@ DIE_Widget::DIE_Widget(QWidget *parent) :
 
 DIE_Widget::~DIE_Widget()
 {
+    if(bProcess)
+    {
+        stop();
+        watcher.waitForFinished();
+    }
+
     delete ui;
 }
 

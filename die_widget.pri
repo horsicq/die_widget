@@ -4,13 +4,11 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 FORMS += \
-    $$PWD/dialoginfo.ui \
     $$PWD/dialoglog.ui \
     $$PWD/dialogsignatures.ui \
     $$PWD/die_widget.ui
 
 HEADERS += \
-    $$PWD/dialoginfo.h \
     $$PWD/dialoglog.h \
     $$PWD/dialogsignatures.h \
     $$PWD/die_highlighter.h \
@@ -18,7 +16,6 @@ HEADERS += \
     $$PWD/die_widget.h
 
 SOURCES += \
-    $$PWD/dialoginfo.cpp \
     $$PWD/dialoglog.cpp \
     $$PWD/dialogsignatures.cpp \
     $$PWD/die_highlighter.cpp \
@@ -28,4 +25,9 @@ SOURCES += \
 !contains(XCONFIG, die_script) {
     XCONFIG += die_script
     include($$PWD/../die_script/die_script.pri)
+}
+
+!contains(XCONFIG, dialoginfo) {
+    XCONFIG += dialoginfo
+    include($$PWD/../FormatDialogs/dialoginfo.pri)
 }
