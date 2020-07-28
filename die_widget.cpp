@@ -55,11 +55,12 @@ void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
     }
 }
 
-void DIE_Widget::setData(QString sFileName, bool bScan)
+void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT ft)
 {
     clear();
 
     this->sFileName=sFileName;
+    this->ft=ft;
     scanType=ST_FILE;
 
     if(bScan)
@@ -100,6 +101,7 @@ void DIE_Widget::process()
         scanOptions.bShowOptions=true;
         scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
         scanOptions.bShowType=true;
+        scanOptions.fileType=ft;
         //    scanOptions.bDebug=true;
 
         QFuture<void> future=QtConcurrent::run(this,&DIE_Widget::scan);
