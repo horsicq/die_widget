@@ -51,6 +51,7 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
     ui->checkBoxShowType->setChecked(true);
     ui->checkBoxShowOptions->setChecked(true);
     ui->checkBoxShowVersion->setChecked(true);
+    ui->checkBoxDeepscan->setChecked(true);
 
     ui->checkBoxReadOnly->setChecked(true);
 }
