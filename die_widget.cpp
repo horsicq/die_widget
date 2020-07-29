@@ -212,7 +212,7 @@ void DIE_Widget::onProgressValueChanged(qint32 nValue)
 
 void DIE_Widget::on_pushButtonSignatures_clicked()
 {
-    DialogSignatures dialogSignatures(this,&dieScript,sFileName);
+    DialogSignatures dialogSignatures(this,&dieScript,sFileName,scanOptions.fileType,"");
 
     dialogSignatures.exec();
 }

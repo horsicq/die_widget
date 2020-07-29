@@ -21,7 +21,7 @@
 #include "dialogsignatures.h"
 #include "ui_dialogsignatures.h"
 
-DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QString sFileName) :
+DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature) :
     QDialog(parent),
     ui(new Ui::DialogSignatures)
 {
@@ -31,8 +31,12 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 
     this->pDieScript=pDieScript;
     this->sFileName=sFileName;
+    this->fileType=fileType;
+    this->sSignature=sSignature;
 
     ui->plainTextEditSignature->setLineWrapMode(QPlainTextEdit::NoWrap);
+
+    ui->treeWidgetSignatures->setSortingEnabled(false);
 
     QTreeWidgetItem *pRootItem=new QTreeWidgetItem(ui->treeWidgetSignatures);
     pRootItem->setText(0,tr("Database"));
@@ -45,6 +49,9 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
     handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
     handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
 
+    ui->treeWidgetSignatures->setSortingEnabled(true);
+    ui->treeWidgetSignatures->sortByColumn(0,Qt::AscendingOrder);
+
     bCurrentEdited=false;
     ui->pushButtonSave->setEnabled(false);
 
@@ -54,6 +61,16 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
     ui->checkBoxDeepscan->setChecked(true);
 
     ui->checkBoxReadOnly->setChecked(true);
+
+    int nCount=ui->treeWidgetSignatures->topLevelItemCount();
+
+    for(int i=0;i<nCount;i++)
+    {
+        if(_setTreeItem(ui->treeWidgetSignatures,ui->treeWidgetSignatures->topLevelItem(i),fileType,sSignature))
+        {
+            break;
+        }
+    }
 }
 
 DialogSignatures::~DialogSignatures()
@@ -79,19 +96,19 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
 {
     int nResult=0;
 
-    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pSignatures=pDieScript->getSignatures();
+    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures=pDieScript->getSignatures();
 
-    int nCount=pSignatures->count();
+    int nCount=pListSignatures->count();
 
     for(int i=0;i<nCount;i++)
     {
-        if(pSignatures->at(i).fileType==fileType)
+        if(pListSignatures->at(i).fileType==fileType)
         {
             QTreeWidgetItem *pRootItem=new QTreeWidgetItem(pParent);
-            pRootItem->setText(0,pSignatures->at(i).sName);
-            pRootItem->setData(0,Qt::UserRole+UD_FILEPATH,pSignatures->at(i).sFilePath);
-            pRootItem->setData(0,Qt::UserRole+UD_FILETYPE,pSignatures->at(i).fileType);
-            pRootItem->setData(0,Qt::UserRole+UD_NAME,pSignatures->at(i).sName);
+            pRootItem->setText(0,pListSignatures->at(i).sName);
+            pRootItem->setData(0,Qt::UserRole+UD_FILEPATH,pListSignatures->at(i).sFilePath);
+            pRootItem->setData(0,Qt::UserRole+UD_FILETYPE,pListSignatures->at(i).fileType);
+            pRootItem->setData(0,Qt::UserRole+UD_NAME,pListSignatures->at(i).sName);
 
             nResult++;
         }
@@ -130,7 +147,7 @@ void DialogSignatures::runScript(bool bIsDebug)
             QScriptEngineDebugger debugger(this);
             QMainWindow *debugWindow=debugger.standardWindow();
             debugWindow->setWindowModality(Qt::ApplicationModal);
-            debugWindow->setWindowTitle("Signature debugger"); // TODO mb tr
+            debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
             pDieScript->setDebugger(&debugger);
 
@@ -143,6 +160,7 @@ void DialogSignatures::runScript(bool bIsDebug)
 
         ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToPlainString(&scanResult));
 
+        ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
         // TODO is debug
         // TODO only scripts for this type if not messagebox
     }
@@ -204,11 +222,6 @@ void DialogSignatures::on_pushButtonClearResult_clicked()
     ui->plainTextEditResult->clear();
 }
 
-void DialogSignatures::on_pushButtonSaveResult_clicked()
-{
-    // TODO
-}
-
 void DialogSignatures::on_pushButtonClose_clicked()
 {
     this->close();
@@ -223,4 +236,35 @@ void DialogSignatures::on_plainTextEditSignature_textChanged()
 void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked)
 {
     ui->plainTextEditSignature->setReadOnly(bChecked);
+}
+
+bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature)
+{
+    bool bResult=false;
+
+    XBinary::FT _fileType=(XBinary::FT)pItem->data(0,Qt::UserRole+UD_FILETYPE).toInt();
+    QString _sSignature=pItem->data(0,Qt::UserRole+UD_NAME).toString();
+
+    if( (XBinary::checkFileType(_fileType,fileType))&&
+        ((sSignature=="")||(_sSignature==sSignature)))
+    {
+        pTree->setCurrentItem(pItem);
+
+        bResult=true;
+    }
+    else
+    {
+        int nCount=pItem->childCount();
+
+        for(int i=0;i<nCount;i++)
+        {
+            if(_setTreeItem(pTree,pItem->child(i),fileType,sSignature))
+            {
+                bResult=true;
+                break;
+            }
+        }
+    }
+
+    return bResult;
 }
