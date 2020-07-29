@@ -219,7 +219,7 @@ void DIE_Widget::on_pushButtonSignatures_clicked()
 
 void DIE_Widget::on_pushButtonExtraInformation_clicked()
 {
-    DialogInfo dialogInfo(this,DiE_Script::scanResultToPlainString(&scanResult));
+    DialogTextInfo dialogInfo(this,DiE_Script::scanResultToPlainString(&scanResult));
 
     dialogInfo.exec();
 }

@@ -27,7 +27,7 @@ SOURCES += \
     include($$PWD/../die_script/die_script.pri)
 }
 
-!contains(XCONFIG, dialoginfo) {
-    XCONFIG += dialoginfo
-    include($$PWD/../FormatDialogs/dialoginfo.pri)
+!contains(XCONFIG, dialogtextinfo) {
+    XCONFIG += dialogtextinfo
+    include($$PWD/../FormatDialogs/dialogtextinfo.pri)
 }

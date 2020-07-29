@@ -26,7 +26,7 @@
 #include <QtConcurrent>
 #include "die_script.h"
 #include "dialogsignatures.h"
-#include "dialoginfo.h"
+#include "dialogtextinfo.h"
 #include "dialoglog.h"
 
 namespace Ui {
