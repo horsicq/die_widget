@@ -170,6 +170,7 @@ void DIE_Widget::onScanFinished()
         ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
 
         QTableWidgetItem *pWidgetString=new QTableWidgetItem;
+        pWidgetString->setTextAlignment(Qt::AlignCenter);
         pWidgetString->setText(scanResult.listRecords.at(i).sResult);
         ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
 
