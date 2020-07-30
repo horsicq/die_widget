@@ -241,7 +241,7 @@ void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
     {
         if(nColumn==COLUMN_SIGNATURE)
         {
-            showSignature(scanResult.listRecords.at(nRow).sName);
+            showSignature(scanResult.listRecords.at(nRow).sSignature);
         }
         else if(nColumn==COLUMN_INFO)
         {
@@ -257,7 +257,9 @@ void DIE_Widget::showInfo(QString sName)
 
 void DIE_Widget::showSignature(QString sName)
 {
-    qDebug("showSignature");
+    DialogSignatures dialogSignatures(this,&dieScript,sFileName,scanOptions.fileType,sName);
+
+    dialogSignatures.exec();
 }
 
 void DIE_Widget::enableControls(bool bState)
