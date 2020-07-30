@@ -262,9 +262,13 @@ void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
 
 void DIE_Widget::showInfo(QString sName)
 {
-    if(XBinary::isFileExists(getInfoFileName(sName)))
+    QString sFileName=getInfoFileName(sName);
+
+    if(XBinary::isFileExists(sFileName))
     {
         DialogTextInfo dialogInfo(this);
+
+        dialogInfo.setFile(sFileName);
 
         dialogInfo.exec();
     }
