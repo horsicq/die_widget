@@ -64,7 +64,8 @@ public:
 
     void setOptions(OPTIONS *pOptions);
     void setData(QString sFileName,bool bScan=false,XBinary::FT ft=XBinary::FT_UNKNOWN);
-    void setDatabase(QString sDatabasePath);
+    void setDatabasePath(QString sDatabasePath);
+    void setInfoPath(QString sInfoPath);
 
 private slots:
     void on_pushButtonScan_clicked();
@@ -93,6 +94,7 @@ private:
     QString sFileName;
     XBinary::FT ft;
     bool bProcess;
+    QString sInfoPath;
 };
 
 #endif // DIE_WIDGET_H

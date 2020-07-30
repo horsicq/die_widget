@@ -69,9 +69,14 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT ft)
     }
 }
 
-void DIE_Widget::setDatabase(QString sDatabasePath)
+void DIE_Widget::setDatabasePath(QString sDatabasePath)
 {
     dieScript.loadDatabase(sDatabasePath);
+}
+
+void DIE_Widget::setInfoPath(QString sInfoPath)
+{
+    this->sInfoPath=sInfoPath;
 }
 
 void DIE_Widget::on_pushButtonScan_clicked()
@@ -223,7 +228,9 @@ void DIE_Widget::on_pushButtonSignatures_clicked()
 
 void DIE_Widget::on_pushButtonExtraInformation_clicked()
 {
-    DialogTextInfo dialogInfo(this,DiE_Script::scanResultToPlainString(&scanResult));
+    DialogTextInfo dialogInfo(this);
+
+    dialogInfo.setText(DiE_Script::scanResultToPlainString(&scanResult));
 
     dialogInfo.exec();
 }
@@ -252,7 +259,9 @@ void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
 
 void DIE_Widget::showInfo(QString sName)
 {
-    qDebug("showInfo");
+    DialogTextInfo dialogInfo(this);
+
+    dialogInfo.exec();
 }
 
 void DIE_Widget::showSignature(QString sName)
