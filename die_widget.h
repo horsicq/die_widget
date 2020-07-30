@@ -84,6 +84,8 @@ private slots:
     void showSignature(QString sName);
     void enableControls(bool bState);
 
+    QString getInfoFileName(QString sName);
+
 private:
     Ui::DIE_Widget *ui;
     ST scanType;

@@ -185,9 +185,12 @@ void DIE_Widget::onScanFinished()
         pWidgetSignature->setText("S");
         ui->tableWidgetResult->setItem(i,COLUMN_SIGNATURE,pWidgetSignature);
 
-        QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
-        pWidgetInfo->setText("?");
-        ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
+        if(XBinary::isFileExists(getInfoFileName(scanResult.listRecords.at(i).sName)))
+        {
+            QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
+            pWidgetInfo->setText("?");
+            ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
+        }
     }
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(true);
@@ -259,9 +262,12 @@ void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
 
 void DIE_Widget::showInfo(QString sName)
 {
-    DialogTextInfo dialogInfo(this);
+    if(XBinary::isFileExists(getInfoFileName(sName)))
+    {
+        DialogTextInfo dialogInfo(this);
 
-    dialogInfo.exec();
+        dialogInfo.exec();
+    }
 }
 
 void DIE_Widget::showSignature(QString sName)
@@ -284,4 +290,9 @@ void DIE_Widget::enableControls(bool bState)
     ui->pushButtonLog->setEnabled(bState);
     ui->pushButtonExtraInformation->setEnabled(bState);
     ui->lineEditElapsedTime->setEnabled(bState);
+}
+
+QString DIE_Widget::getInfoFileName(QString sName)
+{
+    return XBinary::convertFileName(sInfoPath)+QDir::separator()+QString("%1.html").arg(sName);
 }
