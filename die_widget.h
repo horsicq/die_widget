@@ -81,6 +81,7 @@ private slots:
     void on_tableWidgetResult_cellClicked(int nRow, int nColumn);
     void showInfo(QString sName);
     void showSignature(QString sName);
+    void enableControls(bool bState);
 
 private:
     Ui::DIE_Widget *ui;

@@ -93,6 +93,7 @@ void DIE_Widget::process()
 {
     if(!bProcess)
     {
+        enableControls(false);
         bProcess=true;
 
         ui->pushButtonScan->setText(tr("Stop"));
@@ -113,6 +114,7 @@ void DIE_Widget::process()
         stop();
         watcher.waitForFinished();
         ui->pushButtonScan->setText(tr("Scan"));
+        enableControls(true);
     }
 }
 
@@ -198,6 +200,8 @@ void DIE_Widget::onScanFinished()
     ui->progressBarProgress->setMaximum(100);
     ui->progressBarProgress->setValue(100);
     ui->pushButtonScan->setText(tr("Scan"));
+
+    enableControls(true);
 }
 
 void DIE_Widget::onProgressMaximumChanged(qint32 nMaximum)
@@ -254,4 +258,19 @@ void DIE_Widget::showInfo(QString sName)
 void DIE_Widget::showSignature(QString sName)
 {
     qDebug("showSignature");
+}
+
+void DIE_Widget::enableControls(bool bState)
+{
+    if(!bState)
+    {
+        ui->tableWidgetResult->clear();
+    }
+
+    ui->tableWidgetResult->setEnabled(bState);
+    ui->checkBoxDeepScan->setEnabled(bState);
+    ui->pushButtonSignatures->setEnabled(bState);
+    ui->pushButtonLog->setEnabled(bState);
+    ui->pushButtonExtraInformation->setEnabled(bState);
+    ui->lineEditElapsedTime->setEnabled(bState);
 }
