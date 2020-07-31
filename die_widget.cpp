@@ -298,5 +298,7 @@ void DIE_Widget::enableControls(bool bState)
 
 QString DIE_Widget::getInfoFileName(QString sName)
 {
-    return XBinary::convertFileName(sInfoPath)+QDir::separator()+QString("%1.html").arg(sName);
+    QString sResult=XBinary::convertFileName(sInfoPath)+QDir::separator()+QString("%1.html").arg(sName);
+    qDebug(sResult.toLatin1().data());
+    return sResult;
 }
