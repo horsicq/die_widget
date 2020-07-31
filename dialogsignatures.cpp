@@ -62,14 +62,21 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 
     ui->checkBoxReadOnly->setChecked(true);
 
-    int nCount=ui->treeWidgetSignatures->topLevelItemCount();
-
-    for(int i=0;i<nCount;i++)
+    if(sSignature!="")
     {
-        if(_setTreeItem(ui->treeWidgetSignatures,ui->treeWidgetSignatures->topLevelItem(i),fileType,sSignature))
+        int nCount=ui->treeWidgetSignatures->topLevelItemCount();
+
+        for(int i=0;i<nCount;i++)
         {
-            break;
+            if(_setTreeItem(ui->treeWidgetSignatures,ui->treeWidgetSignatures->topLevelItem(i),fileType,sSignature))
+            {
+                break;
+            }
         }
+    }
+    else
+    {
+        ui->treeWidgetSignatures->expandAll();
     }
 }
 
