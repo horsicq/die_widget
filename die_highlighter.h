@@ -39,7 +39,7 @@ private:
         QRegExp pattern;
         QTextCharFormat format;
     };
-    QVector<HighlightingRule> highlightingRules;
+    QVector<HighlightingRule> listHighlightingRules;
 
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
