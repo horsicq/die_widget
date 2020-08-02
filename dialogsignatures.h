@@ -61,6 +61,7 @@ private slots:
     void on_checkBoxReadOnly_toggled(bool bChecked);
 
     bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature);
+    void enableControls(bool bState);
 
 private:
     Ui::DialogSignatures *ui;

@@ -126,6 +126,8 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
 
 void DialogSignatures::runScript(bool bIsDebug)
 {
+    enableControls(false);
+
     QTreeWidgetItem *pCurrentItem=ui->treeWidgetSignatures->currentItem();
 
     if(pCurrentItem)
@@ -171,6 +173,8 @@ void DialogSignatures::runScript(bool bIsDebug)
         // TODO is debug
         // TODO only scripts for this type if not messagebox
     }
+
+    enableControls(true);
 }
 
 void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -274,4 +278,14 @@ bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, 
     }
 
     return bResult;
+}
+
+void DialogSignatures::enableControls(bool bState)
+{
+    ui->treeWidgetSignatures->setEnabled(bState);
+    ui->pushButtonClearResult->setEnabled(bState);
+    ui->pushButtonClose->setEnabled(bState);
+    ui->pushButtonDebug->setEnabled(bState);
+    ui->pushButtonRun->setEnabled(bState);
+    ui->pushButtonSave->setEnabled(bState);
 }
