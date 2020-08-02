@@ -170,7 +170,6 @@ void DialogSignatures::runScript(bool bIsDebug)
         ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToPlainString(&scanResult));
 
         ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
-        // TODO is debug
         // TODO only scripts for this type if not messagebox
     }
 
