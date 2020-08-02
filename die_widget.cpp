@@ -32,6 +32,8 @@ DIE_Widget::DIE_Widget(QWidget *parent) :
     connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
 
     ui->pushButtonLog->setEnabled(false);
+
+    clear();
 }
 
 DIE_Widget::~DIE_Widget()

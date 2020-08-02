@@ -62,7 +62,7 @@ DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QStr
 
     ui->checkBoxReadOnly->setChecked(true);
 
-    if(sSignature!="")
+    if(fileType!=XBinary::FT_UNKNOWN)
     {
         int nCount=ui->treeWidgetSignatures->topLevelItemCount();
 
