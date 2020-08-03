@@ -21,8 +21,8 @@
 #include "die_widget.h"
 #include "ui_die_widget.h"
 
-DIE_Widget::DIE_Widget(QWidget *parent) :
-    QWidget(parent),
+DIE_Widget::DIE_Widget(QWidget *pParent) :
+    QWidget(pParent),
     ui(new Ui::DIE_Widget)
 {
     ui->setupUi(this);

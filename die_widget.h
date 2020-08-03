@@ -59,7 +59,7 @@ public:
         COLUMN_INFO
     };
 
-    explicit DIE_Widget(QWidget *parent=nullptr);
+    explicit DIE_Widget(QWidget *pParent=nullptr);
     ~DIE_Widget();
 
     void setOptions(OPTIONS *pOptions);
