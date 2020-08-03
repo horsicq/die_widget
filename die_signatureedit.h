@@ -30,7 +30,7 @@ class DIE_SignatureEdit : public QPlainTextEdit
 {
     Q_OBJECT
 public:
-    explicit DIE_SignatureEdit(QWidget *parent=nullptr);
+    explicit DIE_SignatureEdit(QWidget *pParent=nullptr);
 
 private:
     DIE_Highlighter *pHighlighter;
