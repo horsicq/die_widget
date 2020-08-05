@@ -21,8 +21,8 @@
 #include "dialoglog.h"
 #include "ui_dialoglog.h"
 
-DialogLog::DialogLog(QWidget *parent,QString sText) :
-    QDialog(parent),
+DialogLog::DialogLog(QWidget *pParent, QString sText) :
+    QDialog(pParent),
     ui(new Ui::DialogLog)
 {
     ui->setupUi(this);

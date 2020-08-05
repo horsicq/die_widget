@@ -32,7 +32,7 @@ class DialogLog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogLog(QWidget *parent,QString sText);
+    explicit DialogLog(QWidget *pParent,QString sText);
     ~DialogLog();
 
 private slots:
