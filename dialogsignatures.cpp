@@ -21,8 +21,8 @@
 #include "dialogsignatures.h"
 #include "ui_dialogsignatures.h"
 
-DialogSignatures::DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature) :
-    QDialog(parent),
+DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature) :
+    QDialog(pParent),
     ui(new Ui::DialogSignatures)
 {
     ui->setupUi(this);

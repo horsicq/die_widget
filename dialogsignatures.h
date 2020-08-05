@@ -42,7 +42,7 @@ class DialogSignatures : public QDialog
     };
 
 public:
-    explicit DialogSignatures(QWidget *parent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature);
+    explicit DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature);
     ~DialogSignatures();
 
 private slots:
