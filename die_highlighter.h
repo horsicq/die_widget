@@ -28,7 +28,7 @@ class DIE_Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 public:
-    explicit DIE_Highlighter(QObject *parent=nullptr);
+    explicit DIE_Highlighter(QObject *pParent=nullptr);
 
 protected:
     void highlightBlock(const QString &text);

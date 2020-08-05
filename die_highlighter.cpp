@@ -20,7 +20,7 @@
 //
 #include "die_highlighter.h"
 
-DIE_Highlighter::DIE_Highlighter(QObject *parent) : QSyntaxHighlighter(parent)
+DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 {
     HighlightingRule rule;
 
