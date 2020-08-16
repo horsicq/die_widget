@@ -149,7 +149,7 @@ void DialogSignatures::runScript(bool bIsDebug)
         scanOptions.sSignatureName=pCurrentItem->data(0,Qt::UserRole+UD_NAME).toString();
         scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();
 
-        DiE_Script::SCAN_RESULT scanResult;
+        DiE_Script::SCAN_RESULT scanResult={};
 
         if(bIsDebug)
         {
