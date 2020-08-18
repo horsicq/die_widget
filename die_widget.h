@@ -63,7 +63,7 @@ public:
     ~DIE_Widget();
 
     void setOptions(OPTIONS *pOptions);
-    void setData(QString sFileName,bool bScan=false,XBinary::FT ft=XBinary::FT_UNKNOWN);
+    void setData(QString sFileName,bool bScan=false,XBinary::FT fileType=XBinary::FT_UNKNOWN);
     void setDatabasePath(QString sDatabasePath);
     void setInfoPath(QString sInfoPath);
 
@@ -94,7 +94,7 @@ private:
     DiE_Script::SCAN_RESULT scanResult;
     QFutureWatcher<void> watcher;
     QString sFileName;
-    XBinary::FT ft;
+    XBinary::FT fileType;
     bool bProcess;
     QString sInfoPath;
 };
