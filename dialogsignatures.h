@@ -46,7 +46,7 @@ public:
     ~DialogSignatures();
 
 private slots:
-    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
     void on_pushButtonSave_clicked();
     void save();
     void on_pushButtonRun_clicked();

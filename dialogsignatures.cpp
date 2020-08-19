@@ -176,11 +176,11 @@ void DialogSignatures::runScript(bool bIsDebug)
     enableControls(true);
 }
 
-void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
 {
-    Q_UNUSED(previous)
+    Q_UNUSED(pPrevious)
 
-    QString sSignatureFilePath=current->data(0,Qt::UserRole).toString();
+    QString sSignatureFilePath=pCurrent->data(0,Qt::UserRole).toString();
 
     if(sSignatureFilePath!=sCurrentSignatureFilePath)
     {
