@@ -145,13 +145,13 @@ void DIE_Widget::onScanFinished()
 {
     bProcess=false;
 
-    int nErrorCount=scanResult.listErrors.count();
+    int nNumberOfErrors=scanResult.listErrors.count();
 
     QString sLogButtonText;
 
-    if(nErrorCount)
+    if(nNumberOfErrors)
     {
-        sLogButtonText=QString("%1(%2)").arg(tr("Log")).arg(nErrorCount);
+        sLogButtonText=QString("%1(%2)").arg(tr("Log")).arg(nNumberOfErrors);
     }
     else
     {
@@ -159,7 +159,7 @@ void DIE_Widget::onScanFinished()
     }
 
     ui->pushButtonLog->setText(sLogButtonText);
-    ui->pushButtonLog->setEnabled(nErrorCount);
+    ui->pushButtonLog->setEnabled(nNumberOfErrors);
 
     ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
