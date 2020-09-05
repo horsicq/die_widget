@@ -165,14 +165,14 @@ void DIE_Widget::onScanFinished()
 
     ui->tableWidgetResult->setColumnCount(0);
 
-    int nCount=scanResult.listRecords.count();
+    int nNumberOfRecords=scanResult.listRecords.count();
 
-    ui->tableWidgetResult->setRowCount(nCount);
+    ui->tableWidgetResult->setRowCount(nNumberOfRecords);
     ui->tableWidgetResult->setColumnCount(4);
 
     // TODO if different filetypes +1 column
 
-    for(int i=0;i<nCount;i++)
+    for(int i=0;i<nNumberOfRecords;i++)
     {
         QTableWidgetItem *pWidgetType=new QTableWidgetItem;
         pWidgetType->setText(scanResult.listRecords.at(i).sType);
