@@ -61,6 +61,12 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 {
     clear();
 
+    // TODO
+    if((fileType==XBinary::FT_ZIP)||(fileType==XBinary::FT_DEX))
+    {
+        fileType=XBinary::FT_BINARY;
+    }
+
     this->sFileName=sFileName;
     this->fileType=fileType;
     scanType=ST_FILE;
