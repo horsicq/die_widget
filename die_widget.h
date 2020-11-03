@@ -86,6 +86,10 @@ private slots:
 
     QString getInfoFileName(QString sName);
 
+signals:
+    void scanStarted();
+    void scanFinished();
+
 private:
     Ui::DIE_Widget *ui;
     ST scanType;

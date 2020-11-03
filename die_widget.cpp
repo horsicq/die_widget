@@ -124,6 +124,8 @@ void DIE_Widget::process()
     }
     else
     {
+        ui->pushButtonScan->setEnabled(false);
+
         stop();
         watcher.waitForFinished();
         ui->pushButtonScan->setText(tr("Scan"));
@@ -137,7 +139,11 @@ void DIE_Widget::scan()
     {
         if(scanType==ST_FILE)
         {
+            emit scanStarted();
+
             scanResult=dieScript.scanFile(sFileName,&scanOptions);
+
+            emit scanFinished();
         }
     }
 }
@@ -217,6 +223,7 @@ void DIE_Widget::onScanFinished()
     ui->progressBarProgress->setValue(100);
     ui->pushButtonScan->setText(tr("Scan"));
 
+    ui->pushButtonScan->setEnabled(true);
     enableControls(true);
 }
 
