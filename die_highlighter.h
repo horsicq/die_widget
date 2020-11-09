@@ -27,6 +27,7 @@
 class DIE_Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
+
 public:
     explicit DIE_Highlighter(QObject *pParent=nullptr);
 

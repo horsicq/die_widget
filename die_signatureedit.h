@@ -29,6 +29,7 @@
 class DIE_SignatureEdit : public QPlainTextEdit
 {
     Q_OBJECT
+
 public:
     explicit DIE_SignatureEdit(QWidget *pParent=nullptr);
 
