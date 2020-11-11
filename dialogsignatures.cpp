@@ -45,7 +45,7 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
 
     handleTreeItems(pRootItem,XBinary::FT_BINARY,   "Binary");
     handleTreeItems(pRootItem,XBinary::FT_MSDOS,    "MSDOS");
-    handleTreeItems(pRootItem,XBinary::FT_MACH,     "MACH");
+    handleTreeItems(pRootItem,XBinary::FT_MACHO,     "MACH");
     handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
     handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
 
