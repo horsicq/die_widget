@@ -21,8 +21,6 @@
 #ifndef DIE_SIGNATUREEDIT_H
 #define DIE_SIGNATUREEDIT_H
 
-#include <QObject>
-#include <QWidget>
 #include <QPlainTextEdit>
 #include "die_highlighter.h"
 
