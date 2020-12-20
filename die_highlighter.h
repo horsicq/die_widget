@@ -21,7 +21,6 @@
 #ifndef DIE_HIGHLIGHTER_H
 #define DIE_HIGHLIGHTER_H
 
-#include <QObject>
 #include <QSyntaxHighlighter>
 
 class DIE_Highlighter : public QSyntaxHighlighter
