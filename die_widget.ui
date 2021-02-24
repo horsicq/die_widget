@@ -61,7 +61,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButtonSignatures">
+          <widget class="QPushButton" name="pushButtonDieSignatures">
            <property name="text">
             <string>Signatures</string>
            </property>
@@ -102,7 +102,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonExtraInformation">
+          <widget class="QPushButton" name="pushButtonDieExtraInformation">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -121,7 +121,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonLog">
+          <widget class="QPushButton" name="pushButtonDieLog">
            <property name="text">
             <string>Log</string>
            </property>
@@ -154,7 +154,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonScan">
+      <widget class="QPushButton" name="pushButtonDieScan">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>

@@ -68,7 +68,7 @@ public:
     void setInfoPath(QString sInfoPath);
 
 private slots:
-    void on_pushButtonScan_clicked();
+    void on_pushButtonDieScan_clicked();
     void clear();
     void process();
     void scan();
@@ -76,9 +76,9 @@ private slots:
     void onScanFinished();
     void onProgressMaximumChanged(qint32 nMaximum);
     void onProgressValueChanged(qint32 nValue);
-    void on_pushButtonSignatures_clicked();
-    void on_pushButtonExtraInformation_clicked();
-    void on_pushButtonLog_clicked();
+    void on_pushButtonDieSignatures_clicked();
+    void on_pushButtonDieExtraInformation_clicked();
+    void on_pushButtonDieLog_clicked();
     void on_tableWidgetResult_cellClicked(int nRow,int nColumn);
     void showInfo(QString sName);
     void showSignature(QString sName);

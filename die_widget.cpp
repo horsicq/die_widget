@@ -31,7 +31,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) :
     connect(&dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
     connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
 
-    ui->pushButtonLog->setEnabled(false);
+    ui->pushButtonDieLog->setEnabled(false);
 
     clear();
 }
@@ -87,7 +87,7 @@ void DIE_Widget::setInfoPath(QString sInfoPath)
     this->sInfoPath=sInfoPath;
 }
 
-void DIE_Widget::on_pushButtonScan_clicked()
+void DIE_Widget::on_pushButtonDieScan_clicked()
 {
     process();
 }
@@ -109,7 +109,7 @@ void DIE_Widget::process()
         enableControls(false);
         bProcess=true;
 
-        ui->pushButtonScan->setText(tr("Stop"));
+        ui->pushButtonDieScan->setText(tr("Stop"));
 
         scanOptions.bShowVersion=true;
         scanOptions.bShowOptions=true;
@@ -124,11 +124,11 @@ void DIE_Widget::process()
     }
     else
     {
-        ui->pushButtonScan->setEnabled(false);
+        ui->pushButtonDieScan->setEnabled(false);
 
         stop();
         watcher.waitForFinished();
-        ui->pushButtonScan->setText(tr("Scan"));
+        ui->pushButtonDieScan->setText(tr("Scan"));
         enableControls(true);
     }
 }
@@ -170,8 +170,8 @@ void DIE_Widget::onScanFinished()
         sLogButtonText=tr("Log");
     }
 
-    ui->pushButtonLog->setText(sLogButtonText);
-    ui->pushButtonLog->setEnabled(nNumberOfErrors);
+    ui->pushButtonDieLog->setText(sLogButtonText);
+    ui->pushButtonDieLog->setEnabled(nNumberOfErrors);
 
     ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
@@ -221,9 +221,9 @@ void DIE_Widget::onScanFinished()
     ui->tableWidgetResult->horizontalHeader()->setVisible(false);
     ui->progressBarProgress->setMaximum(100);
     ui->progressBarProgress->setValue(100);
-    ui->pushButtonScan->setText(tr("Scan"));
+    ui->pushButtonDieScan->setText(tr("Scan"));
 
-    ui->pushButtonScan->setEnabled(true);
+    ui->pushButtonDieScan->setEnabled(true);
     enableControls(true);
 }
 
@@ -237,14 +237,14 @@ void DIE_Widget::onProgressValueChanged(qint32 nValue)
     ui->progressBarProgress->setValue(nValue);
 }
 
-void DIE_Widget::on_pushButtonSignatures_clicked()
+void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
     DialogSignatures dialogSignatures(this,&dieScript,sFileName,scanOptions.fileType,"");
 
     dialogSignatures.exec();
 }
 
-void DIE_Widget::on_pushButtonExtraInformation_clicked()
+void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
@@ -253,7 +253,7 @@ void DIE_Widget::on_pushButtonExtraInformation_clicked()
     dialogInfo.exec();
 }
 
-void DIE_Widget::on_pushButtonLog_clicked()
+void DIE_Widget::on_pushButtonDieLog_clicked()
 {
     DialogLog dialogLog(this,DiE_Script::getErrorsString(&scanResult));
 
@@ -305,9 +305,9 @@ void DIE_Widget::enableControls(bool bState)
 
     ui->tableWidgetResult->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
-    ui->pushButtonSignatures->setEnabled(bState);
-    ui->pushButtonLog->setEnabled(bState);
-    ui->pushButtonExtraInformation->setEnabled(bState);
+    ui->pushButtonDieSignatures->setEnabled(bState);
+    ui->pushButtonDieLog->setEnabled(bState);
+    ui->pushButtonDieExtraInformation->setEnabled(bState);
     ui->lineEditElapsedTime->setEnabled(bState);
 }
 
