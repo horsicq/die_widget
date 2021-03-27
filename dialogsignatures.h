@@ -42,11 +42,11 @@ class DialogSignatures : public QDialog
     };
 
 public:
-    explicit DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature);
+    explicit DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QString sFileName,XBinary::FT fileType,QString sSignature);
     ~DialogSignatures();
 
 private slots:
-    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious);
+    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
     void on_pushButtonSave_clicked();
     void save();
     void on_pushButtonRun_clicked();
@@ -54,13 +54,13 @@ private slots:
     void on_pushButtonClearResult_clicked();
     void on_pushButtonClose_clicked();
 
-    int handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText);
-    int _handleTreeItems(QTreeWidgetItem *pParent, XBinary::FT fileType);
+    int handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText);
+    int _handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType);
     void runScript(bool bIsDebug);
     void on_plainTextEditSignature_textChanged();
     void on_checkBoxReadOnly_toggled(bool bChecked);
 
-    bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature);
+    bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XBinary::FT fileType,QString sSignature);
     void enableControls(bool bState);
 
 private:
