@@ -189,7 +189,11 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
 
     if(sSignatureFilePath!=sCurrentSignatureFilePath)
     {
+    #if QT_VERSION >= 0x050300
         QSignalBlocker blocker(ui->plainTextEditSignature);
+    #else
+        const bool bBlocked1=ui->plainTextEditSignature->blockSignals(true);
+    #endif
 
         if(bCurrentEdited)
         {
@@ -201,6 +205,10 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
+
+    #if QT_VERSION < 0x050300
+        ui->plainTextEditSignature->blockSignals(bBlocked1);
+    #endif
     }
 }
 

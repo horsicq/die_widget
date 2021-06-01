@@ -317,3 +317,43 @@ QString DIE_Widget::getInfoFileName(QString sName)
 
     return sResult;
 }
+
+void DIE_Widget::on_tableWidgetResult_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndexList listIndexes=ui->tableWidgetResult->selectionModel()->selectedIndexes();
+
+    if(listIndexes.size()>0)
+    {
+        QModelIndex index=listIndexes.at(0);
+
+        if(index.column()==1)
+        {
+            QString sString=ui->tableWidgetResult->model()->data(index).toString();
+
+            QMenu contextMenu(this);
+
+            QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"),sString),this);
+            connect(&actionCopy, SIGNAL(triggered()), this, SLOT(copyResult()));
+
+            contextMenu.addAction(&actionCopy);
+
+            contextMenu.exec(ui->tableWidgetResult->viewport()->mapToGlobal(pos));
+        }
+    }
+}
+
+void DIE_Widget::copyResult()
+{
+    QModelIndexList listIndexes=ui->tableWidgetResult->selectionModel()->selectedIndexes();
+
+    if(listIndexes.size()>0)
+    {
+        QModelIndex index=listIndexes.at(0);
+
+        if(index.column()==1)
+        {
+            QString sString=ui->tableWidgetResult->model()->data(index).toString();
+            QApplication::clipboard()->setText(sString);
+        }
+    }
+}

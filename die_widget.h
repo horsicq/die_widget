@@ -24,6 +24,8 @@
 #include <QWidget>
 #include <QFutureWatcher>
 #include <QtConcurrent>
+#include <QMenu>
+#include <QClipboard>
 #include "die_script.h"
 #include "dialogsignatures.h"
 #include "dialogtextinfo.h"
@@ -83,8 +85,9 @@ private slots:
     void showInfo(QString sName);
     void showSignature(QString sName);
     void enableControls(bool bState);
-
     QString getInfoFileName(QString sName);
+    void on_tableWidgetResult_customContextMenuRequested(const QPoint &pos);
+    void copyResult();
 
 signals:
     void scanStarted();
