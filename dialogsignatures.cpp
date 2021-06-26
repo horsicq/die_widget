@@ -155,7 +155,7 @@ void DialogSignatures::runScript(bool bIsDebug)
         {
             QScriptEngineDebugger debugger(this);
             QMainWindow *debugWindow=debugger.standardWindow();
-            debugWindow->setWindowModality(Qt::ApplicationModal);
+            debugWindow->setWindowModality(Qt::WindowModal);
             debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
             pDieScript->setDebugger(&debugger);
