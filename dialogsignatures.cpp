@@ -134,7 +134,7 @@ void DialogSignatures::runScript(bool bIsDebug)
     {
         if(ui->pushButtonSave->isEnabled())
         {
-            save();
+            save(); // TODO Check
         }
 
         ui->plainTextEditResult->clear();
