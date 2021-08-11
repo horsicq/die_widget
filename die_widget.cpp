@@ -163,7 +163,7 @@ void DIE_Widget::onScanFinished()
 
     if(nNumberOfErrors)
     {
-        sLogButtonText=QString("%1(%2)").arg(tr("Log")).arg(nNumberOfErrors);
+        sLogButtonText=QString("%1(%2)").arg(tr("Log"),QString::number(nNumberOfErrors));
     }
     else
     {
