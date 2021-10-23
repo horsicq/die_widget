@@ -64,9 +64,9 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
 
     if(fileType!=XBinary::FT_UNKNOWN)
     {
-        int nNumberOfTopLevelItems=ui->treeWidgetSignatures->topLevelItemCount();
+        qint32 nNumberOfTopLevelItems=ui->treeWidgetSignatures->topLevelItemCount();
 
-        for(int i=0;i<nNumberOfTopLevelItems;i++)
+        for(qint32 i=0;i<nNumberOfTopLevelItems;i++)
         {
             if(_setTreeItem(ui->treeWidgetSignatures,ui->treeWidgetSignatures->topLevelItem(i),fileType,sSignature))
             {
