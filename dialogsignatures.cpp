@@ -105,9 +105,9 @@ int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT file
 
     QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures=pDieScript->getSignatures();
 
-    int nNumberOfSignatures=pListSignatures->count();
+    qint32 nNumberOfSignatures=pListSignatures->count();
 
-    for(int i=0;i<nNumberOfSignatures;i++)
+    for(qint32 i=0;i<nNumberOfSignatures;i++)
     {
         if(pListSignatures->at(i).fileType==fileType)
         {
