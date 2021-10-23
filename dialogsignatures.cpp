@@ -277,9 +277,9 @@ bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, 
     }
     else
     {
-        int nNumberOfChildren=pItem->childCount();
+        qint32 nNumberOfChildren=pItem->childCount();
 
-        for(int i=0;i<nNumberOfChildren;i++)
+        for(qint32 i=0;i<nNumberOfChildren;i++)
         {
             if(_setTreeItem(pTree,pItem->child(i),fileType,sSignature))
             {
