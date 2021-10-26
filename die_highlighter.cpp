@@ -79,7 +79,7 @@ void DIE_Highlighter::highlightBlock(const QString &text)
     foreach(const HighlightingRule &rule, listHighlightingRules)
     {
         QRegExp expression(rule.pattern);
-        int nIndex=expression.indexIn(text);
+        qint32 nIndex=expression.indexIn(text);
 
         while(nIndex>=0)
         {
