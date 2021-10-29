@@ -157,7 +157,7 @@ void DIE_Widget::onScanFinished()
 {
     bProcess=false;
 
-    int nNumberOfErrors=scanResult.listErrors.count();
+    qint32 nNumberOfErrors=scanResult.listErrors.count();
 
     QString sLogButtonText;
 
