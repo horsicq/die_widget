@@ -177,14 +177,14 @@ void DIE_Widget::onScanFinished()
 
     ui->tableWidgetResult->setColumnCount(0);
 
-    int nNumberOfRecords=scanResult.listRecords.count();
+    qint32 nNumberOfRecords=scanResult.listRecords.count();
 
     ui->tableWidgetResult->setRowCount(nNumberOfRecords);
     ui->tableWidgetResult->setColumnCount(4);
 
     // TODO if different filetypes +1 column
 
-    for(int i=0;i<nNumberOfRecords;i++)
+    for(qint32 i=0;i<nNumberOfRecords;i++)
     {
         QTableWidgetItem *pWidgetType=new QTableWidgetItem;
         pWidgetType->setText(scanResult.listRecords.at(i).sType);
@@ -356,4 +356,11 @@ void DIE_Widget::copyResult()
             QApplication::clipboard()->setText(sString);
         }
     }
+}
+
+void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
+{
+    DialogDIEScanDirectory dds(this,QFileInfo(sFileName).absolutePath());
+
+    dds.exec();
 }

@@ -83,7 +83,7 @@ void DIE_Highlighter::highlightBlock(const QString &text)
 
         while(nIndex>=0)
         {
-            int length=expression.matchedLength();
+            qint32 length=expression.matchedLength();
             setFormat(nIndex,length,rule.format);
             nIndex=expression.indexIn(text,nIndex+length);
         }
