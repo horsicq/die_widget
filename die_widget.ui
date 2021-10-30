@@ -90,6 +90,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonDieScanDirectory">
+           <property name="text">
+            <string>Directory</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>

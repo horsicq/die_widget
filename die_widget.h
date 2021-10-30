@@ -30,6 +30,7 @@
 #include "dialogsignatures.h"
 #include "dialogtextinfo.h"
 #include "dialoglog.h"
+#include "dialogdiescandirectory.h"
 
 namespace Ui {
 class DIE_Widget;
@@ -88,6 +89,7 @@ private slots:
     QString getInfoFileName(QString sName);
     void on_tableWidgetResult_customContextMenuRequested(const QPoint &pos);
     void copyResult();
+    void on_pushButtonDieScanDirectory_clicked();
 
 signals:
     void scanStarted();

@@ -4,11 +4,13 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 FORMS += \
+    $$PWD/dialogdiescandirectory.ui \
     $$PWD/dialoglog.ui \
     $$PWD/dialogsignatures.ui \
     $$PWD/die_widget.ui
 
 HEADERS += \
+    $$PWD/dialogdiescandirectory.h \
     $$PWD/dialoglog.h \
     $$PWD/dialogsignatures.h \
     $$PWD/die_highlighter.h \
@@ -16,6 +18,7 @@ HEADERS += \
     $$PWD/die_widget.h
 
 SOURCES += \
+    $$PWD/dialogdiescandirectory.cpp \
     $$PWD/dialoglog.cpp \
     $$PWD/dialogsignatures.cpp \
     $$PWD/die_highlighter.cpp \
