@@ -100,8 +100,8 @@ void DIE_Highlighter::highlightBlock(const QString &text)
 
     while(nStartIndex>=0)
     {
-        int nEndIndex=commentEndExpression.indexIn(text,nStartIndex);
-        int nCommentLength;
+        qint32 nEndIndex=commentEndExpression.indexIn(text,nStartIndex);
+        qint32 nCommentLength=0;
 
         if(nEndIndex==-1)
         {
