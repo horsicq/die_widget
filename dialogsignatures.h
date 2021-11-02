@@ -54,7 +54,7 @@ private slots:
     void on_pushButtonClearResult_clicked();
     void on_pushButtonClose_clicked();
 
-    int handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText);
+    qint32 handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText);
     int _handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType);
     void runScript(bool bIsDebug);
     void on_plainTextEditSignature_textChanged();
