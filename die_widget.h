@@ -98,7 +98,7 @@ signals:
 private:
     Ui::DIE_Widget *ui;
     ST scanType;
-    DiE_Script dieScript;
+    DiE_Script g_dieScript;
     DiE_Script::SCAN_OPTIONS scanOptions;
     DiE_Script::SCAN_RESULT scanResult;
     QFutureWatcher<void> watcher;

@@ -25,7 +25,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include "dialogoptions.h"
-#include "dialogstaticscanprocess.h"
+#include "dialogdiescanprocess.h"
 #include "xoptions.h"
 
 namespace Ui {
@@ -37,14 +37,14 @@ class DialogDIEScanDirectory : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanDirectory(QWidget *pParent,QString sDirName);
+    explicit DialogDIEScanDirectory(QWidget *pParent,QString sDirName,QString sDatabasePath);
     ~DialogDIEScanDirectory();
 
 private slots:
     void on_pushButtonOpenDirectory_clicked();
     void on_pushButtonScan_clicked();
     void scanDirectory(QString sDirectoryName);
-    void scanResult(SpecAbstract::SCAN_RESULT scanResult);
+    void scanResult(DiE_Script::SCAN_RESULT scanResult);
     void appendResult(QString sResult);
     void on_pushButtonOK_clicked();
     void on_pushButtonClear_clicked();
@@ -55,6 +55,7 @@ signals:
 
 private:
     Ui::DialogDIEScanDirectory *ui;
+    QString g_sDatabasePath;
 };
 
 #endif // DIALOGDIESCANDIRECTORY_H

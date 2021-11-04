@@ -28,8 +28,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) :
     ui->setupUi(this);
 
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
-    connect(&dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
-    connect(&dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
+    connect(&g_dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
+    connect(&g_dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
 
     ui->pushButtonDieLog->setEnabled(false);
 
@@ -51,9 +51,9 @@ void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
 {
     ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
 
-    if(dieScript.getDatabasePath()!=pOptions->sDatabasePath)
+    if(g_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
     {
-        dieScript.loadDatabase(pOptions->sDatabasePath);
+        g_dieScript.loadDatabase(pOptions->sDatabasePath);
     }
 }
 
@@ -79,7 +79,7 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 
 void DIE_Widget::setDatabasePath(QString sDatabasePath)
 {
-    dieScript.loadDatabase(sDatabasePath);
+    g_dieScript.loadDatabase(sDatabasePath);
 }
 
 void DIE_Widget::setInfoPath(QString sInfoPath)
@@ -141,7 +141,7 @@ void DIE_Widget::scan()
         {
             emit scanStarted();
 
-            scanResult=dieScript.scanFile(sFileName,&scanOptions);
+            scanResult=g_dieScript.scanFile(sFileName,&scanOptions);
 
             emit scanFinished();
         }
@@ -150,7 +150,7 @@ void DIE_Widget::scan()
 
 void DIE_Widget::stop()
 {
-    dieScript.stop();
+    g_dieScript.stop();
 }
 
 void DIE_Widget::onScanFinished()
@@ -239,7 +239,7 @@ void DIE_Widget::onProgressValueChanged(qint32 nValue)
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    DialogSignatures dialogSignatures(this,&dieScript,sFileName,scanOptions.fileType,"");
+    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,scanOptions.fileType,"");
 
     dialogSignatures.exec();
 }
@@ -291,7 +291,7 @@ void DIE_Widget::showInfo(QString sName)
 
 void DIE_Widget::showSignature(QString sName)
 {
-    DialogSignatures dialogSignatures(this,&dieScript,sFileName,scanOptions.fileType,sName);
+    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,scanOptions.fileType,sName);
 
     dialogSignatures.exec();
 }
@@ -360,7 +360,7 @@ void DIE_Widget::copyResult()
 
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
-    DialogDIEScanDirectory dds(this,QFileInfo(sFileName).absolutePath());
+    DialogDIEScanDirectory dds(this,QFileInfo(sFileName).absolutePath(),g_dieScript.getDatabasePath());
 
     dds.exec();
 }

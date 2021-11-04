@@ -21,11 +21,13 @@
 #include "dialogdiescandirectory.h"
 #include "ui_dialogdiescandirectory.h"
 
-DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirName) :
+DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirName, QString sDatabasePath) :
     QDialog(pParent),
     ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
+
+    g_sDatabasePath=sDatabasePath;
 
     setWindowFlags(windowFlags()|Qt::WindowMinMaxButtonsHint);
 
@@ -71,26 +73,27 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
     {
         ui->textBrowserResult->clear();
 
-        SpecAbstract::SCAN_OPTIONS options={0};
+        // TODO
+        DiE_Script::SCAN_OPTIONS options={0};
         options.bDeepScan=ui->checkBoxDeepScan->isChecked();
         options.bSubdirectories=ui->checkBoxScanSubdirectories->isChecked();
         // TODO Filter
         // |flags|x all|
 
-        DialogStaticScanProcess ds(this);
-        connect(&ds, SIGNAL(scanResult(SpecAbstract::SCAN_RESULT)),this,SLOT(scanResult(SpecAbstract::SCAN_RESULT)),Qt::DirectConnection);
-        ds.setData(sDirectoryName,&options);
+        DialogDIEScanProcess ds(this);
+        connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),this,SLOT(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
+        ds.setData(sDirectoryName,options,g_sDatabasePath);
         ds.exec();
     }
 }
 
-void DialogDIEScanDirectory::scanResult(SpecAbstract::SCAN_RESULT scanResult)
+void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
 {
+    // TODO
     QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
     sResult+="\r\n";
-    StaticScanItemModel model(&scanResult.listRecords);
-    SpecAbstract::SCAN_OPTIONS scanOptions={};
-    sResult+=model.toString(&scanOptions).toLatin1().data();
+
+    sResult+=DiE_Script::scanResultToPlainString(&scanResult);
 
     emit resultSignal(sResult);
 }
@@ -125,7 +128,7 @@ void DialogDIEScanDirectory::on_pushButtonSave_clicked()
         if(file.open(QIODevice::ReadWrite))
         {
             QString sText=ui->textBrowserResult->toPlainText();
-            file.write(sText.toLatin1().data());
+            file.write(sText.toUtf8().data());
 
             file.close();
         }
