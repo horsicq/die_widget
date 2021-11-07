@@ -37,3 +37,6 @@ SOURCES += \
     XCONFIG += dialogtextinfo
     include($$PWD/../FormatDialogs/dialogtextinfo.pri)
 }
+
+DISTFILES += \
+    $$PWD/die_widget.cmake
