@@ -91,7 +91,7 @@ void DIE_Highlighter::highlightBlock(const QString &text)
 
     setCurrentBlockState(0);
 
-    int nStartIndex=0;
+    qint32 nStartIndex=0;
 
     if(previousBlockState()!=1)
     {
