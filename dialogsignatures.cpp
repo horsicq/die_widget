@@ -99,9 +99,9 @@ qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT
     return nResult;
 }
 
-int DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType)
+qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType)
 {
-    int nResult=0;
+    qint32 nResult=0;
 
     QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures=pDieScript->getSignatures();
 
