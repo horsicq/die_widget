@@ -167,6 +167,11 @@ void DialogSignatures::runScript(bool bIsDebug)
             scanResult=pDieScript->scanFile(sFileName,&scanOptions);
         }
 
+        if(bIsDebug)
+        {
+            pDieScript->removeDebugger();
+        }
+
         ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToPlainString(&scanResult));
 
         if(scanResult.listErrors.count())
