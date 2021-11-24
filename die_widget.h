@@ -31,12 +31,13 @@
 #include "dialogtextinfo.h"
 #include "dialoglog.h"
 #include "dialogdiescandirectory.h"
+#include "xshortcutswidget.h"
 
 namespace Ui {
 class DIE_Widget;
 }
 
-class DIE_Widget : public QWidget
+class DIE_Widget : public XShortcutsWidget
 {
     Q_OBJECT
 
@@ -67,8 +68,7 @@ public:
 
     void setOptions(OPTIONS *pOptions);
     void setData(QString sFileName,bool bScan=false,XBinary::FT fileType=XBinary::FT_UNKNOWN);
-    void setDatabasePath(QString sDatabasePath);
-    void setInfoPath(QString sInfoPath);
+    void adjust();
 
 private slots:
     void on_pushButtonDieScan_clicked();
@@ -90,6 +90,9 @@ private slots:
     void on_tableWidgetResult_customContextMenuRequested(const QPoint &pos);
     void copyResult();
     void on_pushButtonDieScanDirectory_clicked();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 signals:
     void scanStarted();

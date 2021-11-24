@@ -22,7 +22,7 @@
 #include "ui_die_widget.h"
 
 DIE_Widget::DIE_Widget(QWidget *pParent) :
-    QWidget(pParent),
+    XShortcutsWidget(pParent),
     ui(new Ui::DIE_Widget)
 {
     ui->setupUi(this);
@@ -77,14 +77,10 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
     }
 }
 
-void DIE_Widget::setDatabasePath(QString sDatabasePath)
+void DIE_Widget::adjust()
 {
-    g_dieScript.loadDatabase(sDatabasePath);
-}
-
-void DIE_Widget::setInfoPath(QString sInfoPath)
-{
-    this->sInfoPath=sInfoPath;
+    g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());
+    this->sInfoPath=getGlobalOptions()->getInfoPath();
 }
 
 void DIE_Widget::on_pushButtonDieScan_clicked()
@@ -363,4 +359,9 @@ void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
     DialogDIEScanDirectory dds(this,QFileInfo(sFileName).absolutePath(),g_dieScript.getDatabasePath());
 
     dds.exec();
+}
+
+void DIE_Widget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }
