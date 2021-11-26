@@ -18,4 +18,6 @@ set(DIE_WIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/die_signatureedit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/die_widget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/die_widget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/dialogelapsed.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogelapsed.ui
 )

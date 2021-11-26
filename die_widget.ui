@@ -138,24 +138,27 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditElapsedTime">
+          <widget class="QToolButton" name="toolButtonElapsedTime">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>16777215</height>
             </size>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>

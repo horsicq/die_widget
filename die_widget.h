@@ -32,6 +32,7 @@
 #include "dialoglog.h"
 #include "dialogdiescandirectory.h"
 #include "xshortcutswidget.h"
+#include "dialogelapsed.h"
 
 namespace Ui {
 class DIE_Widget;
@@ -90,6 +91,7 @@ private slots:
     void on_tableWidgetResult_customContextMenuRequested(const QPoint &pos);
     void copyResult();
     void on_pushButtonDieScanDirectory_clicked();
+    void on_toolButtonElapsedTime_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);

@@ -112,7 +112,7 @@ void DIE_Widget::process()
         scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
         scanOptions.bShowType=true;
         scanOptions.fileType=fileType;
-        //    scanOptions.bDebug=true;
+        scanOptions.bDebug=true;
 
         QFuture<void> future=QtConcurrent::run(this,&DIE_Widget::scan);
 
@@ -169,7 +169,7 @@ void DIE_Widget::onScanFinished()
     ui->pushButtonDieLog->setText(sLogButtonText);
     ui->pushButtonDieLog->setEnabled(nNumberOfErrors);
 
-    ui->lineEditElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
+    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
     ui->tableWidgetResult->setColumnCount(0);
 
@@ -304,7 +304,7 @@ void DIE_Widget::enableControls(bool bState)
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
     ui->pushButtonDieExtraInformation->setEnabled(bState);
-    ui->lineEditElapsedTime->setEnabled(bState);
+    ui->toolButtonElapsedTime->setEnabled(bState);
 }
 
 QString DIE_Widget::getInfoFileName(QString sName)
@@ -364,4 +364,13 @@ void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 void DIE_Widget::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
+}
+
+void DIE_Widget::on_toolButtonElapsedTime_clicked()
+{
+    DialogElapsed dialogElapsed(this);
+
+    dialogElapsed.setData(&scanResult);
+
+    dialogElapsed.exec();
 }

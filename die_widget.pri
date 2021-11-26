@@ -6,6 +6,7 @@ DEPENDPATH += $$PWD
 FORMS += \
     $$PWD/dialogdiescandirectory.ui \
     $$PWD/dialogdiescanprocess.ui \
+    $$PWD/dialogelapsed.ui \
     $$PWD/dialoglog.ui \
     $$PWD/dialogsignatures.ui \
     $$PWD/die_widget.ui
@@ -13,6 +14,7 @@ FORMS += \
 HEADERS += \
     $$PWD/dialogdiescandirectory.h \
     $$PWD/dialogdiescanprocess.h \
+    $$PWD/dialogelapsed.h \
     $$PWD/dialoglog.h \
     $$PWD/dialogsignatures.h \
     $$PWD/die_highlighter.h \
@@ -22,6 +24,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/dialogdiescandirectory.cpp \
     $$PWD/dialogdiescanprocess.cpp \
+    $$PWD/dialogelapsed.cpp \
     $$PWD/dialoglog.cpp \
     $$PWD/dialogsignatures.cpp \
     $$PWD/die_highlighter.cpp \
