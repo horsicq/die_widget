@@ -1,4 +1,5 @@
-QT       += concurrent scripttools
+QT       += concurrent
+lessThan(QT_MAJOR_VERSION, 6): QT += scripttools
 
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
