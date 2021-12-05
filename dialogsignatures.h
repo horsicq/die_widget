@@ -62,6 +62,7 @@ private slots:
 
     bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XBinary::FT fileType,QString sSignature);
     void enableControls(bool bState);
+    void infoMessage(QString sInfoMessage);
 
 private:
     Ui::DialogSignatures *ui;

@@ -34,6 +34,8 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
     this->fileType=fileType;
     this->sSignature=sSignature;
 
+    connect(pDieScript,SIGNAL(infoMessage(QString)),this,SLOT(infoMessage(QString)));
+
     ui->plainTextEditSignature->setLineWrapMode(QPlainTextEdit::NoWrap);
 
     ui->treeWidgetSignatures->setSortingEnabled(false);
@@ -45,6 +47,8 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
 
     handleTreeItems(pRootItem,XBinary::FT_BINARY,   "Binary");
     handleTreeItems(pRootItem,XBinary::FT_MSDOS,    "MSDOS");
+    handleTreeItems(pRootItem,XBinary::FT_NE,       "NE");
+    handleTreeItems(pRootItem,XBinary::FT_LE,       "LE");
     handleTreeItems(pRootItem,XBinary::FT_MACHO,    "MACH");
     handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
     handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
@@ -172,7 +176,7 @@ void DialogSignatures::runScript(bool bIsDebug)
             pDieScript->removeDebugger();
         }
 
-        ui->plainTextEditResult->setPlainText(DiE_Script::scanResultToPlainString(&scanResult));
+        ui->plainTextEditResult->appendPlainText(DiE_Script::scanResultToPlainString(&scanResult));
 
         if(scanResult.listErrors.count())
         {
@@ -305,4 +309,9 @@ void DialogSignatures::enableControls(bool bState)
     ui->pushButtonDebug->setEnabled(bState);
     ui->pushButtonRun->setEnabled(bState);
     ui->pushButtonSave->setEnabled(bState);
+}
+
+void DialogSignatures::infoMessage(QString sInfoMessage)
+{
+    ui->plainTextEditResult->appendPlainText(sInfoMessage);
 }
