@@ -308,7 +308,11 @@ void DialogSignatures::enableControls(bool bState)
     ui->pushButtonClose->setEnabled(bState);
     ui->pushButtonDebug->setEnabled(bState);
     ui->pushButtonRun->setEnabled(bState);
-    ui->pushButtonSave->setEnabled(bState);
+
+    if(bCurrentEdited)
+    {
+        ui->pushButtonSave->setEnabled(bState);
+    }
 }
 
 void DialogSignatures::infoMessage(QString sInfoMessage)
