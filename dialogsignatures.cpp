@@ -82,6 +82,10 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
     {
         ui->treeWidgetSignatures->expandAll();
     }
+
+#ifndef QT_SCRIPTTOOLS_LIB
+    ui->pushButtonDebug->hide();
+#endif
 }
 
 DialogSignatures::~DialogSignatures()
