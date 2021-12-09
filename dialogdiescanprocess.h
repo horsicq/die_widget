@@ -56,7 +56,7 @@ signals:
     void scanResult(DiE_Script::SCAN_RESULT scanResult);
 
 private:
-    static const qint32 N_REFRESH_DELAY=1000; // msec TODO Check
+    static const qint32 N_REFRESH_DELAY=1000; // msec TODO Check mb set/get functions
     Ui::DialogDIEScanProcess *ui;
     DiE_Script *g_pDieScript;
     QThread *g_pThread;
