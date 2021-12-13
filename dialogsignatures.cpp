@@ -46,12 +46,14 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
     _handleTreeItems(pRootItem,XBinary::FT_UNKNOWN);
 
     handleTreeItems(pRootItem,XBinary::FT_BINARY,   "Binary");
+    handleTreeItems(pRootItem,XBinary::FT_COM,      "COM");
     handleTreeItems(pRootItem,XBinary::FT_MSDOS,    "MSDOS");
     handleTreeItems(pRootItem,XBinary::FT_NE,       "NE");
     handleTreeItems(pRootItem,XBinary::FT_LE,       "LE");
+    handleTreeItems(pRootItem,XBinary::FT_LX,       "LX");
+    handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
     handleTreeItems(pRootItem,XBinary::FT_MACHO,    "MACH");
     handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
-    handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
 
     ui->treeWidgetSignatures->setSortingEnabled(true);
     ui->treeWidgetSignatures->sortByColumn(0,Qt::AscendingOrder);
