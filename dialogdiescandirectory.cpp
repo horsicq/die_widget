@@ -76,6 +76,7 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
         // TODO
         DiE_Script::SCAN_OPTIONS options={0};
         options.bDeepScan=ui->checkBoxDeepScan->isChecked();
+        options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         options.bSubdirectories=ui->checkBoxScanSubdirectories->isChecked();
         // TODO Filter
         // |flags|x all|

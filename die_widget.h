@@ -52,6 +52,7 @@ public:
     struct OPTIONS
     {
         bool bDeepScan;
+        bool bAllTypesScan;
         QString sDatabasePath;
         QString sInfoPath; // TODO make zip
     };

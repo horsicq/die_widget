@@ -50,6 +50,7 @@ DIE_Widget::~DIE_Widget()
 void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
 {
     ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
+    ui->checkBoxAllTypes->setChecked(pOptions->bAllTypesScan);
 
     if(g_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
     {
@@ -116,6 +117,7 @@ void DIE_Widget::process()
         scanOptions.bShowVersion=true;
         scanOptions.bShowOptions=true;
         scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
+        scanOptions.bAllTypesScan=ui->checkBoxAllTypes->isChecked();
         scanOptions.bShowType=true;
         scanOptions.fileType=fileType;
         scanOptions.bDebug=true;
@@ -307,6 +309,7 @@ void DIE_Widget::enableControls(bool bState)
 
     ui->tableWidgetResult->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
+    ui->checkBoxAllTypes->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
     ui->pushButtonDieExtraInformation->setEnabled(bState);
