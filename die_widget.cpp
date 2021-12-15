@@ -98,11 +98,11 @@ void DIE_Widget::on_pushButtonDieScan_clicked()
 void DIE_Widget::clear()
 {
     scanType=ST_UNKNOWN;
-    scanOptions={};
+    g_scanOptions={};
     scanResult={};
     bProcess=false;
 
-    ui->tableWidgetResult->setRowCount(0);
+    ui->treeViewResult->setModel(0);
 }
 
 void DIE_Widget::process()
@@ -114,13 +114,13 @@ void DIE_Widget::process()
 
         ui->pushButtonDieScan->setText(tr("Stop"));
 
-        scanOptions.bShowVersion=true;
-        scanOptions.bShowOptions=true;
-        scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
-        scanOptions.bAllTypesScan=ui->checkBoxAllTypes->isChecked();
-        scanOptions.bShowType=true;
-        scanOptions.fileType=fileType;
-        scanOptions.bDebug=true;
+        g_scanOptions.bShowVersion=true;
+        g_scanOptions.bShowOptions=true;
+        g_scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
+        g_scanOptions.bAllTypesScan=ui->checkBoxAllTypes->isChecked();
+        g_scanOptions.bShowType=true;
+        g_scanOptions.fileType=fileType;
+        g_scanOptions.bDebug=true;
 
         QFuture<void> future=QtConcurrent::run(this,&DIE_Widget::scan);
 
@@ -145,7 +145,7 @@ void DIE_Widget::scan()
         {
             emit scanStarted();
 
-            scanResult=g_dieScript.scanFile(sFileName,&scanOptions);
+            scanResult=g_dieScript.scanFile(sFileName,&g_scanOptions);
 
             emit scanFinished();
         }
@@ -179,50 +179,61 @@ void DIE_Widget::onScanFinished()
 
     ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
-    ui->tableWidgetResult->setColumnCount(0);
+    QAbstractItemModel *pOldModel=ui->treeViewResult->model();
 
-    qint32 nNumberOfRecords=scanResult.listRecords.count();
+    QList<XBinary::SCANSTRUCT> _listRecords=DiE_Script::convert(&(scanResult.listRecords));
 
-    ui->tableWidgetResult->setRowCount(nNumberOfRecords);
-    ui->tableWidgetResult->setColumnCount(4);
+    ScanItemModel *pModel=new ScanItemModel(&_listRecords,this,3);
+    ui->treeViewResult->setModel(pModel);
+    ui->treeViewResult->expandAll();
 
-    // TODO if different filetypes +1 column
+    delete pOldModel;
 
-    for(qint32 i=0;i<nNumberOfRecords;i++)
-    {
-        QTableWidgetItem *pWidgetType=new QTableWidgetItem;
-        pWidgetType->setText(scanResult.listRecords.at(i).sType);
-        ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
+//    ui->tableWidgetResult->setColumnCount(0);
 
-        QTableWidgetItem *pWidgetString=new QTableWidgetItem;
-        pWidgetString->setTextAlignment(Qt::AlignCenter);
-        pWidgetString->setText(scanResult.listRecords.at(i).sResult);
-        ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
+//    qint32 nNumberOfRecords=scanResult.listRecords.count();
 
-        QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
-        pWidgetSignature->setText("S");
-        ui->tableWidgetResult->setItem(i,COLUMN_SIGNATURE,pWidgetSignature);
+//    ui->tableWidgetResult->setRowCount(nNumberOfRecords);
+//    ui->tableWidgetResult->setColumnCount(4);
 
-        if(XBinary::isFileExists(getInfoFileName(scanResult.listRecords.at(i).sName)))
-        {
-            QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
-            pWidgetInfo->setText("?");
-            ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
-        }
-    }
+//    // TODO if different filetypes +1 column
 
-    ui->tableWidgetResult->horizontalHeader()->setVisible(true);
-//        ui->tableWidgetResult->horizontalHeader()->setFixedHeight(0);
+//    for(qint32 i=0;i<nNumberOfRecords;i++)
+//    {
+//        QTableWidgetItem *pWidgetType=new QTableWidgetItem;
+//        pWidgetType->setText(scanResult.listRecords.at(i).sType);
+//        ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
 
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_TYPE,QHeaderView::ResizeToContents);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_STRING,QHeaderView::Stretch);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_SIGNATURE,QHeaderView::Interactive);
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_INFO,QHeaderView::Interactive);
+//        QTableWidgetItem *pWidgetString=new QTableWidgetItem;
+//        pWidgetString->setTextAlignment(Qt::AlignCenter);
+//        pWidgetString->setText(scanResult.listRecords.at(i).sResult);
+//        ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
 
-    ui->tableWidgetResult->setColumnWidth(COLUMN_SIGNATURE,20);
-    ui->tableWidgetResult->setColumnWidth(COLUMN_INFO,20);
+//        QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
+//        pWidgetSignature->setText("S");
+//        ui->tableWidgetResult->setItem(i,COLUMN_SIGNATURE,pWidgetSignature);
 
-    ui->tableWidgetResult->horizontalHeader()->setVisible(false);
+//        if(XBinary::isFileExists(getInfoFileName(scanResult.listRecords.at(i).sName)))
+//        {
+//            QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
+//            pWidgetInfo->setText("?");
+//            ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
+//        }
+//    }
+
+//    ui->tableWidgetResult->horizontalHeader()->setVisible(true);
+////        ui->tableWidgetResult->horizontalHeader()->setFixedHeight(0);
+
+//    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(COLUMN_TYPE,QHeaderView::ResizeToContents);
+    ui->treeViewResult->header()->setSectionResizeMode(COLUMN_STRING,QHeaderView::Stretch);
+    ui->treeViewResult->header()->setSectionResizeMode(COLUMN_SIGNATURE,QHeaderView::Fixed);
+    ui->treeViewResult->header()->setSectionResizeMode(COLUMN_INFO,QHeaderView::Fixed);
+
+    ui->treeViewResult->setColumnWidth(COLUMN_SIGNATURE,20);
+    ui->treeViewResult->setColumnWidth(COLUMN_INFO,20);
+
+    ui->treeViewResult->header()->setVisible(false);
+
     ui->progressBarProgress->setMaximum(100);
     ui->progressBarProgress->setValue(100);
     ui->pushButtonDieScan->setText(tr("Scan"));
@@ -243,7 +254,7 @@ void DIE_Widget::onProgressValueChanged(qint32 nValue)
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,scanOptions.fileType,"");
+    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,g_scanOptions.fileType,"");
 
     dialogSignatures.exec();
 }
@@ -252,7 +263,11 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    dialogInfo.setText(DiE_Script::scanResultToPlainString(&scanResult));
+    QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
+
+    ScanItemModel model(&listResult);
+
+    dialogInfo.setText(model.toFormattedString());
 
     dialogInfo.exec();
 }
@@ -291,11 +306,16 @@ void DIE_Widget::showInfo(QString sName)
 
         dialogInfo.exec();
     }
+    else
+    {
+        QString sLink=QString("http://www.google.com/search?q=%1").arg(sName);
+        QDesktopServices::openUrl(QUrl(sLink));
+    }
 }
 
 void DIE_Widget::showSignature(QString sName)
 {
-    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,scanOptions.fileType,sName);
+    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,g_scanOptions.fileType,sName);
 
     dialogSignatures.exec();
 }
@@ -304,10 +324,10 @@ void DIE_Widget::enableControls(bool bState)
 {
     if(!bState)
     {
-        ui->tableWidgetResult->clear();
+        ui->treeViewResult->setModel(0);
     }
 
-    ui->tableWidgetResult->setEnabled(bState);
+    ui->treeViewResult->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
     ui->checkBoxAllTypes->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
@@ -323,33 +343,9 @@ QString DIE_Widget::getInfoFileName(QString sName)
     return sResult;
 }
 
-void DIE_Widget::on_tableWidgetResult_customContextMenuRequested(const QPoint &pos)
-{
-    QModelIndexList listIndexes=ui->tableWidgetResult->selectionModel()->selectedIndexes();
-
-    if(listIndexes.size()>0)
-    {
-        QModelIndex index=listIndexes.at(0);
-
-        if(index.column()==1)
-        {
-            QString sString=ui->tableWidgetResult->model()->data(index).toString();
-
-            QMenu contextMenu(this);
-
-            QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"),sString),this);
-            connect(&actionCopy, SIGNAL(triggered()), this, SLOT(copyResult()));
-
-            contextMenu.addAction(&actionCopy);
-
-            contextMenu.exec(ui->tableWidgetResult->viewport()->mapToGlobal(pos));
-        }
-    }
-}
-
 void DIE_Widget::copyResult()
 {
-    QModelIndexList listIndexes=ui->tableWidgetResult->selectionModel()->selectedIndexes();
+    QModelIndexList listIndexes=ui->treeViewResult->selectionModel()->selectedIndexes();
 
     if(listIndexes.size()>0)
     {
@@ -357,7 +353,7 @@ void DIE_Widget::copyResult()
 
         if(index.column()==1)
         {
-            QString sString=ui->tableWidgetResult->model()->data(index).toString();
+            QString sString=ui->treeViewResult->model()->data(index).toString();
             QApplication::clipboard()->setText(sString);
         }
     }
@@ -382,4 +378,44 @@ void DIE_Widget::on_toolButtonElapsedTime_clicked()
     dialogElapsed.setData(&scanResult);
 
     dialogElapsed.exec();
+}
+
+void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index)
+{
+    if(index.column()==COLUMN_SIGNATURE)
+    {
+        QString sSignature=ui->treeViewResult->model()->data(index,Qt::UserRole+1).toString();
+
+        showSignature(sSignature);
+    }
+    else if(index.column()==COLUMN_INFO)
+    {
+        QString sName=ui->treeViewResult->model()->data(index,Qt::UserRole).toString();
+
+        showInfo(sName);
+    }
+}
+
+void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndexList listIndexes=ui->treeViewResult->selectionModel()->selectedIndexes();
+
+    if(listIndexes.size()>0)
+    {
+        QModelIndex index=listIndexes.at(0);
+
+        if(index.column()==0)
+        {
+            QString sString=ui->treeViewResult->model()->data(index).toString();
+
+            QMenu contextMenu(this);
+
+            QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"),sString),this);
+            connect(&actionCopy, SIGNAL(triggered()), this, SLOT(copyResult()));
+
+            contextMenu.addAction(&actionCopy);
+
+            contextMenu.exec(ui->treeViewResult->viewport()->mapToGlobal(pos));
+        }
+    }
 }

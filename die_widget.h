@@ -26,6 +26,7 @@
 #include <QtConcurrent>
 #include <QMenu>
 #include <QClipboard>
+#include <QDesktopServices>
 #include "die_script.h"
 #include "dialogsignatures.h"
 #include "dialogtextinfo.h"
@@ -59,8 +60,8 @@ public:
 
     enum COLUMN
     {
-        COLUMN_TYPE=0,
-        COLUMN_STRING,
+//        COLUMN_TYPE=0,
+        COLUMN_STRING=0,
         COLUMN_SIGNATURE,
         COLUMN_INFO
     };
@@ -89,10 +90,11 @@ private slots:
     void showSignature(QString sName);
     void enableControls(bool bState);
     QString getInfoFileName(QString sName);
-    void on_tableWidgetResult_customContextMenuRequested(const QPoint &pos);
     void copyResult();
     void on_pushButtonDieScanDirectory_clicked();
     void on_toolButtonElapsedTime_clicked();
+    void on_treeViewResult_clicked(const QModelIndex &index);
+    void on_treeViewResult_customContextMenuRequested(const QPoint &pos);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -105,7 +107,7 @@ private:
     Ui::DIE_Widget *ui;
     ST scanType;
     DiE_Script g_dieScript;
-    DiE_Script::SCAN_OPTIONS scanOptions;
+    DiE_Script::SCAN_OPTIONS g_scanOptions;
     DiE_Script::SCAN_RESULT scanResult;
     QFutureWatcher<void> watcher;
     QString sFileName;

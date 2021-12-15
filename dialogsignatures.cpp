@@ -182,7 +182,11 @@ void DialogSignatures::runScript(bool bIsDebug)
             pDieScript->removeDebugger();
         }
 
-        ui->plainTextEditResult->appendPlainText(DiE_Script::scanResultToPlainString(&scanResult));
+        QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
+
+        ScanItemModel model(&listResult);
+
+        ui->plainTextEditResult->appendPlainText(model.toFormattedString());
 
         if(scanResult.listErrors.count())
         {

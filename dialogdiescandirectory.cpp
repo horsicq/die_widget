@@ -94,7 +94,11 @@ void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
     QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
     sResult+="\r\n";
 
-    sResult+=DiE_Script::scanResultToPlainString(&scanResult);
+    QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
+
+    ScanItemModel model(&listResult);
+
+    sResult+=model.toFormattedString();
 
     emit resultSignal(sResult);
 }
