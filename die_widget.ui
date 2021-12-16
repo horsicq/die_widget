@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
-    <height>143</height>
+    <width>547</width>
+    <height>139</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,16 +79,16 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxAllTypes">
+          <widget class="QCheckBox" name="checkBoxRecursiveScan">
            <property name="text">
-            <string>All types</string>
+            <string>Recursive scan</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonDieScanDirectory">
+          <widget class="QCheckBox" name="checkBoxAllTypes">
            <property name="text">
-            <string>Directory</string>
+            <string>All types</string>
            </property>
           </widget>
          </item>
@@ -96,6 +96,13 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButtonDieScanDirectory">
+           <property name="text">
+            <string>Directory</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QProgressBar" name="progressBarProgress">
            <property name="value">

@@ -52,6 +52,7 @@ public:
 
     struct OPTIONS
     {
+        bool bRecursiveScan;
         bool bDeepScan;
         bool bAllTypesScan;
         QString sDatabasePath;
@@ -85,9 +86,8 @@ private slots:
     void on_pushButtonDieSignatures_clicked();
     void on_pushButtonDieExtraInformation_clicked();
     void on_pushButtonDieLog_clicked();
-    void on_tableWidgetResult_cellClicked(int nRow,int nColumn);
     void showInfo(QString sName);
-    void showSignature(QString sName);
+    void showSignature(XBinary::FT fileType,QString sName);
     void enableControls(bool bState);
     QString getInfoFileName(QString sName);
     void copyResult();

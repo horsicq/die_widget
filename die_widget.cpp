@@ -49,6 +49,7 @@ DIE_Widget::~DIE_Widget()
 
 void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
 {
+    ui->checkBoxRecursiveScan->setChecked(pOptions->bRecursiveScan);
     ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
     ui->checkBoxAllTypes->setChecked(pOptions->bAllTypesScan);
 
@@ -62,11 +63,11 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 {
     clear();
 
-    if(fileType==XBinary::FT_BINARY)
-    {
-        // TODO Check !!!
-        fileType=XBinary::FT_COM;
-    }
+//    if(fileType==XBinary::FT_BINARY)
+//    {
+//        // TODO Check !!!
+//        fileType=XBinary::FT_COM;
+//    }
 
     // TODO
     if((fileType==XBinary::FT_ZIP)||(fileType==XBinary::FT_DEX)) // TODO
@@ -116,6 +117,7 @@ void DIE_Widget::process()
 
         g_scanOptions.bShowVersion=true;
         g_scanOptions.bShowOptions=true;
+        g_scanOptions.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
         g_scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
         g_scanOptions.bAllTypesScan=ui->checkBoxAllTypes->isChecked();
         g_scanOptions.bShowType=true;
@@ -279,21 +281,6 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
     dialogLog.exec();
 }
 
-void DIE_Widget::on_tableWidgetResult_cellClicked(int nRow, int nColumn)
-{
-    if(nRow<scanResult.listRecords.count())
-    {
-        if(nColumn==COLUMN_SIGNATURE)
-        {
-            showSignature(scanResult.listRecords.at(nRow).sSignature);
-        }
-        else if(nColumn==COLUMN_INFO)
-        {
-            showInfo(scanResult.listRecords.at(nRow).sName);
-        }
-    }
-}
-
 void DIE_Widget::showInfo(QString sName)
 {
     QString sFileName=getInfoFileName(sName);
@@ -313,9 +300,9 @@ void DIE_Widget::showInfo(QString sName)
     }
 }
 
-void DIE_Widget::showSignature(QString sName)
+void DIE_Widget::showSignature(XBinary::FT fileType, QString sName)
 {
-    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,g_scanOptions.fileType,sName);
+    DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,fileType,sName);
 
     dialogSignatures.exec();
 }
@@ -384,13 +371,14 @@ void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index)
 {
     if(index.column()==COLUMN_SIGNATURE)
     {
-        QString sSignature=ui->treeViewResult->model()->data(index,Qt::UserRole+1).toString();
+        QString sSignature=ui->treeViewResult->model()->data(index,Qt::UserRole+ScanItemModel::UD_INFO).toString();
+        XBinary::FT fileType=(XBinary::FT)(ui->treeViewResult->model()->data(index,Qt::UserRole+ScanItemModel::UD_FILETYPE).toInt());
 
-        showSignature(sSignature);
+        showSignature(fileType,sSignature);
     }
     else if(index.column()==COLUMN_INFO)
     {
-        QString sName=ui->treeViewResult->model()->data(index,Qt::UserRole).toString();
+        QString sName=ui->treeViewResult->model()->data(index,Qt::UserRole+ScanItemModel::UD_NAME).toString();
 
         showInfo(sName);
     }
