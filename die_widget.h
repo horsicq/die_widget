@@ -50,14 +50,14 @@ public:
         ST_FILE
     };
 
-    struct OPTIONS
-    {
-        bool bRecursiveScan;
-        bool bDeepScan;
-        bool bAllTypesScan;
-        QString sDatabasePath;
-        QString sInfoPath; // TODO make zip
-    };
+//    struct OPTIONS
+//    {
+//        bool bRecursiveScan;
+//        bool bDeepScan;
+//        bool bAllTypesScan;
+//        QString sDatabasePath;
+//        QString sInfoPath; // TODO make zip
+//    };
 
     enum COLUMN
     {
@@ -70,7 +70,7 @@ public:
     explicit DIE_Widget(QWidget *pParent=nullptr);
     ~DIE_Widget();
 
-    void setOptions(OPTIONS *pOptions);
+//    void setOptions(OPTIONS *pOptions);
     void setData(QString sFileName,bool bScan=false,XBinary::FT fileType=XBinary::FT_UNKNOWN);
     void adjust();
 

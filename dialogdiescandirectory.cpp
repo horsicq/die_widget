@@ -36,6 +36,7 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirNam
     connect(this,SIGNAL(resultSignal(QString)),this,SLOT(appendResult(QString)));
 
     ui->checkBoxScanSubdirectories->setChecked(true);
+    ui->checkBoxRecursiveScan->setChecked(true);
 
     if(sDirName!="")
     {

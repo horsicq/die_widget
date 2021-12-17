@@ -33,6 +33,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) :
 
     ui->pushButtonDieLog->setEnabled(false);
 
+    ui->checkBoxRecursiveScan->setChecked(true);
+
     clear();
 }
 
@@ -47,17 +49,17 @@ DIE_Widget::~DIE_Widget()
     delete ui;
 }
 
-void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
-{
-    ui->checkBoxRecursiveScan->setChecked(pOptions->bRecursiveScan);
-    ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
-    ui->checkBoxAllTypes->setChecked(pOptions->bAllTypesScan);
+//void DIE_Widget::setOptions(DIE_Widget::OPTIONS *pOptions)
+//{
+//    ui->checkBoxRecursiveScan->setChecked(pOptions->bRecursiveScan);
+//    ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
+//    ui->checkBoxAllTypes->setChecked(pOptions->bAllTypesScan);
 
-    if(g_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
-    {
-        g_dieScript.loadDatabase(pOptions->sDatabasePath);
-    }
-}
+//    if(g_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
+//    {
+//        g_dieScript.loadDatabase(pOptions->sDatabasePath);
+//    }
+//}
 
 void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 {
@@ -315,12 +317,14 @@ void DIE_Widget::enableControls(bool bState)
     }
 
     ui->treeViewResult->setEnabled(bState);
+    ui->checkBoxRecursiveScan->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
     ui->checkBoxAllTypes->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
     ui->pushButtonDieExtraInformation->setEnabled(bState);
     ui->toolButtonElapsedTime->setEnabled(bState);
+    ui->pushButtonDieScanDirectory->setEnabled(bState);
 }
 
 QString DIE_Widget::getInfoFileName(QString sName)
