@@ -10,7 +10,8 @@ FORMS += \
     $$PWD/dialogelapsed.ui \
     $$PWD/dialoglog.ui \
     $$PWD/dialogsignatures.ui \
-    $$PWD/die_widget.ui
+    $$PWD/die_widget.ui \
+    $$PWD/dieoptionswidget.ui
 
 HEADERS += \
     $$PWD/dialogdiescandirectory.h \
@@ -20,7 +21,8 @@ HEADERS += \
     $$PWD/dialogsignatures.h \
     $$PWD/die_highlighter.h \
     $$PWD/die_signatureedit.h \
-    $$PWD/die_widget.h
+    $$PWD/die_widget.h \
+    $$PWD/dieoptionswidget.h
 
 SOURCES += \
     $$PWD/dialogdiescandirectory.cpp \
@@ -30,7 +32,8 @@ SOURCES += \
     $$PWD/dialogsignatures.cpp \
     $$PWD/die_highlighter.cpp \
     $$PWD/die_signatureedit.cpp \
-    $$PWD/die_widget.cpp
+    $$PWD/die_widget.cpp \
+    $$PWD/dieoptionswidget.cpp
 
 !contains(XCONFIG, die_script) {
     XCONFIG += die_script

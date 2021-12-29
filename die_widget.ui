@@ -86,7 +86,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxAllTypes">
+          <widget class="QCheckBox" name="checkBoxAllTypesScan">
            <property name="text">
             <string>All types</string>
            </property>
