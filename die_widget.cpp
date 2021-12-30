@@ -87,7 +87,7 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
     }
 }
 
-void DIE_Widget::adjust()
+void DIE_Widget::adjustView()
 {
     g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());
     this->sInfoPath=getGlobalOptions()->getInfoPath();
