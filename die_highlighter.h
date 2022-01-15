@@ -23,6 +23,9 @@
 
 #include <QSyntaxHighlighter>
 
+//#include <QRegularExpression>
+//#include <QRegularExpressionMatch>
+
 class DIE_Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
