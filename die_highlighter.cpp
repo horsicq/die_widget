@@ -26,94 +26,83 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
-    QStringList keywordPatterns;
-    keywordPatterns << "\\bvar\\b"
-                    << "\\bfunction\\b"
-                    << "\\bbShowType\\b"
-                    << "\\bbShowVersion\\b"
-                    << "\\bbShowOptions\\b"
-                    << "\\bsVersion\\b"
-                    << "\\bsOptions\\b"
-                    << "\\sName\\b"
-                    << "\\bbDetected\\b"
-                    << "\\breturn\\b";
-
-    foreach(const QString &pattern, keywordPatterns)
+    const QString keywordPatterns[]=
     {
-        rule.pattern=QRegExp(pattern);
-        rule.format=keywordFormat;
-        listHighlightingRules.append(rule);
+        QStringLiteral("\\bvar\\b"),
+        QStringLiteral("\\bfunction\\b"),
+        QStringLiteral("\\bbShowType\\b"),
+        QStringLiteral("\\bbShowVersion\\b"),
+        QStringLiteral("\\bbShowOptions\\b"),
+        QStringLiteral("\\bsVersion\\b"),
+        QStringLiteral("\\bsOptions\\b"),
+        QStringLiteral("\\bsName\\b"),
+        QStringLiteral("\\bbDetected\\b"),
+        QStringLiteral("\\breturn\\b")
+    };
+
+    for(const QString &pattern : keywordPatterns)
+    {
+        rule.pattern = QRegularExpression(pattern);
+        rule.format = keywordFormat;
+        highlightingRules.append(rule);
     }
 
     classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern=QRegExp("\\bQ[A-Za-z]+\\b");
-    rule.format=classFormat;
-    listHighlightingRules.append(rule);
-
-    singleLineCommentFormat.setForeground(Qt::darkGreen);
-    rule.pattern=QRegExp("//[^\n]*");
-    rule.format=singleLineCommentFormat;
-    listHighlightingRules.append(rule);
-
-    multiLineCommentFormat.setForeground(Qt::darkGreen);
+    rule.pattern = QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
+    rule.format = classFormat;
+    highlightingRules.append(rule);
 
     quotationFormat.setForeground(Qt::darkGreen);
-    //          rule.pattern=QRegExp("\".*\"");
-    rule.pattern=QRegExp("\"[^\"]+\"");
-    rule.format=quotationFormat;
-    listHighlightingRules.append(rule);
+    rule.pattern = QRegularExpression(QStringLiteral("\".*\""));
+    rule.format = quotationFormat;
+    highlightingRules.append(rule);
 
-    //          functionFormat.setFontItalic(true);
+    functionFormat.setFontItalic(true);
     functionFormat.setForeground(Qt::blue);
-    rule.pattern=QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
-    rule.format=functionFormat;
-    listHighlightingRules.append(rule);
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
+    rule.format = functionFormat;
+    highlightingRules.append(rule);
 
-    commentStartExpression=QRegExp("/\\*");
-    commentEndExpression=QRegExp("\\*/");
+    singleLineCommentFormat.setForeground(Qt::red);
+    rule.pattern = QRegularExpression(QStringLiteral("//[^\n]*"));
+    rule.format = singleLineCommentFormat;
+    highlightingRules.append(rule);
+
+    multiLineCommentFormat.setForeground(Qt::red);
+
+    commentStartExpression = QRegularExpression(QStringLiteral("/\\*"));
+    commentEndExpression = QRegularExpression(QStringLiteral("\\*/"));
 }
 
 void DIE_Highlighter::highlightBlock(const QString &text)
 {
-    foreach(const HighlightingRule &rule, listHighlightingRules)
-    {
-        QRegExp expression(rule.pattern);
-        qint32 nIndex=expression.indexIn(text);
-
-        while(nIndex>=0)
-        {
-            qint32 length=expression.matchedLength();
-            setFormat(nIndex,length,rule.format);
-            nIndex=expression.indexIn(text,nIndex+length);
+    for (const HighlightingRule &rule : qAsConst(highlightingRules)) {
+        QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
+        while (matchIterator.hasNext()) {
+            QRegularExpressionMatch match = matchIterator.next();
+            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
         }
     }
 
     setCurrentBlockState(0);
 
-    qint32 nStartIndex=0;
+    int startIndex = 0;
+    if (previousBlockState() != 1)
+        startIndex = text.indexOf(commentStartExpression);
 
-    if(previousBlockState()!=1)
-    {
-        nStartIndex=commentStartExpression.indexIn(text);
-    }
-
-    while(nStartIndex>=0)
-    {
-        qint32 nEndIndex=commentEndExpression.indexIn(text,nStartIndex);
-        qint32 nCommentLength=0;
-
-        if(nEndIndex==-1)
-        {
+    while (startIndex >= 0) {
+        QRegularExpressionMatch match = commentEndExpression.match(text, startIndex);
+        int endIndex = match.capturedStart();
+        int commentLength = 0;
+        if (endIndex == -1) {
             setCurrentBlockState(1);
-            nCommentLength=text.length()-nStartIndex;
+            commentLength = text.length() - startIndex;
+        } else {
+            commentLength = endIndex - startIndex
+                            + match.capturedLength();
         }
-        else
-        {
-            nCommentLength=nEndIndex-nStartIndex+commentEndExpression.matchedLength();
-        }
-
-        setFormat(nStartIndex,nCommentLength,multiLineCommentFormat);
-        nStartIndex=commentStartExpression.indexIn(text,nStartIndex+nCommentLength);
+        setFormat(startIndex, commentLength, multiLineCommentFormat);
+        startIndex = text.indexOf(commentStartExpression, startIndex + commentLength);
     }
 }

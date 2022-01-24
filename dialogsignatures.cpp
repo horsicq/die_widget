@@ -163,12 +163,14 @@ void DialogSignatures::runScript(bool bIsDebug)
 
         if(bIsDebug)
         {
+        #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
             QScriptEngineDebugger debugger(this);
             QMainWindow *debugWindow=debugger.standardWindow();
             debugWindow->setWindowModality(Qt::WindowModal);
             debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
             pDieScript->setDebugger(&debugger);
+        #endif
 
             scanResult=pDieScript->scanFile(sFileName,&scanOptions);
         }
@@ -179,7 +181,9 @@ void DialogSignatures::runScript(bool bIsDebug)
 
         if(bIsDebug)
         {
+        #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
             pDieScript->removeDebugger();
+        #endif
         }
 
         QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));

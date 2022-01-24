@@ -133,9 +133,13 @@ void DIE_Widget::process()
         g_scanOptions.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bShowType=true;
         g_scanOptions.fileType=fileType;
-        g_scanOptions.bDebug=true;
+        g_scanOptions.bDebug=true;  
 
+    #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+        QFuture<void> future=QtConcurrent::run(&DIE_Widget::scan,this);
+    #else
         QFuture<void> future=QtConcurrent::run(this,&DIE_Widget::scan);
+    #endif
 
         watcher.setFuture(future);
     }

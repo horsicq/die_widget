@@ -67,6 +67,18 @@ void DIEOptionsWidget::save()
     }
 }
 
+void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
+    pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN,true);
+    pOptions->addID(XOptions::ID_SCAN_RECURSIVE,true);
+    pOptions->addID(XOptions::ID_SCAN_DEEP,true);
+    pOptions->addID(XOptions::ID_SCAN_HEURISTIC,false);
+    pOptions->addID(XOptions::ID_SCAN_ALLTYPES,false);
+    pOptions->addID(XOptions::ID_SCAN_DATABASEPATH,"$data/db");
+    pOptions->addID(XOptions::ID_SCAN_INFOPATH,"$data/info");
+    pOptions->addID(XOptions::ID_SCAN_ENGINE,"auto");
+}
+
 void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 {
     QString sText=ui->lineEditDIEDatabase->text();

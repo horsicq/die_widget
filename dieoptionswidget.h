@@ -40,6 +40,8 @@ public:
     void setOptions(XOptions *pOptions);
     void save();
 
+    static void setDefaultValues(XOptions *pOptions);
+
 private slots:
     void on_toolButtonDIEDatabase_clicked();
     void on_toolButtonDIEInfo_clicked();
