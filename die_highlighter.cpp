@@ -77,7 +77,7 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 
 void DIE_Highlighter::highlightBlock(const QString &text)
 {
-    for (const HighlightingRule &rule : qAsConst(highlightingRules)) {
+    for (const HighlightingRule &rule : highlightingRules) {
         QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
         while (matchIterator.hasNext()) {
             QRegularExpressionMatch match = matchIterator.next();
