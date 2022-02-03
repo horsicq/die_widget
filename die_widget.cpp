@@ -416,7 +416,7 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
             QMenu contextMenu(this);
 
             QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"),sString),this);
-            connect(&actionCopy, SIGNAL(triggered()), this, SLOT(copyResult()));
+            connect(&actionCopy,SIGNAL(triggered()),this,SLOT(copyResult()));
 
             contextMenu.addAction(&actionCopy);
 
