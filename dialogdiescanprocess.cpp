@@ -34,11 +34,11 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
 
     connect(g_pThread,SIGNAL(started()),g_pDieScript,SLOT(processDirectory()));
     connect(g_pDieScript,SIGNAL(directoryScanCompleted(qint64)),this,SLOT(onCompleted(qint64)));
-    connect(g_pDieScript, SIGNAL(directoryScanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
-    connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)),this,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
+    connect(g_pDieScript,SIGNAL(directoryScanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
+    connect(g_pDieScript,SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)),this,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
 
     g_pTimer=new QTimer(this);
-    connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+    connect(g_pTimer,SIGNAL(timeout()),this,SLOT(timerSlot()));
 
     g_bIsRun=false;
 }
