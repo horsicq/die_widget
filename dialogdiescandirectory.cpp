@@ -84,7 +84,7 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
         // |flags|x all|
 
         DialogDIEScanProcess ds(this);
-        connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),this,SLOT(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
+        connect(&ds,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),this,SLOT(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
         ds.setData(sDirectoryName,options,g_sDatabasePath);
         ds.exec();
     }
