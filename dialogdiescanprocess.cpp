@@ -43,7 +43,7 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
     g_bIsRun=false;
 }
 
-void DialogDIEScanProcess::setData(QString sDirectoryName, DiE_Script::SCAN_OPTIONS options, QString sDatabasePath)
+void DialogDIEScanProcess::setData(QString sDirectoryName,DiE_Script::SCAN_OPTIONS options,QString sDatabasePath)
 {
     g_bIsRun=true;
     g_pDieScript->loadDatabase(sDatabasePath);
