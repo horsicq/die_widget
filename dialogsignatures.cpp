@@ -95,7 +95,7 @@ DialogSignatures::~DialogSignatures()
     delete ui;
 }
 
-qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText)
+qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText)
 {
     qint32 nResult=0;
 
