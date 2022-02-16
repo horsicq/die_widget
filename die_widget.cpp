@@ -93,7 +93,7 @@ void DIE_Widget::adjustView()
     this->sInfoPath=getGlobalOptions()->getInfoPath();
 }
 
-void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+void DIE_Widget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
     ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
     ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
