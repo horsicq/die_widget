@@ -204,7 +204,7 @@ void DialogSignatures::runScript(bool bIsDebug)
     enableControls(true);
 }
 
-void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent, QTreeWidgetItem *pPrevious)
+void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
 {
     Q_UNUSED(pPrevious)
 
