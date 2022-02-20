@@ -93,8 +93,9 @@ void DIE_Highlighter::highlightBlock(const QString &text)
     if (previousBlockState() != 1)
         startIndex = text.indexOf(commentStartExpression);
 
-    while (startIndex >= 0) {
-        QRegularExpressionMatch match = commentEndExpression.match(text, startIndex);
+    while(startIndex>=0)
+    {
+        QRegularExpressionMatch match=commentEndExpression.match(text,startIndex);
         int endIndex = match.capturedStart();
         int commentLength = 0;
         if (endIndex == -1) {
