@@ -315,7 +315,7 @@ void DIE_Widget::showInfo(QString sName)
     }
 }
 
-void DIE_Widget::showSignature(XBinary::FT fileType, QString sName)
+void DIE_Widget::showSignature(XBinary::FT fileType,QString sName)
 {
     DialogSignatures dialogSignatures(this,&g_dieScript,sFileName,fileType,sName);
 
