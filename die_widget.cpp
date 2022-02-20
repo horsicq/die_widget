@@ -61,7 +61,7 @@ DIE_Widget::~DIE_Widget()
 //    }
 //}
 
-void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
+void DIE_Widget::setData(QString sFileName,bool bScan,XBinary::FT fileType)
 {
     clear();
 
