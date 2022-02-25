@@ -106,6 +106,6 @@ void DIE_Highlighter::highlightBlock(const QString &text)
                             + match.capturedLength();
         }
         setFormat(startIndex,commentLength,multiLineCommentFormat);
-        startIndex = text.indexOf(commentStartExpression, startIndex + commentLength);
+        startIndex = text.indexOf(commentStartExpression,startIndex+commentLength);
     }
 }
