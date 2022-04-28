@@ -37,18 +37,7 @@ void DIEOptionsWidget::setOptions(XOptions *pOptions)
 {
     g_pOptions=pOptions;
 
-    g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxDeepScan,XOptions::ID_SCAN_DEEP);
-    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabase,XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEInfo,XOptions::ID_SCAN_INFOPATH);
-
-    if(g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE))
-    {
-        g_pOptions->setComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
-    }
+    reload();
 }
 
 void DIEOptionsWidget::save()
@@ -64,6 +53,22 @@ void DIEOptionsWidget::save()
     if(g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE))
     {
         g_pOptions->getComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
+    }
+}
+
+void DIEOptionsWidget::reload()
+{
+    g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCAN_SCANAFTEROPEN);
+    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_RECURSIVE);
+    g_pOptions->setCheckBox(ui->checkBoxDeepScan,XOptions::ID_SCAN_DEEP);
+    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabase,XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEInfo,XOptions::ID_SCAN_INFOPATH);
+
+    if(g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE))
+    {
+        g_pOptions->setComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
     }
 }
 
