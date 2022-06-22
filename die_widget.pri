@@ -45,6 +45,11 @@ SOURCES += \
     include($$PWD/../FormatDialogs/dialogtextinfo.pri)
 }
 
+!contains(XCONFIG, xdialogprocess) {
+    XCONFIG += xdialogprocess
+    include($$PWD/../FormatDialogs/xdialogprocess.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \

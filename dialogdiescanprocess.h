@@ -34,7 +34,7 @@ namespace Ui
 class DialogDIEScanProcess;
 }
 
-class DialogDIEScanProcess : public QDialog
+class DialogDIEScanProcess : public QDialog // TODO XDialogProcess
 {
     Q_OBJECT
 
