@@ -28,13 +28,14 @@
 #include <QThread>
 #include <QTimer>
 #include "die_script.h"
+#include "xdialogprocess.h"
 
 namespace Ui
 {
 class DialogDIEScanProcess;
 }
 
-class DialogDIEScanProcess : public QDialog // TODO XDialogProcess
+class DialogDIEScanProcess : public XDialogProcess
 {
     Q_OBJECT
 
