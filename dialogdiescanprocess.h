@@ -45,24 +45,14 @@ public:
 
     void setData(QString sDirectoryName,DiE_Script::SCAN_OPTIONS options,QString sDatabasePath);
 
-private slots:
-    void on_pushButtonCancel_clicked();
-    void onCompleted(qint64 nElapsed);
-    void onSetProgressMaximum(int nValue);
-    void onSetProgressValueChanged(int nValue);
-    void timerSlot();
-
 signals:
     void scanFileStarted(QString sFileName);
     void scanResult(DiE_Script::SCAN_RESULT scanResult);
 
 private:
     static const qint32 N_REFRESH_DELAY=1000; // msec TODO Check mb set/get functions
-    Ui::DialogDIEScanProcess *ui;
     DiE_Script *g_pDieScript;
     QThread *g_pThread;
-    bool g_bIsRun;
-    QTimer *g_pTimer;
 };
 
 #endif // DIALOGDIESCANPROCESS_H

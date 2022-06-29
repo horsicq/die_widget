@@ -27,6 +27,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) :
 {
     ui->setupUi(this);
 
+    g_pdStruct={};
+
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
     connect(&g_dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
     connect(&g_dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
@@ -162,7 +164,9 @@ void DIE_Widget::scan()
         {
             emit scanStarted();
 
-            scanResult=g_dieScript.scanFile(sFileName,&g_scanOptions);
+            g_pdStruct={};
+
+            scanResult=g_dieScript.scanFile(sFileName,&g_scanOptions,&g_pdStruct);
 
             emit scanFinished();
         }
@@ -171,7 +175,7 @@ void DIE_Widget::scan()
 
 void DIE_Widget::stop()
 {
-    g_dieScript.stop();
+    g_pdStruct.bIsStop=true;
 }
 
 void DIE_Widget::onScanFinished()

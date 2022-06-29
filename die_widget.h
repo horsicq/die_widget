@@ -115,6 +115,7 @@ private:
     XBinary::FT fileType;
     bool bProcess;
     QString sInfoPath;
+    XBinary::PDSTRUCT g_pdStruct;
 };
 
 #endif // DIE_WIDGET_H

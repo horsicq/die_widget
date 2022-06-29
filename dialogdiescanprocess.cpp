@@ -19,14 +19,10 @@
  * SOFTWARE.
  */
 #include "dialogdiescanprocess.h"
-#include "ui_dialogdiescanprocess.h"
 
 DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
-    XDialogProcess(pParent),
-    ui(new Ui::DialogDIEScanProcess)
+    XDialogProcess(pParent)
 {
-    ui->setupUi(this);
-
     g_pDieScript=new DiE_Script;
     g_pThread=new QThread;
 
@@ -36,85 +32,22 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
     connect(g_pDieScript,SIGNAL(directoryScanCompleted(qint64)),this,SLOT(onCompleted(qint64)));
     connect(g_pDieScript,SIGNAL(directoryScanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(g_pDieScript,SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)),this,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
-
-    g_pTimer=new QTimer(this);
-    connect(g_pTimer,SIGNAL(timeout()),this,SLOT(timerSlot()));
-
-    g_bIsRun=false;
 }
 
 void DialogDIEScanProcess::setData(QString sDirectoryName,DiE_Script::SCAN_OPTIONS options,QString sDatabasePath)
 {
-    g_bIsRun=true;
     g_pDieScript->loadDatabase(sDatabasePath);
-    g_pDieScript->setProcessDirectory(sDirectoryName,options);
+    g_pDieScript->setProcessDirectory(sDirectoryName,options,getPdStruct());
     g_pThread->start();
-    g_pTimer->start(N_REFRESH_DELAY);
-    ui->progressBarTotal->setMaximum(100);
 }
 
 DialogDIEScanProcess::~DialogDIEScanProcess()
 {
-    if(g_bIsRun)
-    {
-        g_pDieScript->stop();
-    }
-
-    g_pTimer->stop();
-
     g_pThread->quit();
     g_pThread->wait();
 
-    delete ui;
-
-    g_pThread->deleteLater(); // TODO !!!
-    g_pDieScript->deleteLater(); // TODO !!!
-}
-
-void DialogDIEScanProcess::on_pushButtonCancel_clicked()
-{
-    if(g_bIsRun)
-    {
-        g_pDieScript->stop();
-        g_pTimer->stop();
-        g_bIsRun=false;
-    }
-}
-
-void DialogDIEScanProcess::onCompleted(qint64 nElapsed)
-{
-    Q_UNUSED(nElapsed)
-
-    g_bIsRun=false;
-    this->close();
-}
-
-void DialogDIEScanProcess::onSetProgressMaximum(int nValue)
-{
-    ui->progressBarTotal->setMaximum(nValue);
-}
-
-void DialogDIEScanProcess::onSetProgressValueChanged(int nValue)
-{
-    ui->progressBarTotal->setValue(nValue);
-}
-
-void DialogDIEScanProcess::timerSlot()
-{
-    DiE_Script::DIRECTORYSTATS stats=g_pDieScript->getCurrentDirectoryStats();
-
-    ui->labelTotal->setText(QString::number(stats.nTotal));
-    ui->labelCurrent->setText(QString::number(stats.nCurrent));
-    ui->labelCurrentStatus->setText(stats.sStatus);
-
-    if(stats.nTotal)
-    {
-        ui->progressBarTotal->setValue((int)((stats.nCurrent*100)/stats.nTotal));
-    }
-
-    QDateTime dt;
-    dt.setMSecsSinceEpoch(stats.nElapsed);
-    QString sDateTime=dt.time().addSecs(-60*60).toString("hh:mm:ss");
-
-    ui->labelTime->setText(sDateTime);
+//    g_pThread->deleteLater(); // TODO !!!
+//    g_pDieScript->deleteLater(); // TODO !!!
+    delete g_pThread;
+    delete g_pDieScript;
 }
