@@ -69,6 +69,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="checkBoxHeuristicScan">
+            <property name="text">
+             <string>Heuristic scan</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="checkBoxRecursiveScan">
             <property name="text">
              <string>Recursive scan</string>

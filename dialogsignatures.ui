@@ -62,6 +62,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxReadOnly">
+           <property name="text">
+            <string>Readonly</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -92,13 +99,6 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QCheckBox" name="checkBoxReadOnly">
-           <property name="text">
-            <string>Readonly</string>
-           </property>
-          </widget>
-         </item>
          <item>
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
@@ -134,9 +134,16 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxDeepscan">
+          <widget class="QCheckBox" name="checkBoxDeepScan">
            <property name="text">
             <string>Deep scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxHeuristicScan">
+           <property name="text">
+            <string>Heuristic scan</string>
            </property>
           </widget>
          </item>

@@ -64,7 +64,8 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
     ui->checkBoxShowType->setChecked(true);
     ui->checkBoxShowOptions->setChecked(true);
     ui->checkBoxShowVersion->setChecked(true);
-    ui->checkBoxDeepscan->setChecked(true);
+    ui->checkBoxDeepScan->setChecked(true);
+    ui->checkBoxHeuristicScan->setChecked(true);
 
     ui->checkBoxReadOnly->setChecked(true);
 
@@ -154,7 +155,8 @@ void DialogSignatures::runScript(bool bIsDebug)
         scanOptions.bShowType=ui->checkBoxShowType->isChecked();
         scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
         scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
-        scanOptions.bDeepScan=ui->checkBoxDeepscan->isChecked();
+        scanOptions.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
+        scanOptions.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
 
         scanOptions.sSignatureName=pCurrentItem->data(0,Qt::UserRole+UD_NAME).toString();
         scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();

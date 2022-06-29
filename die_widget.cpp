@@ -99,6 +99,7 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
 {
     ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
     ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
+    ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
     ui->checkBoxRecursiveScan->setChecked(pXOptions->isRecursiveScan());
 
     XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
@@ -131,7 +132,8 @@ void DIE_Widget::process()
         g_scanOptions.bShowVersion=true;
         g_scanOptions.bShowOptions=true;
         g_scanOptions.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
-        g_scanOptions.bDeepScan=ui->checkBoxDeepScan->isChecked();
+        g_scanOptions.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
+        g_scanOptions.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
         g_scanOptions.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bShowType=true;
         g_scanOptions.fileType=fileType;
@@ -336,6 +338,7 @@ void DIE_Widget::enableControls(bool bState)
     ui->treeViewResult->setEnabled(bState);
     ui->checkBoxRecursiveScan->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
+    ui->checkBoxHeuristicScan->setEnabled(bState);
     ui->checkBoxAllTypesScan->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
