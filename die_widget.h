@@ -82,8 +82,6 @@ private slots:
     void scan();
     void stop();
     void onScanFinished();
-    void onProgressMaximumChanged(qint32 nMaximum);
-    void onProgressValueChanged(qint32 nValue);
     void on_pushButtonDieSignatures_clicked();
     void on_pushButtonDieExtraInformation_clicked();
     void on_pushButtonDieLog_clicked();
@@ -96,6 +94,7 @@ private slots:
     void on_toolButtonElapsedTime_clicked();
     void on_treeViewResult_clicked(const QModelIndex &index);
     void on_treeViewResult_customContextMenuRequested(const QPoint &pos);
+    void timerSlot();
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -116,6 +115,7 @@ private:
     bool bProcess;
     QString sInfoPath;
     XBinary::PDSTRUCT g_pdStruct;
+    QTimer *g_pTimer;
 };
 
 #endif // DIE_WIDGET_H

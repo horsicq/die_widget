@@ -30,12 +30,13 @@ DIE_Widget::DIE_Widget(QWidget *pParent) :
     g_pdStruct={};
 
     connect(&watcher,SIGNAL(finished()),this,SLOT(onScanFinished()));
-    connect(&g_dieScript,SIGNAL(progressMaximumChanged(qint32)),this,SLOT(onProgressMaximumChanged(qint32)));
-    connect(&g_dieScript,SIGNAL(progressValueChanged(qint32)),this,SLOT(onProgressValueChanged(qint32)));
 
     ui->pushButtonDieLog->setEnabled(false);
 
     ui->checkBoxRecursiveScan->setChecked(true);
+
+    g_pTimer=new QTimer(this);
+    connect(g_pTimer,SIGNAL(timeout()),this,SLOT(timerSlot()));
 
     clear();
 }
@@ -128,6 +129,7 @@ void DIE_Widget::process()
         bProcess=true;
 
         ui->pushButtonDieScan->setText(tr("Stop"));
+        ui->progressBarProgress->setValue(0);
 
         g_scanOptions.bShowVersion=true;
         g_scanOptions.bShowOptions=true;
@@ -137,7 +139,9 @@ void DIE_Widget::process()
         g_scanOptions.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bShowType=true;
         g_scanOptions.fileType=fileType;
-        g_scanOptions.bDebug=true;  
+        g_scanOptions.bDebug=true;
+
+        g_pTimer->start(200); // TODO const
 
     #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
         QFuture<void> future=QtConcurrent::run(&DIE_Widget::scan,this);
@@ -184,6 +188,8 @@ void DIE_Widget::onScanFinished()
 {
     bProcess=false;
 
+    g_pTimer->stop();
+
     qint32 nNumberOfErrors=scanResult.listErrors.count();
 
     QString sLogButtonText;
@@ -210,7 +216,7 @@ void DIE_Widget::onScanFinished()
     ui->treeViewResult->setModel(pModel);
     ui->treeViewResult->expandAll();
 
-    delete pOldModel;
+    delete pOldModel; // TODO remove in thread
 
 //    ui->tableWidgetResult->setColumnCount(0);
 
@@ -263,16 +269,6 @@ void DIE_Widget::onScanFinished()
 
     ui->pushButtonDieScan->setEnabled(true);
     enableControls(true);
-}
-
-void DIE_Widget::onProgressMaximumChanged(qint32 nMaximum)
-{
-    ui->progressBarProgress->setMaximum(nMaximum);
-}
-
-void DIE_Widget::onProgressValueChanged(qint32 nValue)
-{
-    ui->progressBarProgress->setValue(nValue);
 }
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
@@ -429,5 +425,14 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
             contextMenu.exec(ui->treeViewResult->viewport()->mapToGlobal(pos));
         }
+    }
+}
+
+void DIE_Widget::timerSlot()
+{
+    if(g_pdStruct.pdRecordOpt.nTotal)
+    {
+        ui->progressBarProgress->setMaximum(100);
+        ui->progressBarProgress->setValue((g_pdStruct.pdRecordOpt.nCurrent*100)/(g_pdStruct.pdRecordOpt.nTotal));
     }
 }
