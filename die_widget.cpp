@@ -358,7 +358,7 @@ void DIE_Widget::copyResult()
     {
         QModelIndex index=listIndexes.at(0);
 
-        if(index.column()==1)
+        if(index.column()==0)
         {
             QString sString=ui->treeViewResult->model()->data(index).toString();
             QApplication::clipboard()->setText(sString);
