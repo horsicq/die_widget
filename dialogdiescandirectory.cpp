@@ -79,6 +79,7 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
         options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
         options.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
         options.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+        options.bIsVerbose=ui->checkBoxVerbose->isChecked();
         options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         options.bSubdirectories=ui->checkBoxScanSubdirectories->isChecked();
         // TODO Filter

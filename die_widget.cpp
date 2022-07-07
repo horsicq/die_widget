@@ -101,6 +101,7 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions)
     ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
     ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
     ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
+    ui->checkBoxVerbose->setChecked(pXOptions->isVerbose());
     ui->checkBoxRecursiveScan->setChecked(pXOptions->isRecursiveScan());
 
     XShortcutsWidget::setGlobal(pShortcuts,pXOptions);
@@ -136,6 +137,7 @@ void DIE_Widget::process()
         g_scanOptions.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
         g_scanOptions.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
         g_scanOptions.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
+        g_scanOptions.bIsVerbose=ui->checkBoxVerbose->isChecked();
         g_scanOptions.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bShowType=true;
         g_scanOptions.fileType=fileType;
@@ -430,9 +432,9 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    if(g_pdStruct.pdRecordOpt.nTotal)
+    if(g_pdStruct.pdRecordObj.nTotal)
     {
         ui->progressBarProgress->setMaximum(100);
-        ui->progressBarProgress->setValue((g_pdStruct.pdRecordOpt.nCurrent*100)/(g_pdStruct.pdRecordOpt.nTotal));
+        ui->progressBarProgress->setValue((g_pdStruct.pdRecordObj.nCurrent*100)/(g_pdStruct.pdRecordObj.nTotal));
     }
 }

@@ -82,6 +82,20 @@
           </spacer>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxShowType">
+           <property name="text">
+            <string>Show type</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxShowVersion">
+           <property name="text">
+            <string>Show version</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="pushButtonRun">
            <property name="text">
             <string>Run</string>
@@ -113,20 +127,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxShowType">
-           <property name="text">
-            <string>Show type</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxShowVersion">
-           <property name="text">
-            <string>Show version</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QCheckBox" name="checkBoxShowOptions">
            <property name="text">
             <string>Show options</string>
@@ -144,6 +144,13 @@
           <widget class="QCheckBox" name="checkBoxHeuristicScan">
            <property name="text">
             <string>Heuristic scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxVerbose">
+           <property name="text">
+            <string>Verbose</string>
            </property>
           </widget>
          </item>

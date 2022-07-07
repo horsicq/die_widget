@@ -59,6 +59,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxRecursiveScan">
+           <property name="text">
+            <string>Recursive scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="checkBoxDeepScan">
            <property name="text">
             <string>Deep scan</string>
@@ -73,16 +80,9 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxRecursiveScan">
+          <widget class="QCheckBox" name="checkBoxVerbose">
            <property name="text">
-            <string>Recursive scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxAllTypesScan">
-           <property name="text">
-            <string>All types</string>
+            <string>Verbose</string>
            </property>
           </widget>
          </item>
@@ -143,6 +143,13 @@
           <widget class="QPushButton" name="pushButtonDieLog">
            <property name="text">
             <string>Log</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxAllTypesScan">
+           <property name="text">
+            <string>All types</string>
            </property>
           </widget>
          </item>
