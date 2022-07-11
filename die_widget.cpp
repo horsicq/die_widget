@@ -337,6 +337,7 @@ void DIE_Widget::enableControls(bool bState)
     ui->checkBoxRecursiveScan->setEnabled(bState);
     ui->checkBoxDeepScan->setEnabled(bState);
     ui->checkBoxHeuristicScan->setEnabled(bState);
+    ui->checkBoxVerbose->setEnabled(bState);
     ui->checkBoxAllTypesScan->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);

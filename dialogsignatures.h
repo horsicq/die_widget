@@ -71,7 +71,7 @@ private:
     XBinary::FT fileType;
     QString sSignature;
     QString sCurrentSignatureFilePath;
-    bool bCurrentEdited;
+    bool g_bCurrentEdited;
 };
 
 #endif // DIALOGSIGNATURES_H

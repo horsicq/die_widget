@@ -58,7 +58,7 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
     ui->treeWidgetSignatures->setSortingEnabled(true);
     ui->treeWidgetSignatures->sortByColumn(0,Qt::AscendingOrder);
 
-    bCurrentEdited=false;
+    g_bCurrentEdited=false;
     ui->pushButtonSave->setEnabled(false);
 
     ui->checkBoxShowType->setChecked(true);
@@ -143,9 +143,9 @@ void DialogSignatures::runScript(bool bIsDebug)
 
     if(pCurrentItem)
     {
-        if(ui->pushButtonSave->isEnabled())
+        if(g_bCurrentEdited)
         {
-            save(); // TODO Check
+            save();
         }
 
         ui->plainTextEditResult->clear();
@@ -221,7 +221,7 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
         const bool bBlocked1=ui->plainTextEditSignature->blockSignals(true);
     #endif
 
-        if(bCurrentEdited)
+        if(g_bCurrentEdited)
         {
             // TODO handle warning
         }
@@ -247,7 +247,7 @@ void DialogSignatures::save()
 {
     if(pDieScript->updateSignature(sCurrentSignatureFilePath,ui->plainTextEditSignature->toPlainText()))
     {
-        bCurrentEdited=false;
+        g_bCurrentEdited=false;
         ui->pushButtonSave->setEnabled(false);
     }
     else
@@ -278,7 +278,7 @@ void DialogSignatures::on_pushButtonClose_clicked()
 
 void DialogSignatures::on_plainTextEditSignature_textChanged()
 {
-    bCurrentEdited=true;
+    g_bCurrentEdited=true;
     ui->pushButtonSave->setEnabled(true);
 }
 
@@ -326,7 +326,7 @@ void DialogSignatures::enableControls(bool bState)
     ui->pushButtonDebug->setEnabled(bState);
     ui->pushButtonRun->setEnabled(bState);
 
-    if(bCurrentEdited)
+    if(g_bCurrentEdited)
     {
         ui->pushButtonSave->setEnabled(bState);
     }
