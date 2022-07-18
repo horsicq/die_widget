@@ -22,7 +22,9 @@
 #define DIE_SIGNATUREEDIT_H
 
 #include <QPlainTextEdit>
+#include <QPainter>
 #include "die_highlighter.h"
+#include "xoptions.h"
 
 class DIE_SignatureEdit : public QPlainTextEdit
 {
@@ -30,9 +32,47 @@ class DIE_SignatureEdit : public QPlainTextEdit
 
 public:
     explicit DIE_SignatureEdit(QWidget *pParent=nullptr);
+    void lineNumberAreaPaintEvent(QPaintEvent *pEvent);
+    int lineNumberAreaWidth();
+    void setPlainText(const QString &sText);
+
+protected:
+    virtual void keyPressEvent(QKeyEvent *pEvent);
+    void resizeEvent(QResizeEvent *pEvent) override;
+
+private slots:
+    void updateLineNumberAreaWidth(int newBlockCount);
+    void highlightCurrentLine();
+    void updateLineNumberArea(const QRect &rect, int dy);
 
 private:
     DIE_Highlighter *pHighlighter;
+    QWidget *g_pLineNumberArea;
+};
+
+class DIE_LineNumberArea : public QWidget
+{
+    Q_OBJECT
+
+public:
+    DIE_LineNumberArea::DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
+    {
+        g_pPlainTextEdit=pPlainTextEdit;
+    }
+
+    QSize sizeHint() const
+    {
+        return QSize(((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaWidth(),0);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *pEvent)
+    {
+        ((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaPaintEvent(pEvent);
+    }
+
+private:
+    QPlainTextEdit *g_pPlainTextEdit;
 };
 
 #endif // DIE_SIGNATUREEDIT_H
