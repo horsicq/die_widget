@@ -45,23 +45,23 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
     painter.fillRect(pEvent->rect(),Qt::lightGray);
 
     QTextBlock block=firstVisibleBlock();
-    int blockNumber=block.blockNumber();
-    int top=qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
-    int bottom=top+qRound(blockBoundingRect(block).height());
+    int nBlockNumber=block.blockNumber();
+    int nTop=qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
+    int nBottom=nTop+qRound(blockBoundingRect(block).height());
 
-    while(block.isValid()&&(top<=pEvent->rect().bottom()))
+    while(block.isValid()&&(nTop<=pEvent->rect().bottom()))
     {
-        if(block.isVisible()&&(bottom>=pEvent->rect().top()))
+        if(block.isVisible()&&(nBottom>=pEvent->rect().top()))
         {
-            QString number=QString::number(blockNumber+1);
+            QString number=QString::number(nBlockNumber+1);
             painter.setPen(Qt::black);
-            painter.drawText(0,top,g_pLineNumberArea->width()-5,fontMetrics().height(),Qt::AlignRight,number);
+            painter.drawText(0,nTop,g_pLineNumberArea->width()-5,fontMetrics().height(),Qt::AlignRight,number);
         }
 
         block=block.next();
-        top=bottom;
-        bottom=top+qRound(blockBoundingRect(block).height());
-        ++blockNumber;
+        nTop=nBottom;
+        nBottom=nTop+qRound(blockBoundingRect(block).height());
+        ++nBlockNumber;
     }
 }
 
@@ -76,11 +76,11 @@ int DIE_SignatureEdit::lineNumberAreaWidth()
 //        ++digits;
 //    }
 
-    int digits=3;
+    int nDigits=3;
 
-    int space=10+fontMetrics().horizontalAdvance(QLatin1Char('9'))*digits;
+    int nSpace=10+fontMetrics().width(QLatin1Char('9'))*nDigits;
 
-    return space;
+    return nSpace;
 }
 
 void DIE_SignatureEdit::setPlainText(const QString &sText)
@@ -125,6 +125,8 @@ void DIE_SignatureEdit::resizeEvent(QResizeEvent *pEvent)
 
 void DIE_SignatureEdit::updateLineNumberAreaWidth(int newBlockCount)
 {
+    Q_UNUSED(newBlockCount)
+
     setViewportMargins(lineNumberAreaWidth()+5,0,0,0);
 }
 
@@ -148,12 +150,16 @@ void DIE_SignatureEdit::highlightCurrentLine()
     setExtraSelections(extraSelections);
 }
 
-void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect,int dy)
+void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect,int nDy)
 {
-    if(dy)
-        g_pLineNumberArea->scroll(0,dy);
+    if(nDy)
+    {
+        g_pLineNumberArea->scroll(0,nDy);
+    }
     else
+    {
         g_pLineNumberArea->update(0,rect.y(),g_pLineNumberArea->width(),rect.height());
+    }
 
     if(rect.contains(viewport()->rect()))
     {
