@@ -218,7 +218,7 @@ void DIE_Widget::onScanFinished()
     ui->treeViewResult->setModel(pModel);
     ui->treeViewResult->expandAll();
 
-    delete pOldModel; // TODO remove in thread
+    deleteOldAbstractModel(&pOldModel);
 
 //    ui->tableWidgetResult->setColumnCount(0);
 

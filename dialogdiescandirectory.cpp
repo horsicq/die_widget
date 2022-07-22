@@ -40,7 +40,7 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent,QString sDirName
 
     if(sDirName!="")
     {
-        ui->lineEditDirectoryName->setText(sDirName);
+        ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirName));
     }
 }
 
@@ -57,7 +57,7 @@ void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked()
 
     if(!sDirectoryName.isEmpty())
     {
-        ui->lineEditDirectoryName->setText(sDirectoryName);
+        ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirectoryName));
     }
 }
 
@@ -95,7 +95,7 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
 void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
 {
     // TODO
-    QString sResult=QString("%1 %2 %3").arg(scanResult.sFileName,QString::number(scanResult.nScanTime),tr("msec"));
+    QString sResult=QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName),QString::number(scanResult.nScanTime),tr("msec"));
     sResult+="\r\n";
 
     QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
