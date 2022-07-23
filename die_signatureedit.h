@@ -37,7 +37,7 @@ public:
     void setPlainText(const QString &sText);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent *pEvent);
+    virtual void keyPressEvent(QKeyEvent *pEvent) override;
     void resizeEvent(QResizeEvent *pEvent) override;
 
 private slots:
@@ -55,7 +55,7 @@ class DIE_LineNumberArea : public QWidget
     Q_OBJECT
 
 public:
-    DIE_LineNumberArea::DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
+    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
     {
         g_pPlainTextEdit=pPlainTextEdit;
     }
