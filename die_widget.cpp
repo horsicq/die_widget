@@ -214,7 +214,7 @@ void DIE_Widget::onScanFinished()
 
     QList<XBinary::SCANSTRUCT> _listRecords=DiE_Script::convert(&(scanResult.listRecords));
 
-    ScanItemModel *pModel=new ScanItemModel(&_listRecords,this,3);
+    ScanItemModel *pModel=new ScanItemModel(&_listRecords,3);
     ui->treeViewResult->setModel(pModel);
     ui->treeViewResult->expandAll();
 
