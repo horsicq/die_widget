@@ -77,8 +77,11 @@ int DIE_SignatureEdit::lineNumberAreaWidth()
 //    }
 
     int nDigits=3;
-
+#if (QT_VERSION_MAJOR<6)
     int nSpace=10+fontMetrics().width(QLatin1Char('9'))*nDigits;
+#else
+    int nSpace=10+fontMetrics().horizontalAdvance(QLatin1Char('9'))*nDigits;
+#endif
 
     return nSpace;
 }
