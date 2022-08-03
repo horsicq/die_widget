@@ -107,7 +107,7 @@ private:
     Ui::DIE_Widget *ui;
     ST scanType;
     DiE_Script g_dieScript;
-    DiE_Script::SCAN_OPTIONS g_scanOptions;
+    DiE_Script::OPTIONS g_scanOptions;
     DiE_Script::SCAN_RESULT scanResult;
     QFutureWatcher<void> watcher;
     QString sFileName;

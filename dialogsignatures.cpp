@@ -86,6 +86,8 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
         ui->treeWidgetSignatures->expandAll();
     }
 
+    ui->comboBoxFunction->addItem("detect","detect");
+
 #ifndef QT_SCRIPTTOOLS_LIB
     ui->pushButtonDebug->hide();
 #endif
@@ -135,7 +137,7 @@ qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT f
     return nResult;
 }
 
-void DialogSignatures::runScript(bool bIsDebug)
+void DialogSignatures::runScript(QString sFunction, bool bIsDebug)
 {
     enableControls(false);
 
@@ -150,7 +152,7 @@ void DialogSignatures::runScript(bool bIsDebug)
 
         ui->plainTextEditResult->clear();
 
-        DiE_Script::SCAN_OPTIONS scanOptions={};
+        DiE_Script::OPTIONS scanOptions={};
 
         scanOptions.bShowType=ui->checkBoxShowType->isChecked();
         scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
@@ -175,11 +177,11 @@ void DialogSignatures::runScript(bool bIsDebug)
             pDieScript->setDebugger(&debugger);
         #endif
 
-            scanResult=pDieScript->scanFile(sFileName,&scanOptions);
+            scanResult=pDieScript->processFile(sFileName,&scanOptions,sFunction);
         }
         else
         {
-            scanResult=pDieScript->scanFile(sFileName,&scanOptions);
+            scanResult=pDieScript->processFile(sFileName,&scanOptions,sFunction);
         }
 
         if(bIsDebug)
@@ -258,12 +260,12 @@ void DialogSignatures::save()
 
 void DialogSignatures::on_pushButtonRun_clicked()
 {
-    runScript(false);
+    runScript(ui->comboBoxFunction->currentData().toString(),false);
 }
 
 void DialogSignatures::on_pushButtonDebug_clicked()
 {
-    runScript(true);
+    runScript(ui->comboBoxFunction->currentData().toString(),true);
 }
 
 void DialogSignatures::on_pushButtonClearResult_clicked()

@@ -28,13 +28,13 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
 
     g_pDieScript->moveToThread(g_pThread);
 
-    connect(g_pThread,SIGNAL(started()),g_pDieScript,SLOT(processDirectory()));
+    connect(g_pThread,SIGNAL(started()),g_pDieScript,SLOT(scanDirectory()));
     connect(g_pDieScript,SIGNAL(directoryScanCompleted(qint64)),this,SLOT(onCompleted(qint64)));
     connect(g_pDieScript,SIGNAL(directoryScanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
     connect(g_pDieScript,SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)),this,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
 }
 
-void DialogDIEScanProcess::setData(QString sDirectoryName,DiE_Script::SCAN_OPTIONS options,QString sDatabasePath)
+void DialogDIEScanProcess::setData(QString sDirectoryName,DiE_Script::OPTIONS options,QString sDatabasePath)
 {
     g_pDieScript->loadDatabase(sDatabasePath);
     g_pDieScript->setProcessDirectory(sDirectoryName,options,getPdStruct());
