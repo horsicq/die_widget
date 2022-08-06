@@ -137,7 +137,7 @@ qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT f
     return nResult;
 }
 
-void DialogSignatures::runScript(QString sFunction, bool bIsDebug)
+void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
 {
     enableControls(false);
 
