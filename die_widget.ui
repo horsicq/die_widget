@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>636</width>
-    <height>139</height>
+    <width>587</width>
+    <height>224</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -169,7 +169,7 @@
          <item>
           <widget class="QToolButton" name="toolButtonElapsedTime">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

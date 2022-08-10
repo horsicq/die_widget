@@ -25,6 +25,7 @@
 #include <QTreeWidgetItem>
 #include "die_script.h"
 #include <QMainWindow>
+#include "dialogfindtext.h"
 
 namespace Ui {
 class DialogSignatures;
@@ -63,6 +64,8 @@ private slots:
     bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XBinary::FT fileType,QString sSignature);
     void enableControls(bool bState);
     void infoMessage(QString sInfoMessage);
+    void on_pushButtonFind_clicked();
+    void findNext();
 
 private:
     Ui::DialogSignatures *ui;
@@ -72,6 +75,7 @@ private:
     QString sSignature;
     QString sCurrentSignatureFilePath;
     bool g_bCurrentEdited;
+    DialogFindText::DATA g_data;
 };
 
 #endif // DIALOGSIGNATURES_H

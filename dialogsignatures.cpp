@@ -27,6 +27,8 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
 {
     ui->setupUi(this);
 
+    g_data={};
+
     setWindowFlags(Qt::Window);
 
     this->pDieScript=pDieScript;
@@ -337,4 +339,28 @@ void DialogSignatures::enableControls(bool bState)
 void DialogSignatures::infoMessage(QString sInfoMessage)
 {
     ui->plainTextEditResult->appendPlainText(sInfoMessage);
+}
+
+void DialogSignatures::on_pushButtonFind_clicked()
+{
+    DialogFindText dialogFindText(this);
+
+    dialogFindText.setData(&g_data);
+
+    if(dialogFindText.exec()==QDialog::Accepted)
+    {
+        findNext();
+    }
+}
+
+void DialogSignatures::findNext()
+{
+    QTextDocument::FindFlags findFlags=0;
+
+    if(g_data.bIsMatchCase)
+    {
+        findFlags|=QTextDocument::FindCaseSensitively;
+    }
+
+    ui->plainTextEditSignature->find(g_data.sText,findFlags);
 }

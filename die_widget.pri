@@ -50,6 +50,11 @@ SOURCES += \
     include($$PWD/../FormatDialogs/xdialogprocess.pri)
 }
 
+!contains(XCONFIG, dialogfindtext) {
+    XCONFIG += dialogfindtext
+    include($$PWD/../FormatDialogs/dialogfindtext.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
