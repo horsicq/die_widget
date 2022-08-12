@@ -23,8 +23,6 @@
 DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) :
     QPlainTextEdit(pParent)
 {
-    XOptions::setMonoFont(this);
-
     pHighlighter=new DIE_Highlighter(this->document());
 
     pHighlighter->setDocument(this->document());

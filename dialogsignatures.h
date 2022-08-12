@@ -26,14 +26,23 @@
 #include "die_script.h"
 #include <QMainWindow>
 #include "dialogfindtext.h"
+#include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogSignatures;
 }
 
-class DialogSignatures : public QDialog
+class DialogSignatures : public XShortcutsDialog
 {
     Q_OBJECT
+
+    enum SHORTCUT
+    {
+        SC_FIND_STRING,
+        SC_FIND_NEXT,
+        __SC_SIZE,
+        // TODO more
+    };
 
     enum UD
     {
@@ -45,6 +54,8 @@ class DialogSignatures : public QDialog
 public:
     explicit DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QString sFileName,XBinary::FT fileType,QString sSignature);
     ~DialogSignatures();
+
+    void adjustView();
 
 private slots:
     void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
@@ -65,7 +76,12 @@ private slots:
     void enableControls(bool bState);
     void infoMessage(QString sInfoMessage);
     void on_pushButtonFind_clicked();
+    void on_pushButtonFindNext_clicked();
+    void findString();
     void findNext();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::DialogSignatures *ui;
@@ -76,6 +92,7 @@ private:
     QString sCurrentSignatureFilePath;
     bool g_bCurrentEdited;
     DialogFindText::DATA g_data;
+    QShortcut *shortCuts[__SC_SIZE];
 };
 
 #endif // DIALOGSIGNATURES_H

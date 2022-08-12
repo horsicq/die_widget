@@ -22,10 +22,12 @@
 #include "ui_dialogsignatures.h"
 
 DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QString sFileName,XBinary::FT fileType,QString sSignature) :
-    QDialog(pParent),
+    XShortcutsDialog(pParent),
     ui(new Ui::DialogSignatures)
 {
     ui->setupUi(this);
+
+    memset(shortCuts,0,sizeof shortCuts);
 
     g_data={};
 
@@ -98,6 +100,17 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
 DialogSignatures::~DialogSignatures()
 {
     delete ui;
+}
+
+void DialogSignatures::adjustView()
+{
+    QFont _font;
+    QString sFont=getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
+
+    if((sFont!="")&&_font.fromString(sFont))
+    {
+        ui->plainTextEditSignature->setFont(_font);
+    }
 }
 
 qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText)
@@ -343,6 +356,16 @@ void DialogSignatures::infoMessage(QString sInfoMessage)
 
 void DialogSignatures::on_pushButtonFind_clicked()
 {
+    findString();
+}
+
+void DialogSignatures::on_pushButtonFindNext_clicked()
+{
+    findNext();
+}
+
+void DialogSignatures::findString()
+{
     DialogFindText dialogFindText(this);
 
     dialogFindText.setData(&g_data);
@@ -363,4 +386,24 @@ void DialogSignatures::findNext()
     }
 
     ui->plainTextEditSignature->find(g_data.sText,findFlags);
+}
+
+void DialogSignatures::registerShortcuts(bool bState)
+{
+    if(bState)
+    {
+        if(!shortCuts[SC_FIND_STRING])              shortCuts[SC_FIND_STRING]               =new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING),           this,SLOT(findString()));
+        if(!shortCuts[SC_FIND_NEXT])                shortCuts[SC_FIND_NEXT]                 =new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT),             this,SLOT(findNext()));
+    }
+    else
+    {
+        for(qint32 i=0;i<__SC_SIZE;i++)
+        {
+            if(shortCuts[i])
+            {
+                delete shortCuts[i];
+                shortCuts[i]=nullptr;
+            }
+        }
+    }
 }

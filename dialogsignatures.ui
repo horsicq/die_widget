@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>913</width>
-    <height>529</height>
+    <width>959</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,9 +26,15 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <widget class="QWidget" name="widgetPanel" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
-        <width>350</width>
+        <width>400</width>
         <height>16777215</height>
        </size>
       </property>
@@ -108,19 +114,6 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QCheckBox" name="checkBoxHeuristicScan">
            <property name="text">
             <string>Heuristic scan</string>
@@ -159,6 +152,13 @@
           <widget class="QPushButton" name="pushButtonFind">
            <property name="text">
             <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonFindNext">
+           <property name="text">
+            <string>Next</string>
            </property>
           </widget>
          </item>

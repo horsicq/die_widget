@@ -55,6 +55,8 @@ void DIEOptionsWidget::save()
     {
         g_pOptions->getComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
     }
+
+    g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont,XOptions::ID_SCAN_EDITORFONT);
 }
 
 void DIEOptionsWidget::reload()
@@ -72,6 +74,8 @@ void DIEOptionsWidget::reload()
     {
         g_pOptions->setComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
     }
+
+    g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont,XOptions::ID_SCAN_EDITORFONT);
 }
 
 void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
@@ -85,6 +89,16 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH,"$data/db");
     pOptions->addID(XOptions::ID_SCAN_INFOPATH,"$data/info");
     pOptions->addID(XOptions::ID_SCAN_ENGINE,"auto");
+
+#ifdef Q_OS_WIN
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"Courier,10,-1,5,50,0,0,0,0,0");
+#endif
+#ifdef Q_OS_LINUX
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0");
+#endif
+#ifdef Q_OS_MACOS
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"Menlo,10,-1,5,50,0,0,0,0,0"); // TODO Check
+#endif
 }
 
 void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
@@ -110,5 +124,19 @@ void DIEOptionsWidget::on_toolButtonDIEInfo_clicked()
     if(!sDirectoryName.isEmpty())
     {
         ui->lineEditDIEInfo->setText(sDirectoryName);
+    }
+}
+
+void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked()
+{
+    QFont _font;
+    _font.fromString(ui->lineEditSignaturesEditorFont->text());
+
+    bool bOK=false;
+    _font=QFontDialog::getFont(&bOK,_font,this);
+
+    if(bOK)
+    {
+        ui->lineEditSignaturesEditorFont->setText(_font.toString());
     }
 }
