@@ -378,7 +378,7 @@ void DialogSignatures::findString()
 
 void DialogSignatures::findNext()
 {
-    QTextDocument::FindFlags findFlags=0;
+    QTextDocument::FindFlags findFlags=(QTextDocument::FindFlags)0;
 
     if(g_data.bIsMatchCase)
     {
