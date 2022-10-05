@@ -4,15 +4,6 @@ lessThan(QT_MAJOR_VERSION, 6): QT += scripttools
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-FORMS += \
-    $$PWD/dialogdiescandirectory.ui \
-    $$PWD/dialogdiescanprocess.ui \
-    $$PWD/dialogelapsed.ui \
-    $$PWD/dialoglog.ui \
-    $$PWD/dialogsignatures.ui \
-    $$PWD/die_widget.ui \
-    $$PWD/dieoptionswidget.ui
-
 HEADERS += \
     $$PWD/dialogdiescandirectory.h \
     $$PWD/dialogdiescanprocess.h \
@@ -34,6 +25,15 @@ SOURCES += \
     $$PWD/die_signatureedit.cpp \
     $$PWD/die_widget.cpp \
     $$PWD/dieoptionswidget.cpp
+
+FORMS += \
+    $$PWD/dialogdiescandirectory.ui \
+    $$PWD/dialogdiescanprocess.ui \
+    $$PWD/dialogelapsed.ui \
+    $$PWD/dialoglog.ui \
+    $$PWD/dialogsignatures.ui \
+    $$PWD/die_widget.ui \
+    $$PWD/dieoptionswidget.ui
 
 !contains(XCONFIG, die_script) {
     XCONFIG += die_script
