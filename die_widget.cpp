@@ -172,8 +172,6 @@ void DIE_Widget::scan()
         {
             emit scanStarted();
 
-            g_pdStruct={};
-
             scanResult=g_dieScript.scanFile(sFileName,&g_scanOptions,&g_pdStruct);
 
             emit scanFinished();
@@ -437,9 +435,6 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    if(g_pdStruct.pdRecordObj.nTotal)
-    {
-        ui->progressBarProgress->setMaximum(100);
-        ui->progressBarProgress->setValue((g_pdStruct.pdRecordObj.nCurrent*100)/(g_pdStruct.pdRecordObj.nTotal));
-    }
+    ui->progressBarProgress->setMaximum(100);
+    ui->progressBarProgress->setValue(XBinary::getPdStructProcent(&g_pdStruct));
 }
