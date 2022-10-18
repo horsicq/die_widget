@@ -332,7 +332,10 @@ void DIE_Widget::enableControls(bool bState)
 {
     if(!bState)
     {
+        QAbstractItemModel *pOldModel=ui->treeViewResult->model();
         ui->treeViewResult->setModel(0);
+
+        deleteOldAbstractModel(&pOldModel);
     }
 
     ui->treeViewResult->setEnabled(bState);
