@@ -77,9 +77,10 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 
 void DIE_Highlighter::highlightBlock(const QString &text)
 {
-    for (const HighlightingRule &rule : highlightingRules) // TODO Check qConst
+    for(const HighlightingRule &rule : highlightingRules) // TODO Check qConst
     {
         QRegularExpressionMatchIterator matchIterator=rule.pattern.globalMatch(text);
+
         while(matchIterator.hasNext())
         {
             QRegularExpressionMatch match=matchIterator.next();
@@ -89,9 +90,11 @@ void DIE_Highlighter::highlightBlock(const QString &text)
 
     setCurrentBlockState(0);
 
-    int startIndex = 0;
-    if (previousBlockState() != 1)
-        startIndex = text.indexOf(commentStartExpression);
+    int startIndex=0;
+    if (previousBlockState()!=1)
+    {
+        startIndex=text.indexOf(commentStartExpression);
+    }
 
     while(startIndex>=0)
     {
