@@ -101,7 +101,8 @@ void DIE_Highlighter::highlightBlock(const QString &text)
         QRegularExpressionMatch match=commentEndExpression.match(text,startIndex);
         int endIndex = match.capturedStart();
         int commentLength = 0;
-        if(endIndex == -1)
+
+        if(endIndex==-1)
         {
             setCurrentBlockState(1);
             commentLength = text.length() - startIndex;
