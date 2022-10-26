@@ -49,8 +49,8 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 
     classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
-    rule.format = classFormat;
+    rule.pattern=QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
+    rule.format=classFormat;
     highlightingRules.append(rule);
 
     quotationFormat.setForeground(Qt::darkGreen);
