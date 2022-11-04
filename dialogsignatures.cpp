@@ -127,7 +127,7 @@ qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT 
     return nResult;
 }
 
-qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType)
+qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent,XBinary::FT fileType)
 {
     qint32 nResult=0;
 
@@ -139,7 +139,7 @@ qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT f
     {
         if(pListSignatures->at(i).fileType==fileType)
         {
-            QTreeWidgetItem *pRootItem=new QTreeWidgetItem(pParent);
+            QTreeWidgetItem *pRootItem=new QTreeWidgetItem(pItemParent);
             pRootItem->setText(0,pListSignatures->at(i).sName);
             pRootItem->setData(0,Qt::UserRole+UD_FILEPATH,pListSignatures->at(i).sFilePath);
             pRootItem->setData(0,Qt::UserRole+UD_FILETYPE,pListSignatures->at(i).fileType);

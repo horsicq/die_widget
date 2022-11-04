@@ -67,7 +67,7 @@ private slots:
     void on_pushButtonClose_clicked();
 
     qint32 handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText);
-    qint32 _handleTreeItems(QTreeWidgetItem *pParent,XBinary::FT fileType);
+    qint32 _handleTreeItems(QTreeWidgetItem *pItemParent,XBinary::FT fileType);
     void runScript(QString sFunction,bool bIsDebug);
     void on_plainTextEditSignature_textChanged();
     void on_checkBoxReadOnly_toggled(bool bChecked);
