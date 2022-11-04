@@ -58,7 +58,7 @@ public:
     void adjustView();
 
 private slots:
-    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious);
+    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious);
     void on_pushButtonSave_clicked();
     void save();
     void on_pushButtonRun_clicked();

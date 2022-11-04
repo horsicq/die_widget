@@ -156,9 +156,9 @@ void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
 {
     enableControls(false);
 
-    QTreeWidgetItem *pCurrentItem=ui->treeWidgetSignatures->currentItem();
+    QTreeWidgetItem *pItemCurrent=ui->treeWidgetSignatures->currentItem();
 
-    if(pCurrentItem)
+    if(pItemCurrent)
     {
         if(g_bCurrentEdited)
         {
@@ -176,7 +176,7 @@ void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
         scanOptions.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
         scanOptions.bIsVerbose=ui->checkBoxVerbose->isChecked();
 
-        scanOptions.sSignatureName=pCurrentItem->data(0,Qt::UserRole+UD_NAME).toString();
+        scanOptions.sSignatureName=pItemCurrent->data(0,Qt::UserRole+UD_NAME).toString();
         scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();
 
         DiE_Script::SCAN_RESULT scanResult={};
@@ -224,11 +224,11 @@ void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
     enableControls(true);
 }
 
-void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pCurrent,QTreeWidgetItem *pPrevious)
+void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious)
 {
-    Q_UNUSED(pPrevious)
+    Q_UNUSED(pItemPrevious)
 
-    QString sSignatureFilePath=pCurrent->data(0,Qt::UserRole).toString();
+    QString sSignatureFilePath=pItemCurrent->data(0,Qt::UserRole).toString();
 
     if(sSignatureFilePath!=sCurrentSignatureFilePath)
     {
