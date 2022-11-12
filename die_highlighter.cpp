@@ -20,42 +20,31 @@
  */
 #include "die_highlighter.h"
 
-DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
-{
+DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent) {
     HighlightingRule rule;
 
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
-    const QString keywordPatterns[]=
-    {
-        QStringLiteral("\\bvar\\b"),
-        QStringLiteral("\\bfunction\\b"),
-        QStringLiteral("\\bbShowType\\b"),
-        QStringLiteral("\\bbShowVersion\\b"),
-        QStringLiteral("\\bbShowOptions\\b"),
-        QStringLiteral("\\bsVersion\\b"),
-        QStringLiteral("\\bsOptions\\b"),
-        QStringLiteral("\\bsName\\b"),
-        QStringLiteral("\\bbDetected\\b"),
-        QStringLiteral("\\breturn\\b")
-    };
+    const QString keywordPatterns[] = {QStringLiteral("\\bvar\\b"),          QStringLiteral("\\bfunction\\b"),     QStringLiteral("\\bbShowType\\b"),
+                                       QStringLiteral("\\bbShowVersion\\b"), QStringLiteral("\\bbShowOptions\\b"), QStringLiteral("\\bsVersion\\b"),
+                                       QStringLiteral("\\bsOptions\\b"),     QStringLiteral("\\bsName\\b"),        QStringLiteral("\\bbDetected\\b"),
+                                       QStringLiteral("\\breturn\\b")};
 
-    for(const QString &pattern : keywordPatterns)
-    {
-        rule.pattern=QRegularExpression(pattern);
-        rule.format=keywordFormat;
+    for (const QString &pattern : keywordPatterns) {
+        rule.pattern = QRegularExpression(pattern);
+        rule.format = keywordFormat;
         highlightingRules.append(rule);
     }
 
     classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern=QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
-    rule.format=classFormat;
+    rule.pattern = QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
+    rule.format = classFormat;
     highlightingRules.append(rule);
 
     quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern=QRegularExpression(QStringLiteral("\".*\""));
-    rule.format=quotationFormat;
+    rule.pattern = QRegularExpression(QStringLiteral("\".*\""));
+    rule.format = quotationFormat;
     highlightingRules.append(rule);
 
     functionFormat.setFontItalic(true);
@@ -75,44 +64,36 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
     commentEndExpression = QRegularExpression(QStringLiteral("\\*/"));
 }
 
-void DIE_Highlighter::highlightBlock(const QString &text)
-{
-    for(const HighlightingRule &rule : highlightingRules) // TODO Check qConst
+void DIE_Highlighter::highlightBlock(const QString &text) {
+    for (const HighlightingRule &rule : highlightingRules)  // TODO Check qConst
     {
-        QRegularExpressionMatchIterator matchIterator=rule.pattern.globalMatch(text);
+        QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
 
-        while(matchIterator.hasNext())
-        {
-            QRegularExpressionMatch match=matchIterator.next();
-            setFormat(match.capturedStart(),match.capturedLength(),rule.format);
+        while (matchIterator.hasNext()) {
+            QRegularExpressionMatch match = matchIterator.next();
+            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
         }
     }
 
     setCurrentBlockState(0);
 
-    int startIndex=0;
-    if (previousBlockState()!=1)
-    {
-        startIndex=text.indexOf(commentStartExpression);
+    int startIndex = 0;
+    if (previousBlockState() != 1) {
+        startIndex = text.indexOf(commentStartExpression);
     }
 
-    while(startIndex>=0)
-    {
-        QRegularExpressionMatch match=commentEndExpression.match(text,startIndex);
+    while (startIndex >= 0) {
+        QRegularExpressionMatch match = commentEndExpression.match(text, startIndex);
         int endIndex = match.capturedStart();
         int commentLength = 0;
 
-        if(endIndex==-1)
-        {
+        if (endIndex == -1) {
             setCurrentBlockState(1);
             commentLength = text.length() - startIndex;
+        } else {
+            commentLength = endIndex - startIndex + match.capturedLength();
         }
-        else
-        {
-            commentLength = endIndex - startIndex
-                            + match.capturedLength();
-        }
-        setFormat(startIndex,commentLength,multiLineCommentFormat);
-        startIndex = text.indexOf(commentStartExpression,startIndex+commentLength);
+        setFormat(startIndex, commentLength, multiLineCommentFormat);
+        startIndex = text.indexOf(commentStartExpression, startIndex + commentLength);
     }
 }

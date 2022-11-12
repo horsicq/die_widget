@@ -22,18 +22,18 @@
 #define DIALOGELAPSED_H
 
 #include <QDialog>
+
 #include "die_script.h"
 
 namespace Ui {
 class DialogElapsed;
 }
 
-class DialogElapsed : public QDialog
-{
+class DialogElapsed : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogElapsed(QWidget *pParent=nullptr);
+    explicit DialogElapsed(QWidget *pParent = nullptr);
     ~DialogElapsed();
     void setData(DiE_Script::SCAN_RESULT *pScanResult);
 
@@ -45,4 +45,4 @@ private:
     DiE_Script::SCAN_RESULT *g_pScanResult;
 };
 
-#endif // DIALOGELAPSED_H
+#endif  // DIALOGELAPSED_H

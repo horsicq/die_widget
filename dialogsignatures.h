@@ -22,43 +22,41 @@
 #define DIALOGSIGNATURES_H
 
 #include <QDialog>
-#include <QTreeWidgetItem>
-#include "die_script.h"
 #include <QMainWindow>
+#include <QTreeWidgetItem>
+
 #include "dialogfindtext.h"
+#include "die_script.h"
 #include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogSignatures;
 }
 
-class DialogSignatures : public XShortcutsDialog
-{
+class DialogSignatures : public XShortcutsDialog {
     Q_OBJECT
 
-    enum SHORTCUT
-    {
+    enum SHORTCUT {
         SC_FIND_STRING,
         SC_FIND_NEXT,
         __SC_SIZE,
         // TODO more
     };
 
-    enum UD
-    {
-        UD_FILEPATH=0,
+    enum UD {
+        UD_FILEPATH = 0,
         UD_FILETYPE,
         UD_NAME
     };
 
 public:
-    explicit DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QString sFileName,XBinary::FT fileType,QString sSignature);
+    explicit DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature);
     ~DialogSignatures();
 
     void adjustView();
 
 private slots:
-    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious);
+    void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
     void on_pushButtonSave_clicked();
     void save();
     void on_pushButtonRun_clicked();
@@ -66,13 +64,13 @@ private slots:
     void on_pushButtonClearResult_clicked();
     void on_pushButtonClose_clicked();
 
-    qint32 handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText);
-    qint32 _handleTreeItems(QTreeWidgetItem *pItemParent,XBinary::FT fileType);
-    void runScript(QString sFunction,bool bIsDebug);
+    qint32 handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText);
+    qint32 _handleTreeItems(QTreeWidgetItem *pItemParent, XBinary::FT fileType);
+    void runScript(QString sFunction, bool bIsDebug);
     void on_plainTextEditSignature_textChanged();
     void on_checkBoxReadOnly_toggled(bool bChecked);
 
-    bool _setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XBinary::FT fileType,QString sSignature);
+    bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature);
     void enableControls(bool bState);
     void infoMessage(QString sInfoMessage);
     void on_pushButtonFind_clicked();
@@ -95,4 +93,4 @@ private:
     QShortcut *shortCuts[__SC_SIZE];
 };
 
-#endif // DIALOGSIGNATURES_H
+#endif  // DIALOGSIGNATURES_H

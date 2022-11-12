@@ -19,23 +19,19 @@
  * SOFTWARE.
  */
 #include "dialoglog.h"
+
 #include "ui_dialoglog.h"
 
-DialogLog::DialogLog(QWidget *pParent,QString sText) :
-    QDialog(pParent),
-    ui(new Ui::DialogLog)
-{
+DialogLog::DialogLog(QWidget *pParent, QString sText) : QDialog(pParent), ui(new Ui::DialogLog) {
     ui->setupUi(this);
 
     ui->plainTextEditLog->appendPlainText(sText);
 }
 
-DialogLog::~DialogLog()
-{
+DialogLog::~DialogLog() {
     delete ui;
 }
 
-void DialogLog::on_pushButtonClose_clicked()
-{
+void DialogLog::on_pushButtonClose_clicked() {
     this->close();
 }

@@ -20,34 +20,30 @@
  */
 #include "dialogdiescanprocess.h"
 
-DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) :
-    XDialogProcess(pParent)
-{
-    g_pDieScript=new DiE_Script;
-    g_pThread=new QThread;
+DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pParent) {
+    g_pDieScript = new DiE_Script;
+    g_pThread = new QThread;
 
     g_pDieScript->moveToThread(g_pThread);
 
-    connect(g_pThread,SIGNAL(started()),g_pDieScript,SLOT(scanDirectory()));
-    connect(g_pDieScript,SIGNAL(directoryScanCompleted(qint64)),this,SLOT(onCompleted(qint64)));
-    connect(g_pDieScript,SIGNAL(directoryScanFileStarted(QString)),this,SIGNAL(scanFileStarted(QString)),Qt::DirectConnection);
-    connect(g_pDieScript,SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)),this,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
+    connect(g_pThread, SIGNAL(started()), g_pDieScript, SLOT(scanDirectory()));
+    connect(g_pDieScript, SIGNAL(directoryScanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pDieScript, SIGNAL(directoryScanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
+    connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogDIEScanProcess::setData(QString sDirectoryName,DiE_Script::OPTIONS options,QString sDatabasePath)
-{
+void DialogDIEScanProcess::setData(QString sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath) {
     g_pDieScript->loadDatabase(sDatabasePath);
-    g_pDieScript->setProcessDirectory(sDirectoryName,options,getPdStruct());
+    g_pDieScript->setProcessDirectory(sDirectoryName, options, getPdStruct());
     g_pThread->start();
 }
 
-DialogDIEScanProcess::~DialogDIEScanProcess()
-{
+DialogDIEScanProcess::~DialogDIEScanProcess() {
     g_pThread->quit();
     g_pThread->wait();
 
-//    g_pThread->deleteLater(); // TODO !!!
-//    g_pDieScript->deleteLater(); // TODO !!!
+    //    g_pThread->deleteLater(); // TODO !!!
+    //    g_pDieScript->deleteLater(); // TODO !!!
     delete g_pThread;
     delete g_pDieScript;
 }

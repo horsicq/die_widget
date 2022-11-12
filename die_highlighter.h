@@ -21,24 +21,21 @@
 #ifndef DIE_HIGHLIGHTER_H
 #define DIE_HIGHLIGHTER_H
 
-#include <QSyntaxHighlighter>
-
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QSyntaxHighlighter>
 
-class DIE_Highlighter : public QSyntaxHighlighter
-{
+class DIE_Highlighter : public QSyntaxHighlighter {
     Q_OBJECT
 
 public:
-    explicit DIE_Highlighter(QObject *pParent=nullptr);
+    explicit DIE_Highlighter(QObject *pParent = nullptr);
 
 protected:
     void highlightBlock(const QString &text);
 
 private:
-    struct HighlightingRule
-    {
+    struct HighlightingRule {
         QRegularExpression pattern;
         QTextCharFormat format;
     };
@@ -55,4 +52,4 @@ private:
     QTextCharFormat functionFormat;
 };
 
-#endif // DIE_HIGHLIGHTER_H
+#endif  // DIE_HIGHLIGHTER_H

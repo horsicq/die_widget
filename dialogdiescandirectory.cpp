@@ -19,124 +19,109 @@
  * SOFTWARE.
  */
 #include "dialogdiescandirectory.h"
+
 #include "ui_dialogdiescandirectory.h"
 
-DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent,QString sDirName,QString sDatabasePath) :
-    QDialog(pParent),
-    ui(new Ui::DialogDIEScanDirectory)
-{
+DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirName, QString sDatabasePath)
+    : QDialog(pParent), ui(new Ui::DialogDIEScanDirectory) {
     ui->setupUi(this);
 
-    g_sDatabasePath=sDatabasePath;
+    g_sDatabasePath = sDatabasePath;
 
-    setWindowFlags(windowFlags()|Qt::WindowMinMaxButtonsHint);
+    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
 
-//    Qt::WindowTitleHint
+    //    Qt::WindowTitleHint
 
-    connect(this,SIGNAL(resultSignal(QString)),this,SLOT(appendResult(QString)));
+    connect(this, SIGNAL(resultSignal(QString)), this, SLOT(appendResult(QString)));
 
     ui->checkBoxScanSubdirectories->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
 
-    if(sDirName!="")
-    {
+    if (sDirName != "") {
         ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirName));
     }
 }
 
-DialogDIEScanDirectory::~DialogDIEScanDirectory()
-{
+DialogDIEScanDirectory::~DialogDIEScanDirectory() {
     delete ui;
 }
 
-void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked()
-{
-    QString sInitDirectory=ui->lineEditDirectoryName->text();
+void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked() {
+    QString sInitDirectory = ui->lineEditDirectoryName->text();
 
-    QString sDirectoryName=QFileDialog::getExistingDirectory(this,tr("Open directory")+QString("..."),sInitDirectory,QFileDialog::ShowDirsOnly);
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 
-    if(!sDirectoryName.isEmpty())
-    {
+    if (!sDirectoryName.isEmpty()) {
         ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirectoryName));
     }
 }
 
-void DialogDIEScanDirectory::on_pushButtonScan_clicked()
-{
-    QString sDirectoryName=ui->lineEditDirectoryName->text().trimmed();
+void DialogDIEScanDirectory::on_pushButtonScan_clicked() {
+    QString sDirectoryName = ui->lineEditDirectoryName->text().trimmed();
 
     scanDirectory(sDirectoryName);
 }
 
-void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
-{
-    if(sDirectoryName!="")
-    {
+void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName) {
+    if (sDirectoryName != "") {
         ui->textBrowserResult->clear();
 
         // TODO
-        DiE_Script::OPTIONS options={0};
-        options.bRecursiveScan=ui->checkBoxRecursiveScan->isChecked();
-        options.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
-        options.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
-        options.bIsVerbose=ui->checkBoxVerbose->isChecked();
-        options.bAllTypesScan=ui->checkBoxAllTypesScan->isChecked();
-        options.bSubdirectories=ui->checkBoxScanSubdirectories->isChecked();
+        DiE_Script::OPTIONS options = {0};
+        options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        options.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+        options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+        options.bIsVerbose = ui->checkBoxVerbose->isChecked();
+        options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        options.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
         // TODO Filter
         // |flags|x all|
 
         DialogDIEScanProcess ds(this);
-        connect(&ds,SIGNAL(scanResult(DiE_Script::SCAN_RESULT)),this,SLOT(scanResult(DiE_Script::SCAN_RESULT)),Qt::DirectConnection);
-        ds.setData(sDirectoryName,options,g_sDatabasePath);
+        connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
+        ds.setData(sDirectoryName, options, g_sDatabasePath);
         ds.exec();
     }
 }
 
-void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
-{
+void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult) {
     // TODO
-    QString sResult=QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName),QString::number(scanResult.nScanTime),tr("msec"));
-    sResult+="\r\n";
+    QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
+    sResult += "\r\n";
 
-    QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
 
     ScanItemModel model(&listResult);
 
-    sResult+=model.toFormattedString();
+    sResult += model.toFormattedString();
 
     emit resultSignal(sResult);
 }
 
-void DialogDIEScanDirectory::appendResult(QString sResult)
-{
+void DialogDIEScanDirectory::appendResult(QString sResult) {
     ui->textBrowserResult->append(sResult);
 }
 
-void DialogDIEScanDirectory::on_pushButtonOK_clicked()
-{
+void DialogDIEScanDirectory::on_pushButtonOK_clicked() {
     this->close();
 }
 
-void DialogDIEScanDirectory::on_pushButtonClear_clicked()
-{
+void DialogDIEScanDirectory::on_pushButtonClear_clicked() {
     ui->textBrowserResult->clear();
 }
 
-void DialogDIEScanDirectory::on_pushButtonSave_clicked()
-{
+void DialogDIEScanDirectory::on_pushButtonSave_clicked() {
     QString sFilter;
-    sFilter+=QString("%1 (*.txt)").arg(tr("Text documents"));
-    QString sSaveFileName=ui->lineEditDirectoryName->text()+QDir::separator()+"result";
-    QString sFileName=QFileDialog::getSaveFileName(this,tr("Save result"),sSaveFileName,sFilter);
+    sFilter += QString("%1 (*.txt)").arg(tr("Text documents"));
+    QString sSaveFileName = ui->lineEditDirectoryName->text() + QDir::separator() + "result";
+    QString sFileName = QFileDialog::getSaveFileName(this, tr("Save result"), sSaveFileName, sFilter);
 
-    if(!sFileName.isEmpty())
-    {
+    if (!sFileName.isEmpty()) {
         QFile file;
         file.setFileName(sFileName);
 
-        if(file.open(QIODevice::ReadWrite))
-        {
-            QString sText=ui->textBrowserResult->toPlainText();
+        if (file.open(QIODevice::ReadWrite)) {
+            QString sText = ui->textBrowserResult->toPlainText();
             file.write(sText.toUtf8().data());
 
             file.close();

@@ -27,12 +27,11 @@ namespace Ui {
 class DialogLog;
 }
 
-class DialogLog : public QDialog
-{
+class DialogLog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogLog(QWidget *pParent,QString sText);
+    explicit DialogLog(QWidget *pParent, QString sText);
     ~DialogLog();
 
 private slots:
@@ -42,4 +41,4 @@ private:
     Ui::DialogLog *ui;
 };
 
-#endif // DIALOGLOG_H
+#endif  // DIALOGLOG_H

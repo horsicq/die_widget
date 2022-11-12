@@ -21,59 +21,57 @@
 #ifndef DIE_WIDGET_H
 #define DIE_WIDGET_H
 
-#include <QWidget>
-#include <QFutureWatcher>
-#include <QtConcurrent>
-#include <QMenu>
 #include <QClipboard>
 #include <QDesktopServices>
-#include "die_script.h"
+#include <QFutureWatcher>
+#include <QMenu>
+#include <QWidget>
+#include <QtConcurrent>
+
+#include "dialogdiescandirectory.h"
+#include "dialogelapsed.h"
+#include "dialoglog.h"
 #include "dialogsignatures.h"
 #include "dialogtextinfo.h"
-#include "dialoglog.h"
-#include "dialogdiescandirectory.h"
+#include "die_script.h"
 #include "xshortcutswidget.h"
-#include "dialogelapsed.h"
 
 namespace Ui {
 class DIE_Widget;
 }
 
-class DIE_Widget : public XShortcutsWidget
-{
+class DIE_Widget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
-    enum ST
-    {
-        ST_UNKNOWN=0,
+    enum ST {
+        ST_UNKNOWN = 0,
         ST_FILE
     };
 
-//    struct OPTIONS
-//    {
-//        bool bRecursiveScan;
-//        bool bDeepScan;
-//        bool bAllTypesScan;
-//        QString sDatabasePath;
-//        QString sInfoPath; // TODO make zip
-//    };
+    //    struct OPTIONS
+    //    {
+    //        bool bRecursiveScan;
+    //        bool bDeepScan;
+    //        bool bAllTypesScan;
+    //        QString sDatabasePath;
+    //        QString sInfoPath; // TODO make zip
+    //    };
 
-    enum COLUMN
-    {
-//        COLUMN_TYPE=0,
-        COLUMN_STRING=0,
+    enum COLUMN {
+        //        COLUMN_TYPE=0,
+        COLUMN_STRING = 0,
         COLUMN_SIGNATURE,
         COLUMN_INFO
     };
 
-    explicit DIE_Widget(QWidget *pParent=nullptr);
+    explicit DIE_Widget(QWidget *pParent = nullptr);
     ~DIE_Widget();
 
-//    void setOptions(OPTIONS *pOptions);
-    void setData(QString sFileName,bool bScan=false,XBinary::FT fileType=XBinary::FT_UNKNOWN);
+    //    void setOptions(OPTIONS *pOptions);
+    void setData(QString sFileName, bool bScan = false, XBinary::FT fileType = XBinary::FT_UNKNOWN);
     void adjustView();
-    void setGlobal(XShortcuts *pShortcuts,XOptions *pXOptions);
+    void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 private slots:
     void on_pushButtonDieScan_clicked();
@@ -86,7 +84,7 @@ private slots:
     void on_pushButtonDieExtraInformation_clicked();
     void on_pushButtonDieLog_clicked();
     void showInfo(QString sName);
-    void showSignature(XBinary::FT fileType,QString sName);
+    void showSignature(XBinary::FT fileType, QString sName);
     void enableControls(bool bState);
     QString getInfoFileName(QString sName);
     void copyResult();
@@ -118,4 +116,4 @@ private:
     QTimer *g_pTimer;
 };
 
-#endif // DIE_WIDGET_H
+#endif  // DIE_WIDGET_H

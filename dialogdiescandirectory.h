@@ -21,23 +21,23 @@
 #ifndef DIALOGDIESCANDIRECTORY_H
 #define DIALOGDIESCANDIRECTORY_H
 
-#include "../global.h"
 #include <QDialog>
 #include <QFileDialog>
-#include "dialogoptions.h"
+
+#include "../global.h"
 #include "dialogdiescanprocess.h"
+#include "dialogoptions.h"
 #include "xoptions.h"
 
 namespace Ui {
 class DialogDIEScanDirectory;
 }
 
-class DialogDIEScanDirectory : public QDialog
-{
+class DialogDIEScanDirectory : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanDirectory(QWidget *pParent,QString sDirName,QString sDatabasePath);
+    explicit DialogDIEScanDirectory(QWidget *pParent, QString sDirName, QString sDatabasePath);
     ~DialogDIEScanDirectory();
 
 private slots:
@@ -58,4 +58,4 @@ private:
     QString g_sDatabasePath;
 };
 
-#endif // DIALOGDIESCANDIRECTORY_H
+#endif  // DIALOGDIESCANDIRECTORY_H

@@ -19,25 +19,21 @@
  * SOFTWARE.
  */
 #include "dialogelapsed.h"
+
 #include "ui_dialogelapsed.h"
 
-DialogElapsed::DialogElapsed(QWidget *pParent) :
-    QDialog(pParent),
-    ui(new Ui::DialogElapsed)
-{
+DialogElapsed::DialogElapsed(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogElapsed) {
     ui->setupUi(this);
 }
 
-DialogElapsed::~DialogElapsed()
-{
+DialogElapsed::~DialogElapsed() {
     delete ui;
 }
 
-void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult)
-{
-    g_pScanResult=pScanResult;
+void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult) {
+    g_pScanResult = pScanResult;
 
-    qint32 nNumberOfRecords=pScanResult->listDebugRecords.count();
+    qint32 nNumberOfRecords = pScanResult->listDebugRecords.count();
 
     ui->tableWidgetResult->setColumnCount(2);
     ui->tableWidgetResult->setRowCount(nNumberOfRecords);
@@ -48,31 +44,28 @@ void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult)
 
     ui->tableWidgetResult->setHorizontalHeaderLabels(listHeaders);
 
-    for(qint32 i=0;i<nNumberOfRecords;i++)
-    {
-        QTableWidgetItem *pItemTime=new QTableWidgetItem;
+    for (qint32 i = 0; i < nNumberOfRecords; i++) {
+        QTableWidgetItem *pItemTime = new QTableWidgetItem;
 
-        pItemTime->setData(Qt::DisplayRole,pScanResult->listDebugRecords.at(i).nElapsedTime);
+        pItemTime->setData(Qt::DisplayRole, pScanResult->listDebugRecords.at(i).nElapsedTime);
         pItemTime->setTextAlignment(Qt::AlignRight);
-        ui->tableWidgetResult->setItem(i,0,pItemTime);
+        ui->tableWidgetResult->setItem(i, 0, pItemTime);
 
-        QTableWidgetItem *pItemScript=new QTableWidgetItem;
+        QTableWidgetItem *pItemScript = new QTableWidgetItem;
 
         pItemScript->setText(pScanResult->listDebugRecords.at(i).sScript);
         pItemScript->setTextAlignment(Qt::AlignLeft);
-        ui->tableWidgetResult->setItem(i,1,pItemScript);
+        ui->tableWidgetResult->setItem(i, 1, pItemScript);
     }
 
-    ui->tableWidgetResult->setColumnWidth(0,60);
-    ui->tableWidgetResult->setColumnWidth(1,120);
+    ui->tableWidgetResult->setColumnWidth(0, 60);
+    ui->tableWidgetResult->setColumnWidth(1, 120);
 
-    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->tableWidgetResult->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
     ui->tableWidgetResult->horizontalHeader()->setVisible(true);
 }
 
-void DialogElapsed::on_pushButtonOK_clicked()
-{
+void DialogElapsed::on_pushButtonOK_clicked() {
     this->close();
 }
-

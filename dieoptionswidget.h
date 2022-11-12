@@ -23,19 +23,19 @@
 
 #include <QFontDialog>
 #include <QWidget>
-#include "xoptions.h"
+
 #include "xbinary.h"
+#include "xoptions.h"
 
 namespace Ui {
 class DIEOptionsWidget;
 }
 
-class DIEOptionsWidget : public QWidget
-{
+class DIEOptionsWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit DIEOptionsWidget(QWidget *pParent=nullptr);
+    explicit DIEOptionsWidget(QWidget *pParent = nullptr);
     ~DIEOptionsWidget();
 
     void setOptions(XOptions *pOptions);
@@ -56,4 +56,4 @@ private:
     XOptions *g_pOptions;
 };
 
-#endif // DIEOPTIONSWIDGET_H
+#endif  // DIEOPTIONSWIDGET_H

@@ -19,124 +19,109 @@
  * SOFTWARE.
  */
 #include "dieoptionswidget.h"
+
 #include "ui_dieoptionswidget.h"
 
-DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) :
-    QWidget(pParent),
-    ui(new Ui::DIEOptionsWidget)
-{
+DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget) {
     ui->setupUi(this);
 }
 
-DIEOptionsWidget::~DIEOptionsWidget()
-{
+DIEOptionsWidget::~DIEOptionsWidget() {
     delete ui;
 }
 
-void DIEOptionsWidget::setOptions(XOptions *pOptions)
-{
-    g_pOptions=pOptions;
+void DIEOptionsWidget::setOptions(XOptions *pOptions) {
+    g_pOptions = pOptions;
 
     reload();
 }
 
-void DIEOptionsWidget::save()
-{
-    g_pOptions->getCheckBox(ui->checkBoxDeepScan,XOptions::ID_SCAN_DEEP);
-    g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->getCheckBox(ui->checkBoxVerbose,XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabase,XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEInfo,XOptions::ID_SCAN_INFOPATH);
+void DIEOptionsWidget::save() {
+    g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
+    g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
+    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
+    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
+    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
+    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEInfo, XOptions::ID_SCAN_INFOPATH);
 
-    if(g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE))
-    {
-        g_pOptions->getComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
+    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
+        g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
     }
 
-    g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont,XOptions::ID_SCAN_EDITORFONT);
+    g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
-void DIEOptionsWidget::reload()
-{
-    g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan,XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxDeepScan,XOptions::ID_SCAN_DEEP);
-    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan,XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->setCheckBox(ui->checkBoxVerbose,XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan,XOptions::ID_SCAN_ALLTYPES);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabase,XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEInfo,XOptions::ID_SCAN_INFOPATH);
+void DIEOptionsWidget::reload() {
+    g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
+    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
+    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
+    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
+    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEInfo, XOptions::ID_SCAN_INFOPATH);
 
-    if(g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE))
-    {
-        g_pOptions->setComboBox(ui->comboBoxScanEngine,XOptions::ID_SCAN_ENGINE);
+    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
+        g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
     }
 
-    g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont,XOptions::ID_SCAN_EDITORFONT);
+    g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
-void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
-{
-    pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN,true);
-    pOptions->addID(XOptions::ID_SCAN_RECURSIVE,true);
-    pOptions->addID(XOptions::ID_SCAN_DEEP,true);
-    pOptions->addID(XOptions::ID_SCAN_HEURISTIC,false);
-    pOptions->addID(XOptions::ID_SCAN_VERBOSE,true);
-    pOptions->addID(XOptions::ID_SCAN_ALLTYPES,false);
-    pOptions->addID(XOptions::ID_SCAN_DATABASEPATH,"$data/db");
-    pOptions->addID(XOptions::ID_SCAN_INFOPATH,"$data/info");
-    pOptions->addID(XOptions::ID_SCAN_ENGINE,"auto");
+void DIEOptionsWidget::setDefaultValues(XOptions *pOptions) {
+    pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
+    pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
+    pOptions->addID(XOptions::ID_SCAN_DEEP, true);
+    pOptions->addID(XOptions::ID_SCAN_HEURISTIC, false);
+    pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
+    pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
+    pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
+    pOptions->addID(XOptions::ID_SCAN_INFOPATH, "$data/info");
+    pOptions->addID(XOptions::ID_SCAN_ENGINE, "auto");
 
 #ifdef Q_OS_WIN
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"Courier,10,-1,5,50,0,0,0,0,0");
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");
 #endif
 #ifdef Q_OS_LINUX
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0");
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0");
 #endif
 #ifdef Q_OS_MACOS
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT,"Menlo,10,-1,5,50,0,0,0,0,0"); // TODO Check
+    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Menlo,10,-1,5,50,0,0,0,0,0");  // TODO Check
 #endif
 }
 
-void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
-{
-    QString sText=ui->lineEditDIEDatabase->text();
-    QString sInitDirectory=XBinary::convertPathName(sText);
+void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked() {
+    QString sText = ui->lineEditDIEDatabase->text();
+    QString sInitDirectory = XBinary::convertPathName(sText);
 
-    QString sDirectoryName=QFileDialog::getExistingDirectory(this,tr("Open directory")+QString("..."),sInitDirectory,QFileDialog::ShowDirsOnly);
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 
-    if(!sDirectoryName.isEmpty())
-    {
+    if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabase->setText(sDirectoryName);
     }
 }
 
-void DIEOptionsWidget::on_toolButtonDIEInfo_clicked()
-{
-    QString sText=ui->lineEditDIEInfo->text();
-    QString sInitDirectory=XBinary::convertPathName(sText);
+void DIEOptionsWidget::on_toolButtonDIEInfo_clicked() {
+    QString sText = ui->lineEditDIEInfo->text();
+    QString sInitDirectory = XBinary::convertPathName(sText);
 
-    QString sDirectoryName=QFileDialog::getExistingDirectory(this,tr("Open directory")+QString("..."),sInitDirectory,QFileDialog::ShowDirsOnly);
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
 
-    if(!sDirectoryName.isEmpty())
-    {
+    if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEInfo->setText(sDirectoryName);
     }
 }
 
-void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked()
-{
+void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked() {
     QFont _font;
     _font.fromString(ui->lineEditSignaturesEditorFont->text());
 
-    bool bOK=false;
-    _font=QFontDialog::getFont(&bOK,_font,this);
+    bool bOK = false;
+    _font = QFontDialog::getFont(&bOK, _font, this);
 
-    if(bOK)
-    {
+    if (bOK) {
         ui->lineEditSignaturesEditorFont->setText(_font.toString());
     }
 }

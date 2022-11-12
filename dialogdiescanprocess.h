@@ -27,32 +27,31 @@
 #include <QStandardItemModel>
 #include <QThread>
 #include <QTimer>
+
 #include "die_script.h"
 #include "xdialogprocess.h"
 
-namespace Ui
-{
+namespace Ui {
 class DialogDIEScanProcess;
 }
 
-class DialogDIEScanProcess : public XDialogProcess
-{
+class DialogDIEScanProcess : public XDialogProcess {
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanProcess(QWidget *pParent=nullptr);
+    explicit DialogDIEScanProcess(QWidget *pParent = nullptr);
     ~DialogDIEScanProcess();
 
-    void setData(QString sDirectoryName,DiE_Script::OPTIONS options,QString sDatabasePath);
+    void setData(QString sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath);
 
 signals:
     void scanFileStarted(QString sFileName);
     void scanResult(DiE_Script::SCAN_RESULT scanResult);
 
 private:
-    static const qint32 N_REFRESH_DELAY=1000; // msec TODO Check mb set/get functions
+    static const qint32 N_REFRESH_DELAY = 1000;  // msec TODO Check mb set/get functions
     DiE_Script *g_pDieScript;
     QThread *g_pThread;
 };
 
-#endif // DIALOGDIESCANPROCESS_H
+#endif  // DIALOGDIESCANPROCESS_H

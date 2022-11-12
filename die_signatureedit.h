@@ -21,17 +21,17 @@
 #ifndef DIE_SIGNATUREEDIT_H
 #define DIE_SIGNATUREEDIT_H
 
-#include <QPlainTextEdit>
 #include <QPainter>
+#include <QPlainTextEdit>
+
 #include "die_highlighter.h"
 #include "xoptions.h"
 
-class DIE_SignatureEdit : public QPlainTextEdit
-{
+class DIE_SignatureEdit : public QPlainTextEdit {
     Q_OBJECT
 
 public:
-    explicit DIE_SignatureEdit(QWidget *pParent=nullptr);
+    explicit DIE_SignatureEdit(QWidget *pParent = nullptr);
     void lineNumberAreaPaintEvent(QPaintEvent *pEvent);
     int lineNumberAreaWidth();
     void setPlainText(const QString &sText);
@@ -43,31 +43,27 @@ protected:
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
-    void updateLineNumberArea(const QRect &rect,int nDy);
+    void updateLineNumberArea(const QRect &rect, int nDy);
 
 private:
     DIE_Highlighter *pHighlighter;
     QWidget *g_pLineNumberArea;
 };
 
-class DIE_LineNumberArea : public QWidget
-{
+class DIE_LineNumberArea : public QWidget {
     Q_OBJECT
 
 public:
-    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
-    {
-        g_pPlainTextEdit=pPlainTextEdit;
+    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit) {
+        g_pPlainTextEdit = pPlainTextEdit;
     }
 
-    QSize sizeHint() const
-    {
-        return QSize(((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaWidth(),0);
+    QSize sizeHint() const {
+        return QSize(((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaWidth(), 0);
     }
 
 protected:
-    void paintEvent(QPaintEvent *pEvent)
-    {
+    void paintEvent(QPaintEvent *pEvent) {
         ((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaPaintEvent(pEvent);
     }
 
@@ -75,4 +71,4 @@ private:
     QPlainTextEdit *g_pPlainTextEdit;
 };
 
-#endif // DIE_SIGNATUREEDIT_H
+#endif  // DIE_SIGNATUREEDIT_H

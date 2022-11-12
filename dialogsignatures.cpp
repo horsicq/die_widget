@@ -19,50 +19,49 @@
  * SOFTWARE.
  */
 #include "dialogsignatures.h"
+
 #include "ui_dialogsignatures.h"
 
-DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QString sFileName,XBinary::FT fileType,QString sSignature) :
-    XShortcutsDialog(pParent),
-    ui(new Ui::DialogSignatures)
-{
+DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogSignatures) {
     ui->setupUi(this);
 
-    memset(shortCuts,0,sizeof shortCuts);
+    memset(shortCuts, 0, sizeof shortCuts);
 
-    g_data={};
+    g_data = {};
 
     setWindowFlags(Qt::Window);
 
-    this->pDieScript=pDieScript;
-    this->sFileName=sFileName;
-    this->fileType=fileType;
-    this->sSignature=sSignature;
+    this->pDieScript = pDieScript;
+    this->sFileName = sFileName;
+    this->fileType = fileType;
+    this->sSignature = sSignature;
 
-    connect(pDieScript,SIGNAL(infoMessage(QString)),this,SLOT(infoMessage(QString)));
+    connect(pDieScript, SIGNAL(infoMessage(QString)), this, SLOT(infoMessage(QString)));
 
     ui->plainTextEditSignature->setLineWrapMode(QPlainTextEdit::NoWrap);
 
     ui->treeWidgetSignatures->setSortingEnabled(false);
 
-    QTreeWidgetItem *pRootItem=new QTreeWidgetItem(ui->treeWidgetSignatures);
-    pRootItem->setText(0,tr("Database"));
+    QTreeWidgetItem *pRootItem = new QTreeWidgetItem(ui->treeWidgetSignatures);
+    pRootItem->setText(0, tr("Database"));
 
-    _handleTreeItems(pRootItem,XBinary::FT_UNKNOWN);
+    _handleTreeItems(pRootItem, XBinary::FT_UNKNOWN);
 
-    handleTreeItems(pRootItem,XBinary::FT_BINARY,   "Binary");
-    handleTreeItems(pRootItem,XBinary::FT_COM,      "COM");
-    handleTreeItems(pRootItem,XBinary::FT_MSDOS,    "MSDOS");
-    handleTreeItems(pRootItem,XBinary::FT_NE,       "NE");
-    handleTreeItems(pRootItem,XBinary::FT_LE,       "LE");
-    handleTreeItems(pRootItem,XBinary::FT_LX,       "LX");
-    handleTreeItems(pRootItem,XBinary::FT_PE,       "PE");
-    handleTreeItems(pRootItem,XBinary::FT_MACHO,    "MACH");
-    handleTreeItems(pRootItem,XBinary::FT_ELF,      "ELF");
+    handleTreeItems(pRootItem, XBinary::FT_BINARY, "Binary");
+    handleTreeItems(pRootItem, XBinary::FT_COM, "COM");
+    handleTreeItems(pRootItem, XBinary::FT_MSDOS, "MSDOS");
+    handleTreeItems(pRootItem, XBinary::FT_NE, "NE");
+    handleTreeItems(pRootItem, XBinary::FT_LE, "LE");
+    handleTreeItems(pRootItem, XBinary::FT_LX, "LX");
+    handleTreeItems(pRootItem, XBinary::FT_PE, "PE");
+    handleTreeItems(pRootItem, XBinary::FT_MACHO, "MACH");
+    handleTreeItems(pRootItem, XBinary::FT_ELF, "ELF");
 
     ui->treeWidgetSignatures->setSortingEnabled(true);
-    ui->treeWidgetSignatures->sortByColumn(0,Qt::AscendingOrder);
+    ui->treeWidgetSignatures->sortByColumn(0, Qt::AscendingOrder);
 
-    g_bCurrentEdited=false;
+    g_bCurrentEdited = false;
     ui->pushButtonSave->setEnabled(false);
 
     ui->checkBoxShowType->setChecked(true);
@@ -73,77 +72,64 @@ DialogSignatures::DialogSignatures(QWidget *pParent,DiE_Script *pDieScript,QStri
 
     ui->checkBoxReadOnly->setChecked(true);
 
-    if(fileType!=XBinary::FT_UNKNOWN)
-    {
-        qint32 nNumberOfTopLevelItems=ui->treeWidgetSignatures->topLevelItemCount();
+    if (fileType != XBinary::FT_UNKNOWN) {
+        qint32 nNumberOfTopLevelItems = ui->treeWidgetSignatures->topLevelItemCount();
 
-        for(qint32 i=0;i<nNumberOfTopLevelItems;i++)
-        {
-            if(_setTreeItem(ui->treeWidgetSignatures,ui->treeWidgetSignatures->topLevelItem(i),fileType,sSignature))
-            {
+        for (qint32 i = 0; i < nNumberOfTopLevelItems; i++) {
+            if (_setTreeItem(ui->treeWidgetSignatures, ui->treeWidgetSignatures->topLevelItem(i), fileType, sSignature)) {
                 break;
             }
         }
-    }
-    else
-    {
+    } else {
         ui->treeWidgetSignatures->expandAll();
     }
 
-    ui->comboBoxFunction->addItem("detect","detect");
+    ui->comboBoxFunction->addItem("detect", "detect");
 
 #ifndef QT_SCRIPTTOOLS_LIB
     ui->pushButtonDebug->hide();
 #endif
 }
 
-DialogSignatures::~DialogSignatures()
-{
+DialogSignatures::~DialogSignatures() {
     delete ui;
 }
 
-void DialogSignatures::adjustView()
-{
+void DialogSignatures::adjustView() {
     QFont _font;
-    QString sFont=getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
+    QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
 
-    if((sFont!="")&&_font.fromString(sFont))
-    {
+    if ((sFont != "") && _font.fromString(sFont)) {
         ui->plainTextEditSignature->setFont(_font);
     }
 }
 
-qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem,XBinary::FT fileType,QString sText)
-{
-    qint32 nResult=0;
+qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText) {
+    qint32 nResult = 0;
 
-    if(pDieScript->isSignaturesPresent(fileType))
-    {
-        QTreeWidgetItem *pItem=new QTreeWidgetItem(pRootItem);
-        pItem->setText(0,sText);
-        nResult=_handleTreeItems(pItem,fileType);
+    if (pDieScript->isSignaturesPresent(fileType)) {
+        QTreeWidgetItem *pItem = new QTreeWidgetItem(pRootItem);
+        pItem->setText(0, sText);
+        nResult = _handleTreeItems(pItem, fileType);
     }
 
     return nResult;
 }
 
-qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent,XBinary::FT fileType)
-{
-    qint32 nResult=0;
+qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBinary::FT fileType) {
+    qint32 nResult = 0;
 
-    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures=pDieScript->getSignatures();
+    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = pDieScript->getSignatures();
 
-    qint32 nNumberOfSignatures=pListSignatures->count();
+    qint32 nNumberOfSignatures = pListSignatures->count();
 
-    for(qint32 i=0;i<nNumberOfSignatures;i++)
-    {
-        if(pListSignatures->at(i).fileType==fileType)
-        {
-            QTreeWidgetItem *pRootItem=new QTreeWidgetItem(pItemParent);
-            pRootItem->setText(0,pListSignatures->at(i).sName);
-            pRootItem->setData(0,Qt::UserRole+UD_FILEPATH,pListSignatures->at(i).sFilePath);
-            pRootItem->setData(0,Qt::UserRole+UD_FILETYPE,pListSignatures->at(i).fileType);
-            pRootItem->setData(0,Qt::UserRole+UD_NAME,pListSignatures->at(i).sName);
+    for (qint32 i = 0; i < nNumberOfSignatures; i++) {
+        if (pListSignatures->at(i).fileType == fileType) {
+            QTreeWidgetItem *pRootItem = new QTreeWidgetItem(pItemParent);
+            pRootItem->setText(0, pListSignatures->at(i).sName);
+            pRootItem->setData(0, Qt::UserRole + UD_FILEPATH, pListSignatures->at(i).sFilePath);
+            pRootItem->setData(0, Qt::UserRole + UD_FILETYPE, pListSignatures->at(i).fileType);
+            pRootItem->setData(0, Qt::UserRole + UD_NAME, pListSignatures->at(i).sName);
 
             nResult++;
         }
@@ -152,68 +138,60 @@ qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent,XBinary::
     return nResult;
 }
 
-void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
-{
+void DialogSignatures::runScript(QString sFunction, bool bIsDebug) {
     enableControls(false);
 
-    QTreeWidgetItem *pItemCurrent=ui->treeWidgetSignatures->currentItem();
+    QTreeWidgetItem *pItemCurrent = ui->treeWidgetSignatures->currentItem();
 
-    if(pItemCurrent)
-    {
-        if(g_bCurrentEdited)
-        {
+    if (pItemCurrent) {
+        if (g_bCurrentEdited) {
             save();
         }
 
         ui->plainTextEditResult->clear();
 
-        DiE_Script::OPTIONS scanOptions={};
+        DiE_Script::OPTIONS scanOptions = {};
 
-        scanOptions.bShowType=ui->checkBoxShowType->isChecked();
-        scanOptions.bShowOptions=ui->checkBoxShowOptions->isChecked();
-        scanOptions.bShowVersion=ui->checkBoxShowVersion->isChecked();
-        scanOptions.bIsDeepScan=ui->checkBoxDeepScan->isChecked();
-        scanOptions.bIsHeuristicScan=ui->checkBoxHeuristicScan->isChecked();
-        scanOptions.bIsVerbose=ui->checkBoxVerbose->isChecked();
+        scanOptions.bShowType = ui->checkBoxShowType->isChecked();
+        scanOptions.bShowOptions = ui->checkBoxShowOptions->isChecked();
+        scanOptions.bShowVersion = ui->checkBoxShowVersion->isChecked();
+        scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+        scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+        scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
 
-        scanOptions.sSignatureName=pItemCurrent->data(0,Qt::UserRole+UD_NAME).toString();
-        scanOptions.fileType=(XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0,Qt::UserRole+UD_FILETYPE).toInt();
+        scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();
+        scanOptions.fileType = (XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0, Qt::UserRole + UD_FILETYPE).toInt();
 
-        DiE_Script::SCAN_RESULT scanResult={};
+        DiE_Script::SCAN_RESULT scanResult = {};
 
-        if(bIsDebug)
-        {
-        #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        if (bIsDebug) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             QScriptEngineDebugger debugger(this);
-            QMainWindow *debugWindow=debugger.standardWindow();
+            QMainWindow *debugWindow = debugger.standardWindow();
             debugWindow->setWindowModality(Qt::WindowModal);
             debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
             pDieScript->setDebugger(&debugger);
-        #endif
+#endif
 
-            scanResult=pDieScript->processFile(sFileName,&scanOptions,sFunction);
-        }
-        else
-        {
-            scanResult=pDieScript->processFile(sFileName,&scanOptions,sFunction);
+            scanResult = pDieScript->processFile(sFileName, &scanOptions, sFunction);
+        } else {
+            scanResult = pDieScript->processFile(sFileName, &scanOptions, sFunction);
         }
 
-        if(bIsDebug)
-        {
-        #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        if (bIsDebug) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             pDieScript->removeDebugger();
-        #endif
+#endif
         }
 
-        QList<XBinary::SCANSTRUCT> listResult=DiE_Script::convert(&(scanResult.listRecords));
+        QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
 
         ScanItemModel model(&listResult);
 
         ui->plainTextEditResult->appendPlainText(model.toFormattedString());
 
-        if(scanResult.listErrors.count())
-        {
+        if (scanResult.listErrors.count()) {
             ui->plainTextEditResult->appendPlainText(DiE_Script::getErrorsString(&scanResult));
         }
 
@@ -224,23 +202,20 @@ void DialogSignatures::runScript(QString sFunction,bool bIsDebug)
     enableControls(true);
 }
 
-void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent,QTreeWidgetItem *pItemPrevious)
-{
+void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
     Q_UNUSED(pItemPrevious)
 
-    QString sSignatureFilePath=pItemCurrent->data(0,Qt::UserRole).toString();
+    QString sSignatureFilePath = pItemCurrent->data(0, Qt::UserRole).toString();
 
-    if(sSignatureFilePath!=sCurrentSignatureFilePath)
-    {
-        const bool bBlocked1=ui->plainTextEditSignature->blockSignals(true);
+    if (sSignatureFilePath != sCurrentSignatureFilePath) {
+        const bool bBlocked1 = ui->plainTextEditSignature->blockSignals(true);
 
-        if(g_bCurrentEdited)
-        {
+        if (g_bCurrentEdited) {
             // TODO handle warning
         }
 
-        sCurrentSignatureFilePath=sSignatureFilePath;
-        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord=pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
+        sCurrentSignatureFilePath = sSignatureFilePath;
+        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
@@ -249,78 +224,60 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
     }
 }
 
-void DialogSignatures::on_pushButtonSave_clicked()
-{
+void DialogSignatures::on_pushButtonSave_clicked() {
     save();
 }
 
-void DialogSignatures::save()
-{
-    if(pDieScript->updateSignature(sCurrentSignatureFilePath,ui->plainTextEditSignature->toPlainText()))
-    {
-        g_bCurrentEdited=false;
+void DialogSignatures::save() {
+    if (pDieScript->updateSignature(sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
+        g_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
-    }
-    else
-    {
+    } else {
         // Handle error
     }
 }
 
-void DialogSignatures::on_pushButtonRun_clicked()
-{
-    runScript(ui->comboBoxFunction->currentData().toString(),false);
+void DialogSignatures::on_pushButtonRun_clicked() {
+    runScript(ui->comboBoxFunction->currentData().toString(), false);
 }
 
-void DialogSignatures::on_pushButtonDebug_clicked()
-{
-    runScript(ui->comboBoxFunction->currentData().toString(),true);
+void DialogSignatures::on_pushButtonDebug_clicked() {
+    runScript(ui->comboBoxFunction->currentData().toString(), true);
 }
 
-void DialogSignatures::on_pushButtonClearResult_clicked()
-{
+void DialogSignatures::on_pushButtonClearResult_clicked() {
     ui->plainTextEditResult->clear();
 }
 
-void DialogSignatures::on_pushButtonClose_clicked()
-{
+void DialogSignatures::on_pushButtonClose_clicked() {
     this->close();
 }
 
-void DialogSignatures::on_plainTextEditSignature_textChanged()
-{
-    g_bCurrentEdited=true;
+void DialogSignatures::on_plainTextEditSignature_textChanged() {
+    g_bCurrentEdited = true;
     ui->pushButtonSave->setEnabled(true);
 }
 
-void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked)
-{
+void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked) {
     ui->plainTextEditSignature->setReadOnly(bChecked);
 }
 
-bool DialogSignatures::_setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XBinary::FT fileType,QString sSignature)
-{
-    bool bResult=false;
+bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature) {
+    bool bResult = false;
 
-    XBinary::FT _fileType=(XBinary::FT)pItem->data(0,Qt::UserRole+UD_FILETYPE).toInt();
-    QString _sSignature=pItem->data(0,Qt::UserRole+UD_NAME).toString();
+    XBinary::FT _fileType = (XBinary::FT)pItem->data(0, Qt::UserRole + UD_FILETYPE).toInt();
+    QString _sSignature = pItem->data(0, Qt::UserRole + UD_NAME).toString();
 
-    if( (XBinary::checkFileType(_fileType,fileType))&&
-        ((sSignature=="")||(_sSignature==sSignature)))
-    {
+    if ((XBinary::checkFileType(_fileType, fileType)) && ((sSignature == "") || (_sSignature == sSignature))) {
         pTree->setCurrentItem(pItem);
 
-        bResult=true;
-    }
-    else
-    {
-        qint32 nNumberOfChildren=pItem->childCount();
+        bResult = true;
+    } else {
+        qint32 nNumberOfChildren = pItem->childCount();
 
-        for(qint32 i=0;i<nNumberOfChildren;i++)
-        {
-            if(_setTreeItem(pTree,pItem->child(i),fileType,sSignature))
-            {
-                bResult=true;
+        for (qint32 i = 0; i < nNumberOfChildren; i++) {
+            if (_setTreeItem(pTree, pItem->child(i), fileType, sSignature)) {
+                bResult = true;
                 break;
             }
         }
@@ -329,74 +286,60 @@ bool DialogSignatures::_setTreeItem(QTreeWidget *pTree,QTreeWidgetItem *pItem,XB
     return bResult;
 }
 
-void DialogSignatures::enableControls(bool bState)
-{
+void DialogSignatures::enableControls(bool bState) {
     ui->treeWidgetSignatures->setEnabled(bState);
     ui->pushButtonClearResult->setEnabled(bState);
     ui->pushButtonClose->setEnabled(bState);
     ui->pushButtonDebug->setEnabled(bState);
     ui->pushButtonRun->setEnabled(bState);
 
-    if(g_bCurrentEdited)
-    {
+    if (g_bCurrentEdited) {
         ui->pushButtonSave->setEnabled(bState);
     }
 }
 
-void DialogSignatures::infoMessage(QString sInfoMessage)
-{
+void DialogSignatures::infoMessage(QString sInfoMessage) {
     ui->plainTextEditResult->appendPlainText(sInfoMessage);
 }
 
-void DialogSignatures::on_pushButtonFind_clicked()
-{
+void DialogSignatures::on_pushButtonFind_clicked() {
     findString();
 }
 
-void DialogSignatures::on_pushButtonFindNext_clicked()
-{
+void DialogSignatures::on_pushButtonFindNext_clicked() {
     findNext();
 }
 
-void DialogSignatures::findString()
-{
+void DialogSignatures::findString() {
     DialogFindText dialogFindText(this);
 
     dialogFindText.setData(&g_data);
 
-    if(dialogFindText.exec()==QDialog::Accepted)
-    {
+    if (dialogFindText.exec() == QDialog::Accepted) {
         findNext();
     }
 }
 
-void DialogSignatures::findNext()
-{
-    QTextDocument::FindFlags findFlags=(QTextDocument::FindFlags)0;
+void DialogSignatures::findNext() {
+    QTextDocument::FindFlags findFlags = (QTextDocument::FindFlags)0;
 
-    if(g_data.bIsMatchCase)
-    {
-        findFlags|=QTextDocument::FindCaseSensitively;
+    if (g_data.bIsMatchCase) {
+        findFlags |= QTextDocument::FindCaseSensitively;
     }
 
-    ui->plainTextEditSignature->find(g_data.sText,findFlags);
+    ui->plainTextEditSignature->find(g_data.sText, findFlags);
 }
 
-void DialogSignatures::registerShortcuts(bool bState)
-{
-    if(bState)
-    {
-        if(!shortCuts[SC_FIND_STRING])              shortCuts[SC_FIND_STRING]               =new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING),           this,SLOT(findString()));
-        if(!shortCuts[SC_FIND_NEXT])                shortCuts[SC_FIND_NEXT]                 =new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT),             this,SLOT(findNext()));
-    }
-    else
-    {
-        for(qint32 i=0;i<__SC_SIZE;i++)
-        {
-            if(shortCuts[i])
-            {
+void DialogSignatures::registerShortcuts(bool bState) {
+    if (bState) {
+        if (!shortCuts[SC_FIND_STRING])
+            shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
+        if (!shortCuts[SC_FIND_NEXT]) shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
+    } else {
+        for (qint32 i = 0; i < __SC_SIZE; i++) {
+            if (shortCuts[i]) {
                 delete shortCuts[i];
-                shortCuts[i]=nullptr;
+                shortCuts[i] = nullptr;
             }
         }
     }
