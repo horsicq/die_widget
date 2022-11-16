@@ -22,7 +22,8 @@
 
 #include "ui_die_widget.h"
 
-DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIE_Widget) {
+DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIE_Widget)
+{
     ui->setupUi(this);
 
     g_pdStruct = {};
@@ -39,7 +40,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     clear();
 }
 
-DIE_Widget::~DIE_Widget() {
+DIE_Widget::~DIE_Widget()
+{
     if (bProcess) {
         stop();
         watcher.waitForFinished();
@@ -60,7 +62,8 @@ DIE_Widget::~DIE_Widget() {
 //    }
 //}
 
-void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType) {
+void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
+{
     clear();
 
     //    if(fileType==XBinary::FT_BINARY)
@@ -84,12 +87,14 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType) {
     }
 }
 
-void DIE_Widget::adjustView() {
+void DIE_Widget::adjustView()
+{
     this->sInfoPath = getGlobalOptions()->getInfoPath();
     g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());  // TODO in Thread
 }
 
-void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
+void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
+{
     ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
     ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
     ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
@@ -99,11 +104,13 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions) {
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-void DIE_Widget::on_pushButtonDieScan_clicked() {
+void DIE_Widget::on_pushButtonDieScan_clicked()
+{
     process();
 }
 
-void DIE_Widget::clear() {
+void DIE_Widget::clear()
+{
     scanType = ST_UNKNOWN;
     g_scanOptions = {};
     scanResult = {};
@@ -112,7 +119,8 @@ void DIE_Widget::clear() {
     ui->treeViewResult->setModel(0);
 }
 
-void DIE_Widget::process() {
+void DIE_Widget::process()
+{
     if (!bProcess) {
         enableControls(false);
         bProcess = true;
@@ -150,7 +158,8 @@ void DIE_Widget::process() {
     }
 }
 
-void DIE_Widget::scan() {
+void DIE_Widget::scan()
+{
     if (scanType != ST_UNKNOWN) {
         if (scanType == ST_FILE) {
             emit scanStarted();
@@ -162,11 +171,13 @@ void DIE_Widget::scan() {
     }
 }
 
-void DIE_Widget::stop() {
+void DIE_Widget::stop()
+{
     g_pdStruct.bIsStop = true;
 }
 
-void DIE_Widget::onScanFinished() {
+void DIE_Widget::onScanFinished()
+{
     bProcess = false;
 
     g_pTimer->stop();
@@ -249,7 +260,8 @@ void DIE_Widget::onScanFinished() {
     enableControls(true);
 }
 
-void DIE_Widget::on_pushButtonDieSignatures_clicked() {
+void DIE_Widget::on_pushButtonDieSignatures_clicked()
+{
     DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, g_scanOptions.fileType, "");
 
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
@@ -257,7 +269,8 @@ void DIE_Widget::on_pushButtonDieSignatures_clicked() {
     dialogSignatures.exec();
 }
 
-void DIE_Widget::on_pushButtonDieExtraInformation_clicked() {
+void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
+{
     DialogTextInfo dialogInfo(this);
 
     QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
@@ -269,13 +282,15 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked() {
     dialogInfo.exec();
 }
 
-void DIE_Widget::on_pushButtonDieLog_clicked() {
+void DIE_Widget::on_pushButtonDieLog_clicked()
+{
     DialogLog dialogLog(this, DiE_Script::getErrorsString(&scanResult));
 
     dialogLog.exec();
 }
 
-void DIE_Widget::showInfo(QString sName) {
+void DIE_Widget::showInfo(QString sName)
+{
     QString sFileName = getInfoFileName(sName);
 
     if (XBinary::isFileExists(sFileName)) {
@@ -290,7 +305,8 @@ void DIE_Widget::showInfo(QString sName) {
     }
 }
 
-void DIE_Widget::showSignature(XBinary::FT fileType, QString sName) {
+void DIE_Widget::showSignature(XBinary::FT fileType, QString sName)
+{
     DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
 
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
@@ -298,7 +314,8 @@ void DIE_Widget::showSignature(XBinary::FT fileType, QString sName) {
     dialogSignatures.exec();
 }
 
-void DIE_Widget::enableControls(bool bState) {
+void DIE_Widget::enableControls(bool bState)
+{
     if (!bState) {
         QAbstractItemModel *pOldModel = ui->treeViewResult->model();
         ui->treeViewResult->setModel(0);
@@ -319,13 +336,15 @@ void DIE_Widget::enableControls(bool bState) {
     ui->pushButtonDieScanDirectory->setEnabled(bState);
 }
 
-QString DIE_Widget::getInfoFileName(QString sName) {
+QString DIE_Widget::getInfoFileName(QString sName)
+{
     QString sResult = XBinary::convertPathName(sInfoPath) + QDir::separator() + QString("%1.html").arg(sName);
 
     return sResult;
 }
 
-void DIE_Widget::copyResult() {
+void DIE_Widget::copyResult()
+{
     QModelIndexList listIndexes = ui->treeViewResult->selectionModel()->selectedIndexes();
 
     if (listIndexes.size() > 0) {
@@ -338,17 +357,20 @@ void DIE_Widget::copyResult() {
     }
 }
 
-void DIE_Widget::on_pushButtonDieScanDirectory_clicked() {
+void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
+{
     DialogDIEScanDirectory dds(this, QFileInfo(sFileName).absolutePath(), g_dieScript.getDatabasePath());
 
     dds.exec();
 }
 
-void DIE_Widget::registerShortcuts(bool bState) {
+void DIE_Widget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }
 
-void DIE_Widget::on_toolButtonElapsedTime_clicked() {
+void DIE_Widget::on_toolButtonElapsedTime_clicked()
+{
     DialogElapsed dialogElapsed(this);
 
     dialogElapsed.setData(&scanResult);
@@ -356,7 +378,8 @@ void DIE_Widget::on_toolButtonElapsedTime_clicked() {
     dialogElapsed.exec();
 }
 
-void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index) {
+void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index)
+{
     if (index.column() == COLUMN_SIGNATURE) {
         QString sSignature = ui->treeViewResult->model()->data(index, Qt::UserRole + ScanItemModel::UD_INFO).toString();
         XBinary::FT fileType = (XBinary::FT)(ui->treeViewResult->model()->data(index, Qt::UserRole + ScanItemModel::UD_FILETYPE).toInt());
@@ -369,7 +392,8 @@ void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index) {
     }
 }
 
-void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos) {
+void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
+{
     QModelIndexList listIndexes = ui->treeViewResult->selectionModel()->selectedIndexes();
 
     if (listIndexes.size() > 0) {
@@ -390,7 +414,8 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
     }
 }
 
-void DIE_Widget::timerSlot() {
+void DIE_Widget::timerSlot()
+{
     ui->progressBarProgress->setMaximum(100);
     ui->progressBarProgress->setValue(XBinary::getPdStructProcent(&g_pdStruct));
 }

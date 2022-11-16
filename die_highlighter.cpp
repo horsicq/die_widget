@@ -20,7 +20,8 @@
  */
 #include "die_highlighter.h"
 
-DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent) {
+DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
+{
     HighlightingRule rule;
 
     keywordFormat.setForeground(Qt::darkBlue);
@@ -64,7 +65,8 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
     commentEndExpression = QRegularExpression(QStringLiteral("\\*/"));
 }
 
-void DIE_Highlighter::highlightBlock(const QString &text) {
+void DIE_Highlighter::highlightBlock(const QString &text)
+{
     for (const HighlightingRule &rule : highlightingRules)  // TODO Check qConst
     {
         QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);

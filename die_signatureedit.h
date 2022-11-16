@@ -54,16 +54,19 @@ class DIE_LineNumberArea : public QWidget {
     Q_OBJECT
 
 public:
-    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit) {
+    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
+    {
         g_pPlainTextEdit = pPlainTextEdit;
     }
 
-    QSize sizeHint() const {
+    QSize sizeHint() const
+    {
         return QSize(((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaWidth(), 0);
     }
 
 protected:
-    void paintEvent(QPaintEvent *pEvent) {
+    void paintEvent(QPaintEvent *pEvent)
+    {
         ((DIE_SignatureEdit *)g_pPlainTextEdit)->lineNumberAreaPaintEvent(pEvent);
     }
 

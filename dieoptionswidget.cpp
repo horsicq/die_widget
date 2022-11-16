@@ -22,21 +22,25 @@
 
 #include "ui_dieoptionswidget.h"
 
-DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget) {
+DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget)
+{
     ui->setupUi(this);
 }
 
-DIEOptionsWidget::~DIEOptionsWidget() {
+DIEOptionsWidget::~DIEOptionsWidget()
+{
     delete ui;
 }
 
-void DIEOptionsWidget::setOptions(XOptions *pOptions) {
+void DIEOptionsWidget::setOptions(XOptions *pOptions)
+{
     g_pOptions = pOptions;
 
     reload();
 }
 
-void DIEOptionsWidget::save() {
+void DIEOptionsWidget::save()
+{
     g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
     g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
     g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
@@ -53,7 +57,8 @@ void DIEOptionsWidget::save() {
     g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
-void DIEOptionsWidget::reload() {
+void DIEOptionsWidget::reload()
+{
     g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
     g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
     g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
@@ -70,7 +75,8 @@ void DIEOptionsWidget::reload() {
     g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
-void DIEOptionsWidget::setDefaultValues(XOptions *pOptions) {
+void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
+{
     pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
     pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
     pOptions->addID(XOptions::ID_SCAN_DEEP, true);
@@ -92,7 +98,8 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions) {
 #endif
 }
 
-void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked() {
+void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
+{
     QString sText = ui->lineEditDIEDatabase->text();
     QString sInitDirectory = XBinary::convertPathName(sText);
 
@@ -103,7 +110,8 @@ void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked() {
     }
 }
 
-void DIEOptionsWidget::on_toolButtonDIEInfo_clicked() {
+void DIEOptionsWidget::on_toolButtonDIEInfo_clicked()
+{
     QString sText = ui->lineEditDIEInfo->text();
     QString sInitDirectory = XBinary::convertPathName(sText);
 
@@ -114,7 +122,8 @@ void DIEOptionsWidget::on_toolButtonDIEInfo_clicked() {
     }
 }
 
-void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked() {
+void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked()
+{
     QFont _font;
     _font.fromString(ui->lineEditSignaturesEditorFont->text());
 

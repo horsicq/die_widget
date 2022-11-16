@@ -23,7 +23,8 @@
 #include "ui_dialogsignatures.h"
 
 DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogSignatures) {
+    : XShortcutsDialog(pParent), ui(new Ui::DialogSignatures)
+{
     ui->setupUi(this);
 
     memset(shortCuts, 0, sizeof shortCuts);
@@ -91,11 +92,13 @@ DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QSt
 #endif
 }
 
-DialogSignatures::~DialogSignatures() {
+DialogSignatures::~DialogSignatures()
+{
     delete ui;
 }
 
-void DialogSignatures::adjustView() {
+void DialogSignatures::adjustView()
+{
     QFont _font;
     QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
 
@@ -104,7 +107,8 @@ void DialogSignatures::adjustView() {
     }
 }
 
-qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText) {
+qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText)
+{
     qint32 nResult = 0;
 
     if (pDieScript->isSignaturesPresent(fileType)) {
@@ -116,7 +120,8 @@ qint32 DialogSignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT
     return nResult;
 }
 
-qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBinary::FT fileType) {
+qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBinary::FT fileType)
+{
     qint32 nResult = 0;
 
     QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = pDieScript->getSignatures();
@@ -138,7 +143,8 @@ qint32 DialogSignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBinary:
     return nResult;
 }
 
-void DialogSignatures::runScript(QString sFunction, bool bIsDebug) {
+void DialogSignatures::runScript(QString sFunction, bool bIsDebug)
+{
     enableControls(false);
 
     QTreeWidgetItem *pItemCurrent = ui->treeWidgetSignatures->currentItem();
@@ -202,7 +208,8 @@ void DialogSignatures::runScript(QString sFunction, bool bIsDebug) {
     enableControls(true);
 }
 
-void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious) {
+void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious)
+{
     Q_UNUSED(pItemPrevious)
 
     QString sSignatureFilePath = pItemCurrent->data(0, Qt::UserRole).toString();
@@ -224,11 +231,13 @@ void DialogSignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidgetIte
     }
 }
 
-void DialogSignatures::on_pushButtonSave_clicked() {
+void DialogSignatures::on_pushButtonSave_clicked()
+{
     save();
 }
 
-void DialogSignatures::save() {
+void DialogSignatures::save()
+{
     if (pDieScript->updateSignature(sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
         g_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
@@ -237,32 +246,39 @@ void DialogSignatures::save() {
     }
 }
 
-void DialogSignatures::on_pushButtonRun_clicked() {
+void DialogSignatures::on_pushButtonRun_clicked()
+{
     runScript(ui->comboBoxFunction->currentData().toString(), false);
 }
 
-void DialogSignatures::on_pushButtonDebug_clicked() {
+void DialogSignatures::on_pushButtonDebug_clicked()
+{
     runScript(ui->comboBoxFunction->currentData().toString(), true);
 }
 
-void DialogSignatures::on_pushButtonClearResult_clicked() {
+void DialogSignatures::on_pushButtonClearResult_clicked()
+{
     ui->plainTextEditResult->clear();
 }
 
-void DialogSignatures::on_pushButtonClose_clicked() {
+void DialogSignatures::on_pushButtonClose_clicked()
+{
     this->close();
 }
 
-void DialogSignatures::on_plainTextEditSignature_textChanged() {
+void DialogSignatures::on_plainTextEditSignature_textChanged()
+{
     g_bCurrentEdited = true;
     ui->pushButtonSave->setEnabled(true);
 }
 
-void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked) {
+void DialogSignatures::on_checkBoxReadOnly_toggled(bool bChecked)
+{
     ui->plainTextEditSignature->setReadOnly(bChecked);
 }
 
-bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature) {
+bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature)
+{
     bool bResult = false;
 
     XBinary::FT _fileType = (XBinary::FT)pItem->data(0, Qt::UserRole + UD_FILETYPE).toInt();
@@ -286,7 +302,8 @@ bool DialogSignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, 
     return bResult;
 }
 
-void DialogSignatures::enableControls(bool bState) {
+void DialogSignatures::enableControls(bool bState)
+{
     ui->treeWidgetSignatures->setEnabled(bState);
     ui->pushButtonClearResult->setEnabled(bState);
     ui->pushButtonClose->setEnabled(bState);
@@ -298,19 +315,23 @@ void DialogSignatures::enableControls(bool bState) {
     }
 }
 
-void DialogSignatures::infoMessage(QString sInfoMessage) {
+void DialogSignatures::infoMessage(QString sInfoMessage)
+{
     ui->plainTextEditResult->appendPlainText(sInfoMessage);
 }
 
-void DialogSignatures::on_pushButtonFind_clicked() {
+void DialogSignatures::on_pushButtonFind_clicked()
+{
     findString();
 }
 
-void DialogSignatures::on_pushButtonFindNext_clicked() {
+void DialogSignatures::on_pushButtonFindNext_clicked()
+{
     findNext();
 }
 
-void DialogSignatures::findString() {
+void DialogSignatures::findString()
+{
     DialogFindText dialogFindText(this);
 
     dialogFindText.setData(&g_data);
@@ -320,7 +341,8 @@ void DialogSignatures::findString() {
     }
 }
 
-void DialogSignatures::findNext() {
+void DialogSignatures::findNext()
+{
     QTextDocument::FindFlags findFlags = (QTextDocument::FindFlags)0;
 
     if (g_data.bIsMatchCase) {
@@ -330,7 +352,8 @@ void DialogSignatures::findNext() {
     ui->plainTextEditSignature->find(g_data.sText, findFlags);
 }
 
-void DialogSignatures::registerShortcuts(bool bState) {
+void DialogSignatures::registerShortcuts(bool bState)
+{
     if (bState) {
         if (!shortCuts[SC_FIND_STRING]) shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
         if (!shortCuts[SC_FIND_NEXT]) shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));

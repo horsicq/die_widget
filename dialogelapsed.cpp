@@ -22,15 +22,18 @@
 
 #include "ui_dialogelapsed.h"
 
-DialogElapsed::DialogElapsed(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogElapsed) {
+DialogElapsed::DialogElapsed(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogElapsed)
+{
     ui->setupUi(this);
 }
 
-DialogElapsed::~DialogElapsed() {
+DialogElapsed::~DialogElapsed()
+{
     delete ui;
 }
 
-void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult) {
+void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult)
+{
     g_pScanResult = pScanResult;
 
     qint32 nNumberOfRecords = pScanResult->listDebugRecords.count();
@@ -66,6 +69,7 @@ void DialogElapsed::setData(DiE_Script::SCAN_RESULT *pScanResult) {
     ui->tableWidgetResult->horizontalHeader()->setVisible(true);
 }
 
-void DialogElapsed::on_pushButtonOK_clicked() {
+void DialogElapsed::on_pushButtonOK_clicked()
+{
     this->close();
 }

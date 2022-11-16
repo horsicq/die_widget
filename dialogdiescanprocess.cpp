@@ -20,7 +20,8 @@
  */
 #include "dialogdiescanprocess.h"
 
-DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pParent) {
+DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pParent)
+{
     g_pDieScript = new DiE_Script;
     g_pThread = new QThread;
 
@@ -32,13 +33,15 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pP
     connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogDIEScanProcess::setData(QString sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath) {
+void DialogDIEScanProcess::setData(QString sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath)
+{
     g_pDieScript->loadDatabase(sDatabasePath);
     g_pDieScript->setProcessDirectory(sDirectoryName, options, getPdStruct());
     g_pThread->start();
 }
 
-DialogDIEScanProcess::~DialogDIEScanProcess() {
+DialogDIEScanProcess::~DialogDIEScanProcess()
+{
     g_pThread->quit();
     g_pThread->wait();
 

@@ -20,7 +20,8 @@
  */
 #include "die_signatureedit.h"
 
-DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent) {
+DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent)
+{
     pHighlighter = new DIE_Highlighter(this->document());
 
     pHighlighter->setDocument(this->document());
@@ -35,7 +36,8 @@ DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent)
     highlightCurrentLine();
 }
 
-void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent) {
+void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
+{
     QPainter painter(g_pLineNumberArea);
     painter.fillRect(pEvent->rect(), Qt::lightGray);
 
@@ -58,7 +60,8 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent) {
     }
 }
 
-int DIE_SignatureEdit::lineNumberAreaWidth() {
+int DIE_SignatureEdit::lineNumberAreaWidth()
+{
     //    int digits=1;
     //    int max=qMax(1,blockCount());
 
@@ -78,7 +81,8 @@ int DIE_SignatureEdit::lineNumberAreaWidth() {
     return nSpace;
 }
 
-void DIE_SignatureEdit::setPlainText(const QString &sText) {
+void DIE_SignatureEdit::setPlainText(const QString &sText)
+{
     QPlainTextEdit::setPlainText(sText);
 
     highlightCurrentLine();
@@ -86,7 +90,8 @@ void DIE_SignatureEdit::setPlainText(const QString &sText) {
     g_pLineNumberArea->update();
 }
 
-void DIE_SignatureEdit::keyPressEvent(QKeyEvent *pEvent) {
+void DIE_SignatureEdit::keyPressEvent(QKeyEvent *pEvent)
+{
     if (pEvent->key() == Qt::Key_Tab) {
         qint32 nPosition = textCursor().positionInBlock();
 
@@ -105,20 +110,23 @@ void DIE_SignatureEdit::keyPressEvent(QKeyEvent *pEvent) {
     }
 }
 
-void DIE_SignatureEdit::resizeEvent(QResizeEvent *pEvent) {
+void DIE_SignatureEdit::resizeEvent(QResizeEvent *pEvent)
+{
     QPlainTextEdit::resizeEvent(pEvent);
 
     QRect cr = contentsRect();
     g_pLineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
-void DIE_SignatureEdit::updateLineNumberAreaWidth(int newBlockCount) {
+void DIE_SignatureEdit::updateLineNumberAreaWidth(int newBlockCount)
+{
     Q_UNUSED(newBlockCount)
 
     setViewportMargins(lineNumberAreaWidth() + 5, 0, 0, 0);
 }
 
-void DIE_SignatureEdit::highlightCurrentLine() {
+void DIE_SignatureEdit::highlightCurrentLine()
+{
     QList<QTextEdit::ExtraSelection> extraSelections;
 
     if (!isReadOnly()) {
@@ -136,7 +144,8 @@ void DIE_SignatureEdit::highlightCurrentLine() {
     setExtraSelections(extraSelections);
 }
 
-void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect, int nDy) {
+void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect, int nDy)
+{
     if (nDy) {
         g_pLineNumberArea->scroll(0, nDy);
     } else {
