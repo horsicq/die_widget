@@ -22,7 +22,8 @@
 
 #include "ui_dieoptionswidget.h"
 
-DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget)
+DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent)
+    : QWidget(pParent), ui(new Ui::DIEOptionsWidget)
 {
     ui->setupUi(this);
 }

@@ -22,7 +22,8 @@
 
 #include "ui_dialogdiescandirectory.h"
 
-DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirName, QString sDatabasePath) : QDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
+DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, QString sDirName, QString sDatabasePath)
+    : QDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
 

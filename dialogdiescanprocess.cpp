@@ -20,7 +20,8 @@
  */
 #include "dialogdiescanprocess.h"
 
-DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pParent)
+DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent)
+    : XDialogProcess(pParent)
 {
     g_pDieScript = new DiE_Script;
     g_pThread = new QThread;

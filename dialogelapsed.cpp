@@ -22,7 +22,8 @@
 
 #include "ui_dialogelapsed.h"
 
-DialogElapsed::DialogElapsed(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogElapsed)
+DialogElapsed::DialogElapsed(QWidget *pParent)
+    : QDialog(pParent), ui(new Ui::DialogElapsed)
 {
     ui->setupUi(this);
 }

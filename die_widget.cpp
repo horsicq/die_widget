@@ -22,7 +22,8 @@
 
 #include "ui_die_widget.h"
 
-DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIE_Widget)
+DIE_Widget::DIE_Widget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::DIE_Widget)
 {
     ui->setupUi(this);
 
