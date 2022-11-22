@@ -54,8 +54,7 @@ class DIE_LineNumberArea : public QWidget {
     Q_OBJECT
 
 public:
-    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit)
-        : QWidget(pPlainTextEdit)
+    DIE_LineNumberArea(QPlainTextEdit *pPlainTextEdit) : QWidget(pPlainTextEdit)
     {
         g_pPlainTextEdit = pPlainTextEdit;
     }

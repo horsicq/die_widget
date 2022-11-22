@@ -20,8 +20,7 @@
  */
 #include "die_signatureedit.h"
 
-DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent)
-    : QPlainTextEdit(pParent)
+DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent)
 {
     pHighlighter = new DIE_Highlighter(this->document());
 
