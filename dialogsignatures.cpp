@@ -22,7 +22,8 @@
 
 #include "ui_dialogsignatures.h"
 
-DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature) : XShortcutsDialog(pParent), ui(new Ui::DialogSignatures)
+DialogSignatures::DialogSignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogSignatures)
 {
     ui->setupUi(this);
 

@@ -103,7 +103,7 @@ signals:
 
 private:
     Ui::DIE_Widget *ui;
-    ST scanType;
+    ST g_scanType;
     DiE_Script g_dieScript;
     DiE_Script::OPTIONS g_scanOptions;
     DiE_Script::SCAN_RESULT scanResult;
@@ -111,7 +111,7 @@ private:
     QString sFileName;
     XBinary::FT fileType;
     bool bProcess;
-    QString sInfoPath;
+    QString g_sInfoPath;
     XBinary::PDSTRUCT g_pdStruct;
     QTimer *g_pTimer;
 };

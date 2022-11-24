@@ -80,7 +80,7 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 
     this->sFileName = sFileName;
     this->fileType = fileType;
-    scanType = ST_FILE;
+    g_scanType = ST_FILE;
 
     if (bScan) {
         process();
@@ -89,7 +89,7 @@ void DIE_Widget::setData(QString sFileName, bool bScan, XBinary::FT fileType)
 
 void DIE_Widget::adjustView()
 {
-    this->sInfoPath = getGlobalOptions()->getInfoPath();
+    this->g_sInfoPath = getGlobalOptions()->getInfoPath();
     g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());  // TODO in Thread
 }
 
@@ -111,7 +111,7 @@ void DIE_Widget::on_pushButtonDieScan_clicked()
 
 void DIE_Widget::clear()
 {
-    scanType = ST_UNKNOWN;
+    g_scanType = ST_UNKNOWN;
     g_scanOptions = {};
     scanResult = {};
     bProcess = false;
@@ -160,8 +160,8 @@ void DIE_Widget::process()
 
 void DIE_Widget::scan()
 {
-    if (scanType != ST_UNKNOWN) {
-        if (scanType == ST_FILE) {
+    if (g_scanType != ST_UNKNOWN) {
+        if (g_scanType == ST_FILE) {
             emit scanStarted();
 
             scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
@@ -338,7 +338,7 @@ void DIE_Widget::enableControls(bool bState)
 
 QString DIE_Widget::getInfoFileName(QString sName)
 {
-    QString sResult = XBinary::convertPathName(sInfoPath) + QDir::separator() + QString("%1.html").arg(sName);
+    QString sResult = XBinary::convertPathName(g_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
 
     return sResult;
 }

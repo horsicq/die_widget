@@ -48,7 +48,6 @@ public slots:
 
 private slots:
     void on_toolButtonDIEDatabase_clicked();
-    void on_toolButtonDIEInfo_clicked();
     void on_toolButtonSignaturesEditorFont_clicked();
 
 private:

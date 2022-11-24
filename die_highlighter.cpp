@@ -26,9 +26,10 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
-    const QString keywordPatterns[] = {QStringLiteral("\\bvar\\b"),          QStringLiteral("\\bfunction\\b"), QStringLiteral("\\bbShowType\\b"), QStringLiteral("\\bbShowVersion\\b"),
-                                       QStringLiteral("\\bbShowOptions\\b"), QStringLiteral("\\bsVersion\\b"), QStringLiteral("\\bsOptions\\b"),  QStringLiteral("\\bsName\\b"),
-                                       QStringLiteral("\\bbDetected\\b"),    QStringLiteral("\\breturn\\b")};
+    const QString keywordPatterns[] = {QStringLiteral("\\bvar\\b"),          QStringLiteral("\\bfunction\\b"),     QStringLiteral("\\bbShowType\\b"),
+                                       QStringLiteral("\\bbShowVersion\\b"), QStringLiteral("\\bbShowOptions\\b"), QStringLiteral("\\bsVersion\\b"),
+                                       QStringLiteral("\\bsOptions\\b"),     QStringLiteral("\\bsName\\b"),        QStringLiteral("\\bbDetected\\b"),
+                                       QStringLiteral("\\breturn\\b")};
 
     for (const QString &pattern : keywordPatterns) {
         rule.pattern = QRegularExpression(pattern);

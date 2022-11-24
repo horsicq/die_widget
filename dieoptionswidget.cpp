@@ -48,7 +48,6 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEInfo, XOptions::ID_SCAN_INFOPATH);
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
@@ -66,7 +65,6 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEInfo, XOptions::ID_SCAN_INFOPATH);
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
@@ -84,7 +82,6 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
-    pOptions->addID(XOptions::ID_SCAN_INFOPATH, "$data/info");
     pOptions->addID(XOptions::ID_SCAN_ENGINE, "auto");
 
 #ifdef Q_OS_WIN
@@ -107,18 +104,6 @@ void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabase->setText(sDirectoryName);
-    }
-}
-
-void DIEOptionsWidget::on_toolButtonDIEInfo_clicked()
-{
-    QString sText = ui->lineEditDIEInfo->text();
-    QString sInitDirectory = XBinary::convertPathName(sText);
-
-    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
-
-    if (!sDirectoryName.isEmpty()) {
-        ui->lineEditDIEInfo->setText(sDirectoryName);
     }
 }
 
