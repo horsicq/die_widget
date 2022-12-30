@@ -26,8 +26,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 {
     ui->setupUi(this);
 
-    g_pdStruct = {};
-    XBinary::_pdStructInit(&g_pdStruct);
+    g_pdStruct = XBinary::createPdStruct();
 
     connect(&watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
