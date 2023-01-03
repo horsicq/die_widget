@@ -291,27 +291,31 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
 
 void DIE_Widget::showInfo(QString sName)
 {
-    QString sFileName = getInfoFileName(sName);
+    if (sName != "") {
+        QString sFileName = getInfoFileName(sName);
 
-    if (XBinary::isFileExists(sFileName)) {
-        DialogTextInfo dialogInfo(this);
+        if (XBinary::isFileExists(sFileName)) {
+            DialogTextInfo dialogInfo(this);
 
-        dialogInfo.setFile(sFileName);
+            dialogInfo.setFile(sFileName);
 
-        dialogInfo.exec();
-    } else {
-        QString sLink = QString("http://www.google.com/search?q=%1").arg(sName);
-        QDesktopServices::openUrl(QUrl(sLink));
+            dialogInfo.exec();
+        } else {
+            QString sLink = QString("http://www.google.com/search?q=%1").arg(sName);
+            QDesktopServices::openUrl(QUrl(sLink));
+        }
     }
 }
 
 void DIE_Widget::showSignature(XBinary::FT fileType, QString sName)
 {
-    DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
+    if (sName != "") {
+        DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
 
-    dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
 
-    dialogSignatures.exec();
+        dialogSignatures.exec();
+    }
 }
 
 void DIE_Widget::enableControls(bool bState)
