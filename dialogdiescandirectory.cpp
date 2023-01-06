@@ -72,7 +72,7 @@ void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
 
         // TODO
         DiE_Script::OPTIONS options = {0};
-        options.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        options.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
         options.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
         options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         options.bIsVerbose = ui->checkBoxVerbose->isChecked();

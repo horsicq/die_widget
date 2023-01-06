@@ -130,7 +130,7 @@ void DIE_Widget::process()
 
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowOptions = true;
-        g_scanOptions.bRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
         g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
         g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();

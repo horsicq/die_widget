@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>959</width>
+    <width>1001</width>
     <height>509</height>
    </rect>
   </property>
@@ -100,27 +100,6 @@
           </spacer>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxDeepScan">
-           <property name="text">
-            <string>Deep scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxVerbose">
-           <property name="text">
-            <string>Verbose</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxHeuristicScan">
-           <property name="text">
-            <string>Heuristic scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QComboBox" name="comboBoxFunction">
            <property name="minimumSize">
             <size>
@@ -143,6 +122,51 @@
             <string>Debug</string>
            </property>
           </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QCheckBox" name="checkBoxRecursiveScan">
+           <property name="text">
+            <string>Recursive scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxDeepScan">
+           <property name="text">
+            <string>Deep scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxVerbose">
+           <property name="text">
+            <string>Verbose</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxHeuristicScan">
+           <property name="text">
+            <string>Heuristic scan</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
