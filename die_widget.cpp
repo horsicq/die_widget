@@ -164,6 +164,8 @@ void DIE_Widget::scan()
         if (g_scanType == ST_FILE) {
             emit scanStarted();
 
+            g_pdStruct = XBinary::createPdStruct();
+
             scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
 
             emit scanFinished();
