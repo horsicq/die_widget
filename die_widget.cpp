@@ -299,7 +299,7 @@ void DIE_Widget::showInfo(QString sName)
         if (XBinary::isFileExists(sFileName)) {
             DialogTextInfo dialogInfo(this);
 
-            dialogInfo.setFile(sFileName);
+            dialogInfo.setFileName(sFileName);
 
             dialogInfo.exec();
         } else {
