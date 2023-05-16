@@ -291,7 +291,7 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
     dialogLog.exec();
 }
 
-void DIE_Widget::showInfo(QString sName)
+void DIE_Widget::showInfo(const QString &sName)
 {
     if (sName != "") {
         QString sFileName = getInfoFileName(sName);
