@@ -311,7 +311,8 @@ void DIE_Widget::showInfo(const QString &sName)
 
             dialogInfo.exec();
         } else {
-            QString sLink = QString("http://www.google.com/search?q=%1").arg(sName);
+            QString _sName = QUrl::toPercentEncoding(sName);
+            QString sLink = QString("http://www.google.com/search?q=%1").arg(_sName);
             QDesktopServices::openUrl(QUrl(sLink));
         }
     }
