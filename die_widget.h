@@ -114,6 +114,7 @@ private:
     QString g_sInfoPath;
     XBinary::PDSTRUCT g_pdStruct;
     QTimer *g_pTimer;
+    bool g_bInitDatabase;
 };
 
 #endif  // DIE_WIDGET_H

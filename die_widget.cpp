@@ -38,6 +38,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
     clear();
+
+    g_bInitDatabase = false;
 }
 
 DIE_Widget::~DIE_Widget()
@@ -90,7 +92,8 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
 void DIE_Widget::adjustView()
 {
     this->g_sInfoPath = getGlobalOptions()->getInfoPath();
-    g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());  // TODO in Thread
+
+    g_bInitDatabase = false;
 }
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -165,6 +168,11 @@ void DIE_Widget::scan()
             emit scanStarted();
 
             g_pdStruct = XBinary::createPdStruct();
+
+            if (!g_bInitDatabase) {
+                g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());
+                g_bInitDatabase = true;
+            }
 
             scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
 
