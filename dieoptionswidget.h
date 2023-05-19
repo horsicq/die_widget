@@ -49,6 +49,7 @@ public slots:
 private slots:
     void on_toolButtonDIEDatabase_clicked();
     void on_toolButtonSignaturesEditorFont_clicked();
+    void on_toolButtonYaraRules_clicked();
 
 private:
     Ui::DIEOptionsWidget *ui;
