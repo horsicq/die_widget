@@ -84,7 +84,7 @@ private slots:
     void on_pushButtonDieExtraInformation_clicked();
     void on_pushButtonDieLog_clicked();
     void showInfo(const QString &sName);
-    void showSignature(XBinary::FT fileType, QString sName);
+    void showSignature(XBinary::FT fileType, const QString &sName);
     void enableControls(bool bState);
     QString getInfoFileName(QString sName);
     void copyResult();

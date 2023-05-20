@@ -318,7 +318,7 @@ void DIE_Widget::showInfo(const QString &sName)
     }
 }
 
-void DIE_Widget::showSignature(XBinary::FT fileType, QString sName)
+void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 {
     if (sName != "") {
         DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
