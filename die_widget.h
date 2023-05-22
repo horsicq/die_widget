@@ -30,7 +30,7 @@
 
 #include "dialogdiescandirectory.h"
 #include "dialogdiesignatureselapsed.h"
-#include "dialogsignatures.h"
+#include "dialogdiesignatures.h"
 #include "dialogtextinfo.h"
 #include "die_script.h"
 #include "xshortcutswidget.h"

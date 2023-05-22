@@ -272,7 +272,7 @@ void DIE_Widget::onScanFinished()
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, g_scanOptions.fileType, "");
+    DialogDIESignatures dialogSignatures(this, &g_dieScript, sFileName, g_scanOptions.fileType, "");
 
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
 
@@ -324,7 +324,7 @@ void DIE_Widget::showInfo(const QString &sName)
 void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 {
     if (sName != "") {
-        DialogSignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
+        DialogDIESignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
 
         dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
 
