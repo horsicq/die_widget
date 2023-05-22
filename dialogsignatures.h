@@ -33,6 +33,7 @@ namespace Ui {
 class DialogSignatures;
 }
 
+// TODO rename DialogDieSignatures
 class DialogSignatures : public XShortcutsDialog {
     Q_OBJECT
 

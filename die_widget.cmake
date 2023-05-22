@@ -14,16 +14,14 @@ set(DIE_WIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.ui
-    ${CMAKE_CURRENT_LIST_DIR}/dialoglog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/dialoglog.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogsignatures.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogsignatures.ui
     ${CMAKE_CURRENT_LIST_DIR}/die_highlighter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/die_signatureedit.cpp
     ${CMAKE_CURRENT_LIST_DIR}/die_widget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/die_widget.ui
-    ${CMAKE_CURRENT_LIST_DIR}/dialogelapsed.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/dialogelapsed.ui
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.ui
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.ui
 )

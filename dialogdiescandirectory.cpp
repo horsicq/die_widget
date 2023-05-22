@@ -65,7 +65,7 @@ void DialogDIEScanDirectory::on_pushButtonScan_clicked()
     scanDirectory(sDirectoryName);
 }
 
-void DialogDIEScanDirectory::scanDirectory(QString sDirectoryName)
+void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 {
     if (sDirectoryName != "") {
         ui->textBrowserResult->clear();

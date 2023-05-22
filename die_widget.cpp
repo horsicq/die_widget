@@ -294,9 +294,12 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 
 void DIE_Widget::on_pushButtonDieLog_clicked()
 {
-    DialogLog dialogLog(this, DiE_Script::getErrorsString(&scanResult));
+    DialogTextInfo dialogInfo(this);
 
-    dialogLog.exec();
+    dialogInfo.setText(DiE_Script::getErrorsString(&scanResult));
+    dialogInfo.setTitle(tr("Log"));
+
+    dialogInfo.exec();
 }
 
 void DIE_Widget::showInfo(const QString &sName)
@@ -386,7 +389,7 @@ void DIE_Widget::registerShortcuts(bool bState)
 
 void DIE_Widget::on_toolButtonElapsedTime_clicked()
 {
-    DialogElapsed dialogElapsed(this);
+    DialogDIESignaturesElapsed dialogElapsed(this);
 
     dialogElapsed.setData(&scanResult);
 

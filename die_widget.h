@@ -29,8 +29,7 @@
 #include <QtConcurrent>
 
 #include "dialogdiescandirectory.h"
-#include "dialogelapsed.h"
-#include "dialoglog.h"
+#include "dialogdiesignatureselapsed.h"
 #include "dialogsignatures.h"
 #include "dialogtextinfo.h"
 #include "die_script.h"
