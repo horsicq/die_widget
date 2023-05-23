@@ -33,7 +33,7 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pP
     connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
 }
 
-void DialogDIEScanProcess::setData(QString sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath)
+void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath)
 {
     g_pDieScript->loadDatabase(sDatabasePath);
     g_pDieScript->setProcessDirectory(sDirectoryName, options, getPdStruct());
