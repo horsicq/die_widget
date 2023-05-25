@@ -103,7 +103,7 @@ void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
     emit resultSignal(sResult);
 }
 
-void DialogDIEScanDirectory::appendResult(QString sResult)
+void DialogDIEScanDirectory::appendResult(const QString &sResult)
 {
     ui->textBrowserResult->append(sResult);
 }
