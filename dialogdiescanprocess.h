@@ -42,7 +42,7 @@ public:
     explicit DialogDIEScanProcess(QWidget *pParent = nullptr);
     ~DialogDIEScanProcess();
 
-    void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options, QString sDatabasePath);
+    void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options, const QString &sDatabasePath);
 
 signals:
     void scanFileStarted(QString sFileName);
