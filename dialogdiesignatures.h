@@ -71,7 +71,7 @@ private slots:
     void on_plainTextEditSignature_textChanged();
     void on_checkBoxReadOnly_toggled(bool bChecked);
 
-    bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature);
+    bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, const QString &sSignature);
     void enableControls(bool bState);
     void infoMessage(QString sInfoMessage);
     void on_pushButtonFind_clicked();

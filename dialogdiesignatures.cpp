@@ -279,7 +279,7 @@ void DialogDIESignatures::on_checkBoxReadOnly_toggled(bool bChecked)
     ui->plainTextEditSignature->setReadOnly(bChecked);
 }
 
-bool DialogDIESignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, QString sSignature)
+bool DialogDIESignatures::_setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, const QString &sSignature)
 {
     bool bResult = false;
 
