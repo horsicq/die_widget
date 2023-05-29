@@ -73,7 +73,7 @@ private slots:
 
     bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, const QString &sSignature);
     void enableControls(bool bState);
-    void infoMessage(QString sInfoMessage);
+    void infoMessage(const QString &sInfoMessage);
     void on_pushButtonFind_clicked();
     void on_pushButtonFindNext_clicked();
     void findString();

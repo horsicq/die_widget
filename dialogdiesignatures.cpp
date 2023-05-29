@@ -317,7 +317,7 @@ void DialogDIESignatures::enableControls(bool bState)
     }
 }
 
-void DialogDIESignatures::infoMessage(QString sInfoMessage)
+void DialogDIESignatures::infoMessage(const QString &sInfoMessage)
 {
     ui->plainTextEditResult->appendPlainText(sInfoMessage);
 }
