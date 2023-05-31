@@ -24,4 +24,6 @@ set(DIE_WIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.ui
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/diewidgetadvanced.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/diewidgetadvanced.ui
 )

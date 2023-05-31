@@ -21,13 +21,7 @@
 #ifndef DIALOGDIESCANDIRECTORY_H
 #define DIALOGDIESCANDIRECTORY_H
 
-#include <QDialog>
-#include <QFileDialog>
-
-#include "../global.h"
 #include "dialogdiescanprocess.h"
-#include "dialogoptions.h"
-#include "xoptions.h"
 
 namespace Ui {
 class DialogDIEScanDirectory;
