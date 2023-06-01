@@ -354,7 +354,7 @@ void DIE_Widget::enableControls(bool bState)
     ui->pushButtonDieScanDirectory->setEnabled(bState);
 }
 
-QString DIE_Widget::getInfoFileName(QString sName)
+QString DIE_Widget::getInfoFileName(const QString &sName)
 {
     QString sResult = XBinary::convertPathName(g_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
 

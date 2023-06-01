@@ -85,7 +85,7 @@ private slots:
     void showInfo(const QString &sName);
     void showSignature(XBinary::FT fileType, const QString &sName);
     void enableControls(bool bState);
-    QString getInfoFileName(QString sName);
+    QString getInfoFileName(const QString &sName);
     void copyResult();
     void on_pushButtonDieScanDirectory_clicked();
     void on_toolButtonElapsedTime_clicked();
