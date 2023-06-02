@@ -108,7 +108,7 @@ void DialogDIESignatures::adjustView()
     }
 }
 
-qint32 DialogDIESignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, QString sText)
+qint32 DialogDIESignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, const QString &sText)
 {
     qint32 nResult = 0;
 
