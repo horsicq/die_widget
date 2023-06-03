@@ -134,4 +134,3 @@ void DIEOptionsWidget::on_toolButtonYaraRules_clicked()
         ui->lineEditYaraRules->setText(sDirectoryName);
     }
 }
-
