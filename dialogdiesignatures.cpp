@@ -22,7 +22,7 @@
 
 #include "ui_dialogdiesignatures.h"
 
-DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature)
+DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, const QString &sFileName, XBinary::FT fileType, QString sSignature)
     : XShortcutsDialog(pParent), ui(new Ui::DialogDIESignatures)
 {
     ui->setupUi(this);

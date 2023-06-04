@@ -51,7 +51,7 @@ class DialogDIESignatures : public XShortcutsDialog {
     };
 
 public:
-    explicit DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, QString sFileName, XBinary::FT fileType, QString sSignature);
+    explicit DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, const QString &sFileName, XBinary::FT fileType, QString sSignature);
     ~DialogDIESignatures();
 
     void adjustView();
