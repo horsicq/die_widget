@@ -82,9 +82,13 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         // TODO Filter
         // |flags|x all|
 
-        DialogDIEScanProcess ds(this);
+        DiE_Script dieScript;
+
+        dieScript.loadDatabase(g_sDatabasePath); // TODO initDB
+
+        DialogDIEScanProcess ds(this, &dieScript);
         connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
-        ds.setData(sDirectoryName, options, g_sDatabasePath);
+        ds.setData(sDirectoryName, options);
         ds.exec();
     }
 }

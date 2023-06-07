@@ -69,7 +69,10 @@ void DIEOptionsWidget::reload()
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
+        ui->groupBoxScanEngine->show();
         g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    } else {
+        ui->groupBoxScanEngine->hide();
     }
 
     g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
@@ -85,7 +88,6 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
     pOptions->addID(XOptions::ID_SCAN_YARARULESPATH, "$data/yara_rules");
-    pOptions->addID(XOptions::ID_SCAN_ENGINE, "auto");
 
 #ifdef Q_OS_WIN
     pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");

@@ -39,17 +39,16 @@ class DialogDIEScanProcess : public XDialogProcess {
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanProcess(QWidget *pParent = nullptr);
+    explicit DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScript);
     ~DialogDIEScanProcess();
 
-    void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options, const QString &sDatabasePath);
+    void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options);
 
 signals:
     void scanFileStarted(QString sFileName);
     void scanResult(DiE_Script::SCAN_RESULT scanResult);
 
 private:
-    static const qint32 N_REFRESH_DELAY = 1000;  // msec TODO Check mb set/get functions
     DiE_Script *g_pDieScript;
     QThread *g_pThread;
 };

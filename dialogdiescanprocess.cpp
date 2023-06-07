@@ -20,23 +20,23 @@
  */
 #include "dialogdiescanprocess.h"
 
-DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent) : XDialogProcess(pParent)
+DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScript) : XDialogProcess(pParent)
 {
-    g_pDieScript = new DiE_Script;
+    g_pDieScript = pDieScript;
     g_pThread = new QThread;
 
-    g_pDieScript->moveToThread(g_pThread);
+    g_pDieScript->moveToThread(g_pThread); 
+}
+
+void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options)
+{
+    g_pDieScript->setProcessDirectory(sDirectoryName, options, getPdStruct());
 
     connect(g_pThread, SIGNAL(started()), g_pDieScript, SLOT(scanDirectory()));
     connect(g_pDieScript, SIGNAL(directoryScanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pDieScript, SIGNAL(directoryScanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
     connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
-}
 
-void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options, const QString &sDatabasePath)
-{
-    g_pDieScript->loadDatabase(sDatabasePath);
-    g_pDieScript->setProcessDirectory(sDirectoryName, options, getPdStruct());
     g_pThread->start();
 }
 
@@ -48,5 +48,4 @@ DialogDIEScanProcess::~DialogDIEScanProcess()
     //    g_pThread->deleteLater(); // TODO !!!
     //    g_pDieScript->deleteLater(); // TODO !!!
     delete g_pThread;
-    delete g_pDieScript;
 }
