@@ -43,6 +43,7 @@ public:
     ~DialogDIEScanProcess();
 
     void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options);
+    void setData(QIODevice *pDevice, DiE_Script::OPTIONS options);
 
 signals:
     void scanFileStarted(QString sFileName);
