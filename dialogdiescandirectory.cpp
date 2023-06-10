@@ -84,7 +84,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        dieScript.loadDatabase(g_sDatabasePath); // TODO initDB
+        dieScript.loadDatabase(g_sDatabasePath);  // TODO initDB
 
         DialogDIEScanProcess ds(this, &dieScript);
         connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);

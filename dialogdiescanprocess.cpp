@@ -25,7 +25,7 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScr
     g_pDieScript = pDieScript;
     g_pThread = new QThread;
 
-    g_pDieScript->moveToThread(g_pThread); 
+    g_pDieScript->moveToThread(g_pThread);
 }
 
 void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options)
