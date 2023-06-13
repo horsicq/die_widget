@@ -48,7 +48,10 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+
+    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
+        g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+    }
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
@@ -67,6 +70,13 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+
+    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
+        ui->groupBoxYaraRules->show();
+        g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+    } else {
+        ui->groupBoxYaraRules->hide();
+    }
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         ui->groupBoxScanEngine->show();
@@ -87,7 +97,6 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
-    pOptions->addID(XOptions::ID_SCAN_YARARULESPATH, "$data/yara_rules");
 
 #ifdef Q_OS_WIN
     pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");

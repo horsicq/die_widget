@@ -26,14 +26,15 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScr
     g_pThread = new QThread;
 
     g_pDieScript->moveToThread(g_pThread);
+
+    connect(g_pThread, SIGNAL(started()), g_pDieScript, SLOT(process()));
+    connect(g_pDieScript, SIGNAL(scanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
 }
 
 void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options)
 {
     g_pDieScript->setData(sDirectoryName, options, getPdStruct());
 
-    connect(g_pThread, SIGNAL(started()), g_pDieScript, SLOT(process()));
-    connect(g_pDieScript, SIGNAL(directoryScanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
     connect(g_pDieScript, SIGNAL(directoryScanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
     connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
 
@@ -42,7 +43,9 @@ void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OP
 
 void DialogDIEScanProcess::setData(QIODevice *pDevice, DiE_Script::OPTIONS options)
 {
-    // TODO
+    g_pDieScript->setData(pDevice, options, getPdStruct());
+
+    g_pThread->start();
 }
 
 DialogDIEScanProcess::~DialogDIEScanProcess()
