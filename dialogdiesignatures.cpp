@@ -356,14 +356,16 @@ void DialogDIESignatures::findNext()
 
 void DialogDIESignatures::registerShortcuts(bool bState)
 {
-    if (bState) {
-        if (!shortCuts[SC_FIND_STRING]) shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
-        if (!shortCuts[SC_FIND_NEXT]) shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
-    } else {
-        for (qint32 i = 0; i < __SC_SIZE; i++) {
-            if (shortCuts[i]) {
-                delete shortCuts[i];
-                shortCuts[i] = nullptr;
+    if (getShortcuts()) {
+        if (bState) {
+            if (!shortCuts[SC_FIND_STRING]) shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
+            if (!shortCuts[SC_FIND_NEXT]) shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
+        } else {
+            for (qint32 i = 0; i < __SC_SIZE; i++) {
+                if (shortCuts[i]) {
+                    delete shortCuts[i];
+                    shortCuts[i] = nullptr;
+                }
             }
         }
     }
