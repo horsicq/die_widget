@@ -101,7 +101,7 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
     ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
     ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
-    ui->checkBoxVerbose->setChecked(pXOptions->isVerbose());
+    ui->checkBoxVerbose->setChecked(pXOptions->isVerboseScan());
     ui->checkBoxRecursiveScan->setChecked(pXOptions->isRecursiveScan());
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
@@ -272,11 +272,19 @@ void DIE_Widget::onScanFinished()
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    DialogDIESignatures dialogSignatures(this, &g_dieScript, sFileName, g_scanOptions.fileType, "");
+    QFile file;
+    file.setFileName(sFileName);
 
-    dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+    if (file.open(QIODevice::ReadOnly)) {
+        DialogDIESignatures dialogSignatures(this, &g_dieScript);
+        dialogSignatures.setData(&file, g_scanOptions.fileType, "");
 
-    dialogSignatures.exec();
+        dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+
+        dialogSignatures.exec();
+
+        file.close();
+    }
 }
 
 void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
@@ -324,11 +332,19 @@ void DIE_Widget::showInfo(const QString &sName)
 void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 {
     if (sName != "") {
-        DialogDIESignatures dialogSignatures(this, &g_dieScript, sFileName, fileType, sName);
+        QFile file;
+        file.setFileName(sFileName);
 
-        dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+        if (file.open(QIODevice::ReadOnly)) {
+            DialogDIESignatures dialogSignatures(this, &g_dieScript);
+            dialogSignatures.setData(&file, fileType, sName);
 
-        dialogSignatures.exec();
+            dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+
+            dialogSignatures.exec();
+
+            file.close();
+        }
     }
 }
 

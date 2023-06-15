@@ -51,8 +51,10 @@ class DialogDIESignatures : public XShortcutsDialog {
     };
 
 public:
-    explicit DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, const QString &sFileName, XBinary::FT fileType, const QString &sSignature);
+    explicit DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript);
     ~DialogDIESignatures();
+
+    void setData(QIODevice *pDevice, XBinary::FT fileType, const QString &sSignature);
 
     void adjustView();
 
@@ -85,9 +87,9 @@ protected:
 private:
     Ui::DialogDIESignatures *ui;
     DiE_Script *pDieScript;
-    QString sFileName;
-    XBinary::FT fileType;
-    QString sSignature;
+    QIODevice *g_pDevice;
+    XBinary::FT g_fileType;
+    QString g_sSignature;
     QString sCurrentSignatureFilePath;
     bool g_bCurrentEdited;
     DialogFindText::DATA g_data;

@@ -22,7 +22,7 @@
 
 #include "ui_dialogdiesignatures.h"
 
-DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript, const QString &sFileName, XBinary::FT fileType, const QString &sSignature)
+DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript)
     : XShortcutsDialog(pParent), ui(new Ui::DialogDIESignatures)
 {
     ui->setupUi(this);
@@ -34,9 +34,6 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     setWindowFlags(Qt::Window);
 
     this->pDieScript = pDieScript;
-    this->sFileName = sFileName;
-    this->fileType = fileType;
-    this->sSignature = sSignature;
 
     connect(pDieScript, SIGNAL(infoMessage(QString)), this, SLOT(infoMessage(QString)));
 
@@ -74,18 +71,6 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 
     ui->checkBoxReadOnly->setChecked(true);
 
-    if (fileType != XBinary::FT_UNKNOWN) {
-        qint32 nNumberOfTopLevelItems = ui->treeWidgetSignatures->topLevelItemCount();
-
-        for (qint32 i = 0; i < nNumberOfTopLevelItems; i++) {
-            if (_setTreeItem(ui->treeWidgetSignatures, ui->treeWidgetSignatures->topLevelItem(i), fileType, sSignature)) {
-                break;
-            }
-        }
-    } else {
-        ui->treeWidgetSignatures->expandAll();
-    }
-
     ui->comboBoxFunction->addItem("detect", "detect");
 
 #ifndef QT_SCRIPTTOOLS_LIB
@@ -96,6 +81,25 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 DialogDIESignatures::~DialogDIESignatures()
 {
     delete ui;
+}
+
+void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, const QString &sSignature)
+{
+    this->g_pDevice = pDevice;
+    this->g_fileType = fileType;
+    this->g_sSignature = sSignature;
+
+    if (g_fileType != XBinary::FT_UNKNOWN) {
+        qint32 nNumberOfTopLevelItems = ui->treeWidgetSignatures->topLevelItemCount();
+
+        for (qint32 i = 0; i < nNumberOfTopLevelItems; i++) {
+            if (_setTreeItem(ui->treeWidgetSignatures, ui->treeWidgetSignatures->topLevelItem(i), fileType, sSignature)) {
+                break;
+            }
+        }
+    } else {
+        ui->treeWidgetSignatures->expandAll();
+    }
 }
 
 void DialogDIESignatures::adjustView()
@@ -182,9 +186,9 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
             pDieScript->setDebugger(&debugger);
 #endif
 
-            scanResult = pDieScript->processFile(sFileName, &scanOptions, sFunction);
+            scanResult = pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
         } else {
-            scanResult = pDieScript->processFile(sFileName, &scanOptions, sFunction);
+            scanResult = pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
         }
 
         if (bIsDebug) {
