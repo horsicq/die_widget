@@ -47,7 +47,6 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 
 void DIEWidgetAdvanced::adjustView()
 {
-
 }
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -70,7 +69,7 @@ void DIEWidgetAdvanced::process()
 {
     DiE_Script dieScript;
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString()); // TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString());  // TODO optimize
 
     DiE_Script::OPTIONS options = {};
     options.bShowVersion = true;
@@ -130,7 +129,7 @@ void DIEWidgetAdvanced::onSelectionChanged(const QItemSelection &itemSelected, c
     QModelIndexList listSelected = itemSelected.indexes();
 
     if (listSelected.count() >= 1) {
-        QString sSignatureFileName = listSelected.at(0).data(Qt::UserRole + ScanItemModel::UD_INFO2).toString(); // TODO
+        QString sSignatureFileName = listSelected.at(0).data(Qt::UserRole + ScanItemModel::UD_INFO2).toString();  // TODO
 
         QByteArray baData = XBinary::readFile(sSignatureFileName);
         ui->plainTextEditSignature->setPlainText(baData);
@@ -148,7 +147,7 @@ void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
 {
     DiE_Script dieScript;
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString()); // TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString());  // TODO optimize
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
