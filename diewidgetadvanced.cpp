@@ -125,14 +125,17 @@ void DIEWidgetAdvanced::onSelectionChanged(const QItemSelection &itemSelected, c
     Q_UNUSED(itemDeselected)
 
     ui->plainTextEditSignature->clear();
+    ui->lineEditSignatureName->clear();
 
     QModelIndexList listSelected = itemSelected.indexes();
 
     if (listSelected.count() >= 1) {
+        QString sSignatureName = listSelected.at(0).data(Qt::UserRole + ScanItemModel::UD_INFO).toString();
         QString sSignatureFileName = listSelected.at(0).data(Qt::UserRole + ScanItemModel::UD_INFO2).toString();  // TODO
 
         QByteArray baData = XBinary::readFile(sSignatureFileName);
         ui->plainTextEditSignature->setPlainText(baData);
+        ui->lineEditSignatureName->setText(sSignatureName);
     }
 }
 
