@@ -55,6 +55,7 @@ private slots:
 private:
     Ui::DIEWidgetAdvanced *ui;
     QIODevice *g_pDevice;
+    ScanItemModel *g_pModel;
     DiE_Script::SCAN_RESULT g_scanResult;
 };
 

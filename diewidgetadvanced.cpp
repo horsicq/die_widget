@@ -27,6 +27,7 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
 
     g_scanResult = {};
     g_pDevice = nullptr;
+    g_pModel = nullptr;
 }
 
 DIEWidgetAdvanced::~DIEWidgetAdvanced()
@@ -89,17 +90,19 @@ void DIEWidgetAdvanced::process()
 
     DiE_Script::SCAN_RESULT scanResult = dieScript.getScanResultProcess();
 
-    QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+    //QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+    ScanItemModel *pOldModel = g_pModel;
 
     QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(scanResult.listRecords));
 
-    ScanItemModel *pModel = new ScanItemModel(&_listRecords);
-    ui->treeViewResult->setModel(pModel);
+    g_pModel = new ScanItemModel(&_listRecords);
+    ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
     connect(ui->treeViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SLOT(onSelectionChanged(QItemSelection, QItemSelection)));
 
-    deleteOldAbstractModel(&pOldModel);
+    //deleteOldAbstractModel(&pOldModel);
+    delete pOldModel;
 }
 
 void DIEWidgetAdvanced::on_pushButtonSave_clicked()

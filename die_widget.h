@@ -114,6 +114,7 @@ private:
     XBinary::PDSTRUCT g_pdStruct;
     QTimer *g_pTimer;
     bool g_bInitDatabase;
+    ScanItemModel *g_pModel;
 };
 
 #endif  // DIE_WIDGET_H

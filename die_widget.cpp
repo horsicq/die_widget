@@ -27,6 +27,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     ui->setupUi(this);
 
     g_pdStruct = XBinary::createPdStruct();
+    g_pModel = nullptr;
 
     connect(&watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
@@ -207,15 +208,18 @@ void DIE_Widget::onScanFinished()
 
     ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
-    QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+    //QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+    ScanItemModel *pOldModel = g_pModel;
 
     QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(scanResult.listRecords));
 
-    ScanItemModel *pModel = new ScanItemModel(&_listRecords, 3);
-    ui->treeViewResult->setModel(pModel);
+    g_pModel = new ScanItemModel(&_listRecords, 3);
+    ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
-    deleteOldAbstractModel(&pOldModel);
+    if (pOldModel) {
+        delete pOldModel;
+    }
 
     //    ui->tableWidgetResult->setColumnCount(0);
 
@@ -351,10 +355,13 @@ void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 void DIE_Widget::enableControls(bool bState)
 {
     if (!bState) {
-        QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+        ScanItemModel *pOldModel = g_pModel;
         ui->treeViewResult->setModel(0);
 
-        deleteOldAbstractModel(&pOldModel);
+        if (pOldModel) {
+            delete pOldModel;
+            g_pModel = nullptr;
+        }
     }
 
     ui->treeViewResult->setEnabled(bState);
