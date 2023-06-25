@@ -208,7 +208,7 @@ void DIE_Widget::onScanFinished()
 
     ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
 
-    //QAbstractItemModel *pOldModel = ui->treeViewResult->model();
+    // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
     QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(scanResult.listRecords));
