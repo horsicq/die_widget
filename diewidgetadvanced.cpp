@@ -63,6 +63,7 @@ void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 
 void DIEWidgetAdvanced::registerShortcuts(bool bState)
 {
+    Q_UNUSED(bState)
     // TODO
 }
 

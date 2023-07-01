@@ -348,13 +348,11 @@ void DialogDIESignatures::findString()
 
 void DialogDIESignatures::findNext()
 {
-    QTextDocument::FindFlags findFlags = (QTextDocument::FindFlags)0;
-
     if (g_data.bIsMatchCase) {
-        findFlags |= QTextDocument::FindCaseSensitively;
+        ui->plainTextEditSignature->find(g_data.sText, QTextDocument::FindCaseSensitively);
+    } else {
+        ui->plainTextEditSignature->find(g_data.sText);
     }
-
-    ui->plainTextEditSignature->find(g_data.sText, findFlags);
 }
 
 void DialogDIESignatures::registerShortcuts(bool bState)
