@@ -157,8 +157,8 @@ void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString());  // TODO optimize
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
-    dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+    dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
 
     dialogSignatures.exec();
 }

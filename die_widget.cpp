@@ -281,9 +281,8 @@ void DIE_Widget::on_pushButtonDieSignatures_clicked()
 
     if (file.open(QIODevice::ReadOnly)) {
         DialogDIESignatures dialogSignatures(this, &g_dieScript);
-        dialogSignatures.setData(&file, g_scanOptions.fileType, "");
-
         dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+        dialogSignatures.setData(&file, g_scanOptions.fileType, "");
 
         dialogSignatures.exec();
 
@@ -341,9 +340,8 @@ void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 
         if (file.open(QIODevice::ReadOnly)) {
             DialogDIESignatures dialogSignatures(this, &g_dieScript);
-            dialogSignatures.setData(&file, fileType, sName);
-
             dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+            dialogSignatures.setData(&file, fileType, sName);
 
             dialogSignatures.exec();
 
