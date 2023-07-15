@@ -25,6 +25,10 @@
 DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget)
 {
     ui->setupUi(this);
+
+#ifndef USE_YARA
+    ui->groupBoxYaraRules->hide();
+#endif
 }
 
 DIEOptionsWidget::~DIEOptionsWidget()
@@ -48,11 +52,11 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-
+#ifdef USE_YARA
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
     }
-
+#endif
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
     }
