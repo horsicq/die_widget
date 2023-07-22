@@ -117,7 +117,7 @@ void DIE_Widget::clear()
 {
     g_scanType = ST_UNKNOWN;
     g_scanOptions = {};
-    scanResult = {};
+    g_scanResult = {};
     bProcess = false;
 
     ui->treeViewResult->setModel(0);
@@ -175,7 +175,7 @@ void DIE_Widget::scan()
                 g_bInitDatabase = true;
             }
 
-            scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
+            g_scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
 
             emit scanFinished();
         }
@@ -193,7 +193,7 @@ void DIE_Widget::onScanFinished()
 
     g_pTimer->stop();
 
-    qint32 nNumberOfErrors = scanResult.listErrors.count();
+    qint32 nNumberOfErrors = g_scanResult.listErrors.count();
 
     QString sLogButtonText;
 
@@ -206,12 +206,12 @@ void DIE_Widget::onScanFinished()
     ui->pushButtonDieLog->setText(sLogButtonText);
     ui->pushButtonDieLog->setEnabled(nNumberOfErrors);
 
-    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(scanResult.nScanTime).arg(tr("msec")));
+    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(g_scanResult.nScanTime).arg(tr("msec")));
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
-    QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(g_scanResult.listRecords));
 
     g_pModel = new ScanItemModel(&_listRecords, 3);
     ui->treeViewResult->setModel(g_pModel);
@@ -294,7 +294,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
+    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(g_scanResult.listRecords));
 
     ScanItemModel model(&listResult);
 
@@ -307,7 +307,7 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    dialogInfo.setText(DiE_Script::getErrorsString(&scanResult));
+    dialogInfo.setText(DiE_Script::getErrorsString(&g_scanResult));
     dialogInfo.setTitle(tr("Log"));
 
     dialogInfo.exec();
@@ -412,7 +412,7 @@ void DIE_Widget::on_toolButtonElapsedTime_clicked()
 {
     DialogDIESignaturesElapsed dialogElapsed(this);
 
-    dialogElapsed.setData(&scanResult);
+    dialogElapsed.setData(&g_scanResult);
 
     dialogElapsed.exec();
 }
