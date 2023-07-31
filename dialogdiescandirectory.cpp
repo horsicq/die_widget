@@ -125,8 +125,7 @@ void DialogDIEScanDirectory::on_pushButtonClear_clicked()
 
 void DialogDIEScanDirectory::on_pushButtonSave_clicked()
 {
-    QString sFilter;
-    sFilter += QString("%1 (*.txt)").arg(tr("Text documents"));
+    QString sFilter = QString("%1 (*.txt)").arg(tr("Text documents"));
     QString sSaveFileName = ui->lineEditDirectoryName->text() + QDir::separator() + "result";
     QString sFileName = QFileDialog::getSaveFileName(this, tr("Save result"), sSaveFileName, sFilter);
 
@@ -137,7 +136,6 @@ void DialogDIEScanDirectory::on_pushButtonSave_clicked()
         if (file.open(QIODevice::ReadWrite)) {
             QString sText = ui->textBrowserResult->toPlainText();
             file.write(sText.toUtf8().data());
-
             file.close();
         }
     }
