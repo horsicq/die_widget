@@ -221,38 +221,6 @@ void DIE_Widget::onScanFinished()
         delete pOldModel;
     }
 
-    //    ui->tableWidgetResult->setColumnCount(0);
-
-    //    qint32 nNumberOfRecords=scanResult.listRecords.count();
-
-    //    ui->tableWidgetResult->setRowCount(nNumberOfRecords);
-    //    ui->tableWidgetResult->setColumnCount(4);
-
-    //    // TODO if different filetypes +1 column
-
-    //    for(qint32 i=0;i<nNumberOfRecords;i++)
-    //    {
-    //        QTableWidgetItem *pWidgetType=new QTableWidgetItem;
-    //        pWidgetType->setText(scanResult.listRecords.at(i).sType);
-    //        ui->tableWidgetResult->setItem(i,COLUMN_TYPE,pWidgetType);
-
-    //        QTableWidgetItem *pWidgetString=new QTableWidgetItem;
-    //        pWidgetString->setTextAlignment(Qt::AlignCenter);
-    //        pWidgetString->setText(scanResult.listRecords.at(i).sResult);
-    //        ui->tableWidgetResult->setItem(i,COLUMN_STRING,pWidgetString);
-
-    //        QTableWidgetItem *pWidgetSignature=new QTableWidgetItem;
-    //        pWidgetSignature->setText("S");
-    //        ui->tableWidgetResult->setItem(i,COLUMN_SIGNATURE,pWidgetSignature);
-
-    //        if(XBinary::isFileExists(getInfoFileName(scanResult.listRecords.at(i).sName)))
-    //        {
-    //            QTableWidgetItem *pWidgetInfo=new QTableWidgetItem;
-    //            pWidgetInfo->setText("?");
-    //            ui->tableWidgetResult->setItem(i,COLUMN_INFO,pWidgetInfo);
-    //        }
-    //    }
-
     //    ui->tableWidgetResult->horizontalHeader()->setVisible(true);
     ////        ui->tableWidgetResult->horizontalHeader()->setFixedHeight(0);
 
