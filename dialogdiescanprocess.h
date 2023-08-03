@@ -46,8 +46,8 @@ public:
     void setData(QIODevice *pDevice, DiE_Script::OPTIONS options);
 
 signals:
-    void scanFileStarted(QString sFileName);
-    void scanResult(DiE_Script::SCAN_RESULT scanResult);
+    void scanFileStarted(const QString &sFileName);
+    void scanResult(const DiE_Script::SCAN_RESULT &scanResult);
 
 private:
     DiE_Script *g_pDieScript;
