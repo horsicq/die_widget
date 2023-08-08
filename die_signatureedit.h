@@ -33,7 +33,7 @@ class DIE_SignatureEdit : public QPlainTextEdit {
 public:
     explicit DIE_SignatureEdit(QWidget *pParent = nullptr);
     void lineNumberAreaPaintEvent(QPaintEvent *pEvent);
-    int lineNumberAreaWidth();
+    qint32 lineNumberAreaWidth();
     void setPlainText(const QString &sText);
 
 protected:

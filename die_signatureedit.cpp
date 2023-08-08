@@ -42,9 +42,9 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
     painter.fillRect(pEvent->rect(), Qt::lightGray);
 
     QTextBlock block = firstVisibleBlock();
-    int nBlockNumber = block.blockNumber();
-    int nTop = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
-    int nBottom = nTop + qRound(blockBoundingRect(block).height());
+    qint32 nBlockNumber = block.blockNumber();
+    qint32 nTop = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
+    qint32 nBottom = nTop + qRound(blockBoundingRect(block).height());
 
     while (block.isValid() && (nTop <= pEvent->rect().bottom())) {
         if (block.isVisible() && (nBottom >= pEvent->rect().top())) {
@@ -60,7 +60,7 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
     }
 }
 
-int DIE_SignatureEdit::lineNumberAreaWidth()
+qint32 DIE_SignatureEdit::lineNumberAreaWidth()
 {
     //    int digits=1;
     //    int max=qMax(1,blockCount());
@@ -71,11 +71,11 @@ int DIE_SignatureEdit::lineNumberAreaWidth()
     //        ++digits;
     //    }
 
-    int nDigits = 3;
+    qint32 nDigits = 3;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
-    int nSpace = 10 + fontMetrics().width(QLatin1Char('9')) * nDigits;
+    qint32 nSpace = 10 + fontMetrics().width(QLatin1Char('9')) * nDigits;
 #else
-    int nSpace = 10 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * nDigits;
+    qint32 nSpace = 10 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * nDigits;
 #endif
 
     return nSpace;
