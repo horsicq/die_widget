@@ -41,6 +41,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     clear();
 
     g_bInitDatabase = false;
+
+    ui->stackedWidgetDieScan->setCurrentIndex(0);
 }
 
 DIE_Widget::~DIE_Widget()
@@ -130,7 +132,7 @@ void DIE_Widget::process()
         bProcess = true;
 
         ui->pushButtonDieScan->setText(tr("Stop"));
-        ui->progressBarProgress->setValue(0);
+        //ui->progressBarProgress->setValue(0);
 
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowOptions = true;
@@ -234,8 +236,8 @@ void DIE_Widget::onScanFinished()
 
     ui->treeViewResult->header()->setVisible(false);
 
-    ui->progressBarProgress->setMaximum(100);
-    ui->progressBarProgress->setValue(100);
+//    ui->progressBarProgress->setMaximum(100);
+//    ui->progressBarProgress->setValue(100);
     ui->pushButtonDieScan->setText(tr("Scan"));
 
     ui->pushButtonDieScan->setEnabled(true);
@@ -341,6 +343,12 @@ void DIE_Widget::enableControls(bool bState)
     ui->pushButtonDieExtraInformation->setEnabled(bState);
     ui->toolButtonElapsedTime->setEnabled(bState);
     ui->pushButtonDieScanDirectory->setEnabled(bState);
+
+    if (bState) {
+        ui->stackedWidgetDieScan->setCurrentIndex(0);
+    } else {
+        ui->stackedWidgetDieScan->setCurrentIndex(1);
+    }
 }
 
 QString DIE_Widget::getInfoFileName(const QString &sName)
@@ -423,6 +431,11 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    ui->progressBarProgress->setMaximum(100);
-    ui->progressBarProgress->setValue(XBinary::getPdStructProcent(&g_pdStruct));
+    ui->progressBar1->setMaximum(g_pdStruct._pdRecord[0].nTotal);
+    ui->progressBar1->setValue(g_pdStruct._pdRecord[0].nCurrent);
+    ui->progressBar1->setFormat(g_pdStruct._pdRecord[0].sStatus);
+
+    ui->progressBar2->setMaximum(g_pdStruct._pdRecord[1].nTotal);
+    ui->progressBar2->setValue(g_pdStruct._pdRecord[1].nCurrent);
+    ui->progressBar2->setFormat(g_pdStruct._pdRecord[1].sStatus);
 }

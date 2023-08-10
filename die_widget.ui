@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
-    <height>224</height>
+    <width>595</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,146 +48,200 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <widget class="QStackedWidget" name="stackedWidgetDieScan">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="pageScan">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QPushButton" name="pushButtonDieSignatures">
-           <property name="text">
-            <string>Signatures</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pushButtonDieSignatures">
+             <property name="text">
+              <string>Signatures</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxRecursiveScan">
+             <property name="text">
+              <string>Recursive scan</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxDeepScan">
+             <property name="text">
+              <string>Deep scan</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxHeuristicScan">
+             <property name="text">
+              <string>Heuristic scan</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxVerbose">
+             <property name="text">
+              <string>Verbose</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxRecursiveScan">
-           <property name="text">
-            <string>Recursive scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxDeepScan">
-           <property name="text">
-            <string>Deep scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxHeuristicScan">
-           <property name="text">
-            <string>Heuristic scan</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxVerbose">
-           <property name="text">
-            <string>Verbose</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="pushButtonDieScanDirectory">
+             <property name="text">
+              <string>Directory</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonDieLog">
+             <property name="text">
+              <string>Log</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonDieExtraInformation">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>23</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string notr="true">&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxAllTypesScan">
+             <property name="text">
+              <string>All types</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="toolButtonElapsedTime">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+       </widget>
+       <widget class="QWidget" name="pageProgress">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QPushButton" name="pushButtonDieScanDirectory">
-           <property name="text">
-            <string>Directory</string>
+          <widget class="QProgressBar" name="progressBar1">
+           <property name="maximum">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="progressBarProgress">
            <property name="value">
-            <number>100</number>
+            <number>0</number>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButtonDieExtraInformation">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>23</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string notr="true">&gt;</string>
+           <property name="format">
+            <string/>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButtonDieLog">
-           <property name="text">
-            <string>Log</string>
+          <widget class="QProgressBar" name="progressBar2">
+           <property name="maximum">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxAllTypesScan">
-           <property name="text">
-            <string>All types</string>
+           <property name="value">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+           <property name="textVisible">
+            <bool>true</bool>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QToolButton" name="toolButtonElapsedTime">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>90</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
+           <property name="format">
             <string/>
            </property>
           </widget>
          </item>
         </layout>
-       </item>
-      </layout>
+       </widget>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonDieScan">
