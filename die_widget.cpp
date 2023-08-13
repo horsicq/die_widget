@@ -132,7 +132,7 @@ void DIE_Widget::process()
         bProcess = true;
 
         ui->pushButtonDieScan->setText(tr("Stop"));
-        //ui->progressBarProgress->setValue(0);
+        // ui->progressBarProgress->setValue(0);
 
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowOptions = true;
@@ -236,8 +236,8 @@ void DIE_Widget::onScanFinished()
 
     ui->treeViewResult->header()->setVisible(false);
 
-//    ui->progressBarProgress->setMaximum(100);
-//    ui->progressBarProgress->setValue(100);
+    //    ui->progressBarProgress->setMaximum(100);
+    //    ui->progressBarProgress->setValue(100);
     ui->pushButtonDieScan->setText(tr("Scan"));
 
     ui->pushButtonDieScan->setEnabled(true);
