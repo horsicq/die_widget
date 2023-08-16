@@ -41,7 +41,7 @@ protected:
     void resizeEvent(QResizeEvent *pEvent) override;
 
 private slots:
-    void updateLineNumberAreaWidth(int newBlockCount);
+    void updateLineNumberAreaWidth(qint32 newBlockCount);
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &rect, int nDy);
 

@@ -118,7 +118,7 @@ void DIE_SignatureEdit::resizeEvent(QResizeEvent *pEvent)
     g_pLineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
-void DIE_SignatureEdit::updateLineNumberAreaWidth(int newBlockCount)
+void DIE_SignatureEdit::updateLineNumberAreaWidth(qint32 newBlockCount)
 {
     Q_UNUSED(newBlockCount)
 
