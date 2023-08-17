@@ -43,7 +43,7 @@ protected:
 private slots:
     void updateLineNumberAreaWidth(qint32 newBlockCount);
     void highlightCurrentLine();
-    void updateLineNumberArea(const QRect &rect, int nDy);
+    void updateLineNumberArea(const QRect &rect, qint32 nDy);
 
 private:
     DIE_Highlighter *pHighlighter;

@@ -144,7 +144,7 @@ void DIE_SignatureEdit::highlightCurrentLine()
     setExtraSelections(extraSelections);
 }
 
-void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect, int nDy)
+void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect, qint32 nDy)
 {
     if (nDy) {
         g_pLineNumberArea->scroll(0, nDy);
