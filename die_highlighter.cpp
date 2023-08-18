@@ -89,7 +89,7 @@ void DIE_Highlighter::highlightBlock(const QString &text)
     while (startIndex >= 0) {
         QRegularExpressionMatch match = commentEndExpression.match(text, startIndex);
         qint32 endIndex = match.capturedStart();
-        int commentLength = 0;
+        qint32 commentLength = 0;
 
         if (endIndex == -1) {
             setCurrentBlockState(1);
