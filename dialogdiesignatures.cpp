@@ -67,6 +67,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxHeuristicScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(true);
+    ui->checkBoxVerbose->setChecked(true);
 
     ui->checkBoxReadOnly->setChecked(true);
 

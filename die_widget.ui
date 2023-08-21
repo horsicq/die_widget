@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>595</width>
-    <height>210</height>
+    <width>635</width>
+    <height>231</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,8 +49,20 @@
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QStackedWidget" name="stackedWidgetDieScan">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>60</height>
+        </size>
+       </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="pageScan">
         <layout class="QVBoxLayout" name="verticalLayout">
