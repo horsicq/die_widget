@@ -110,11 +110,6 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
-void DIE_Widget::on_pushButtonDieScan_clicked()
-{
-    process();
-}
-
 void DIE_Widget::clear()
 {
     g_scanType = ST_UNKNOWN;
@@ -130,8 +125,6 @@ void DIE_Widget::process()
     if (!bProcess) {
         enableControls(false);
         bProcess = true;
-
-        ui->pushButtonDieScan->setText(tr("Stop"));
         // ui->progressBarProgress->setValue(0);
 
         g_scanOptions.bShowVersion = true;
@@ -155,11 +148,8 @@ void DIE_Widget::process()
 
         watcher.setFuture(future);
     } else {
-        ui->pushButtonDieScan->setEnabled(false);
-
         stop();
         watcher.waitForFinished();
-        ui->pushButtonDieScan->setText(tr("Scan"));
         enableControls(true);
     }
 }
@@ -238,9 +228,6 @@ void DIE_Widget::onScanFinished()
 
     //    ui->progressBarProgress->setMaximum(100);
     //    ui->progressBarProgress->setValue(100);
-    ui->pushButtonDieScan->setText(tr("Scan"));
-
-    ui->pushButtonDieScan->setEnabled(true);
     enableControls(true);
 }
 
@@ -438,4 +425,18 @@ void DIE_Widget::timerSlot()
     ui->progressBar2->setMaximum(g_pdStruct._pdRecord[1].nTotal);
     ui->progressBar2->setValue(g_pdStruct._pdRecord[1].nCurrent);
     ui->progressBar2->setFormat(g_pdStruct._pdRecord[1].sStatus);
+}
+
+void DIE_Widget::on_pushButtonDieScanStart_clicked()
+{
+    ui->pushButtonDieScanStart->setEnabled(false);
+    process();
+    ui->pushButtonDieScanStart->setEnabled(true);
+}
+
+void DIE_Widget::on_pushButtonDieScanStop_clicked()
+{
+    ui->pushButtonDieScanStop->setEnabled(false);
+    process();
+    ui->pushButtonDieScanStop->setEnabled(true);
 }

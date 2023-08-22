@@ -73,7 +73,6 @@ public:
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 private slots:
-    void on_pushButtonDieScan_clicked();
     void clear();
     void process();
     void scan();
@@ -92,6 +91,8 @@ private slots:
     void on_treeViewResult_clicked(const QModelIndex &index);
     void on_treeViewResult_customContextMenuRequested(const QPoint &pos);
     void timerSlot();
+    void on_pushButtonDieScanStart_clicked();
+    void on_pushButtonDieScanStop_clicked();
 
 protected:
     virtual void registerShortcuts(bool bState);
