@@ -42,7 +42,7 @@ public:
     explicit DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScript);
     ~DialogDIEScanProcess();
 
-    void setData(const QString &sDirectoryName, DiE_Script::OPTIONS options);
+    void setData(const QString &sDirectoryName, const DiE_Script::OPTIONS &options);
     void setData(QIODevice *pDevice, DiE_Script::OPTIONS options);
 
 signals:

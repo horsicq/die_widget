@@ -31,7 +31,7 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScr
     connect(g_pDieScript, SIGNAL(scanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
 }
 
-void DialogDIEScanProcess::setData(const QString &sDirectoryName, DiE_Script::OPTIONS options)
+void DialogDIEScanProcess::setData(const QString &sDirectoryName, const DiE_Script::OPTIONS &options)
 {
     g_pDieScript->setData(sDirectoryName, options, getPdStruct());
 
