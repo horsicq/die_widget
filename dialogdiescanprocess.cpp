@@ -41,7 +41,7 @@ void DialogDIEScanProcess::setData(const QString &sDirectoryName, const DiE_Scri
     g_pThread->start();
 }
 
-void DialogDIEScanProcess::setData(QIODevice *pDevice, DiE_Script::OPTIONS options)
+void DialogDIEScanProcess::setData(QIODevice *pDevice, const DiE_Script::OPTIONS &options)
 {
     g_pDieScript->setData(pDevice, options, getPdStruct());
 
