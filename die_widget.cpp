@@ -29,7 +29,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     g_pdStruct = XBinary::createPdStruct();
     g_pModel = nullptr;
 
-    connect(&watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
+    connect(&g_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
     ui->pushButtonDieLog->setEnabled(false);
 
@@ -49,7 +49,7 @@ DIE_Widget::~DIE_Widget()
 {
     if (bProcess) {
         stop();
-        watcher.waitForFinished();
+        g_watcher.waitForFinished();
     }
 
     delete ui;
@@ -146,10 +146,10 @@ void DIE_Widget::process()
         QFuture<void> future = QtConcurrent::run(this, &DIE_Widget::scan);
 #endif
 
-        watcher.setFuture(future);
+        g_watcher.setFuture(future);
     } else {
         stop();
-        watcher.waitForFinished();
+        g_watcher.waitForFinished();
         enableControls(true);
     }
 }

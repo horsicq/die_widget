@@ -107,7 +107,7 @@ private:
     DiE_Script g_dieScript;
     DiE_Script::OPTIONS g_scanOptions;
     DiE_Script::SCAN_RESULT g_scanResult;
-    QFutureWatcher<void> watcher;
+    QFutureWatcher<void> g_watcher;
     QString sFileName;
     XBinary::FT fileType;
     bool bProcess;
