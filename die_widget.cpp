@@ -28,6 +28,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
     g_pdStruct = XBinary::createPdStruct();
     g_pModel = nullptr;
+    g_bProcess = false;
 
     connect(&g_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
@@ -47,7 +48,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
 DIE_Widget::~DIE_Widget()
 {
-    if (bProcess) {
+    if (g_bProcess) {
         stop();
         g_watcher.waitForFinished();
     }
@@ -115,16 +116,16 @@ void DIE_Widget::clear()
     g_scanType = ST_UNKNOWN;
     g_scanOptions = {};
     g_scanResult = {};
-    bProcess = false;
+    g_bProcess = false;
 
     ui->treeViewResult->setModel(0);
 }
 
 void DIE_Widget::process()
 {
-    if (!bProcess) {
+    if (!g_bProcess) {
         enableControls(false);
-        bProcess = true;
+        g_bProcess = true;
         // ui->progressBarProgress->setValue(0);
 
         g_scanOptions.bShowVersion = true;
@@ -181,7 +182,7 @@ void DIE_Widget::stop()
 
 void DIE_Widget::onScanFinished()
 {
-    bProcess = false;
+    g_bProcess = false;
 
     g_pTimer->stop();
 

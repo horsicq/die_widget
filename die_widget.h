@@ -110,7 +110,7 @@ private:
     QFutureWatcher<void> g_watcher;
     QString sFileName;
     XBinary::FT fileType;
-    bool bProcess;
+    bool g_bProcess;
     QString g_sInfoPath;
     XBinary::PDSTRUCT g_pdStruct;
     QTimer *g_pTimer;
