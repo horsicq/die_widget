@@ -109,7 +109,7 @@ private:
     DiE_Script::SCAN_RESULT g_scanResult;
     QFutureWatcher<void> g_watcher;
     QString sFileName;
-    XBinary::FT fileType;
+    XBinary::FT g_fileType;
     bool g_bProcess;
     QString g_sInfoPath;
     XBinary::PDSTRUCT g_pdStruct;

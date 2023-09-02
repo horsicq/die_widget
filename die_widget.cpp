@@ -85,7 +85,7 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
     }
 
     this->sFileName = sFileName;
-    this->fileType = fileType;
+    this->g_fileType = fileType;
     g_scanType = ST_FILE;
 
     if (bScan) {
@@ -136,7 +136,7 @@ void DIE_Widget::process()
         g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
         g_scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bShowType = true;
-        g_scanOptions.fileType = fileType;
+        g_scanOptions.fileType = g_fileType;
         g_scanOptions.bDebug = true;
 
         g_pTimer->start(200);  // TODO const

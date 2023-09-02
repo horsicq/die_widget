@@ -49,7 +49,6 @@ private slots:
     void on_pushButtonScan_clicked();
     void onSelectionChanged(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_comboBoxType_currentIndexChanged(int nIndex);
-
     void on_pushButtonSignatures_clicked();
 
 private:
