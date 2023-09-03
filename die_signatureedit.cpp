@@ -62,15 +62,6 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
 
 qint32 DIE_SignatureEdit::lineNumberAreaWidth()
 {
-    //    int digits=1;
-    //    int max=qMax(1,blockCount());
-
-    //    while(max>=10)
-    //    {
-    //        max/=10;
-    //        ++digits;
-    //    }
-
     qint32 nDigits = 3;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
     qint32 nSpace = 10 + fontMetrics().width(QLatin1Char('9')) * nDigits;
