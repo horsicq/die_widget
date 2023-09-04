@@ -84,7 +84,7 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
         fileType = XBinary::FT_BINARY;
     }
 
-    this->sFileName = sFileName;
+    this->g_sFileName = sFileName;
     this->g_fileType = fileType;
     g_scanType = ST_FILE;
 
@@ -168,7 +168,7 @@ void DIE_Widget::scan()
                 g_bInitDatabase = true;
             }
 
-            g_scanResult = g_dieScript.scanFile(sFileName, &g_scanOptions, &g_pdStruct);
+            g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);
 
             emit scanFinished();
         }
@@ -235,7 +235,7 @@ void DIE_Widget::onScanFinished()
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
     QFile file;
-    file.setFileName(sFileName);
+    file.setFileName(g_sFileName);
 
     if (file.open(QIODevice::ReadOnly)) {
         DialogDIESignatures dialogSignatures(this, &g_dieScript);
@@ -294,7 +294,7 @@ void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 {
     if (sName != "") {
         QFile file;
-        file.setFileName(sFileName);
+        file.setFileName(g_sFileName);
 
         if (file.open(QIODevice::ReadOnly)) {
             DialogDIESignatures dialogSignatures(this, &g_dieScript);
@@ -362,7 +362,7 @@ void DIE_Widget::copyResult()
 
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
-    DialogDIEScanDirectory dds(this, QFileInfo(sFileName).absolutePath(), g_dieScript.getDatabasePath());
+    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath(), g_dieScript.getDatabasePath());
 
     dds.exec();
 }
