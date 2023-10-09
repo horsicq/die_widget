@@ -71,7 +71,8 @@ void DIEWidgetAdvanced::process()
 {
     DiE_Script dieScript;
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString());  // TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);  // TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);
 
     DiE_Script::OPTIONS options = {};
     options.bShowVersion = true;
@@ -154,7 +155,8 @@ void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
 {
     DiE_Script dieScript;
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString());  // TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);// TODO optimize
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());

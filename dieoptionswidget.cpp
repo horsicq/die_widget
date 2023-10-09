@@ -52,6 +52,7 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
 #ifdef USE_YARA
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
@@ -73,6 +74,7 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
@@ -101,6 +103,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
+    pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
 
 #ifdef Q_OS_WIN
     pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");
@@ -122,6 +125,18 @@ void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabase->setText(sDirectoryName);
+    }
+}
+
+void DIEOptionsWidget::on_toolButtonDIEDatabaseCustom_clicked()
+{
+    QString sText = ui->lineEditDIEDatabaseCustom->text();
+    QString sInitDirectory = XBinary::convertPathName(sText);
+
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
+
+    if (!sDirectoryName.isEmpty()) {
+        ui->lineEditDIEDatabaseCustom->setText(sDirectoryName);
     }
 }
 

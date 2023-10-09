@@ -31,7 +31,7 @@ class DialogDIEScanDirectory : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath);
+    explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom);
     ~DialogDIEScanDirectory();
 
 private slots:
@@ -50,6 +50,7 @@ signals:
 private:
     Ui::DialogDIEScanDirectory *ui;
     QString g_sDatabasePath;
+    QString g_sDatabasePathCustom;
 };
 
 #endif  // DIALOGDIESCANDIRECTORY_H

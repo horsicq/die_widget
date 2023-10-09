@@ -164,7 +164,8 @@ void DIE_Widget::scan()
             g_pdStruct = XBinary::createPdStruct();
 
             if (!g_bInitDatabase) {
-                g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath());
+                g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath(), true);
+                g_dieScript.loadDatabase(getGlobalOptions()->getCustomDatabasePath(), false);
                 g_bInitDatabase = true;
             }
 
@@ -362,7 +363,7 @@ void DIE_Widget::copyResult()
 
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
-    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath(), g_dieScript.getDatabasePath());
+    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath(), getGlobalOptions()->getDatabasePath(), getGlobalOptions()->getCustomDatabasePath());
 
     dds.exec();
 }

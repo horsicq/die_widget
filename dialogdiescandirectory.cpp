@@ -22,12 +22,13 @@
 
 #include "ui_dialogdiescandirectory.h"
 
-DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath)
+DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom)
     : QDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
 
     g_sDatabasePath = sDatabasePath;
+    g_sDatabasePathCustom = sDatabasePathCustom;
 
     setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
 
@@ -84,7 +85,8 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        dieScript.loadDatabase(g_sDatabasePath);  // TODO initDB
+        dieScript.loadDatabase(g_sDatabasePath, true);  // TODO initDB
+        dieScript.loadDatabase(g_sDatabasePathCustom, false);
 
         DialogDIEScanProcess ds(this, &dieScript);
         connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
