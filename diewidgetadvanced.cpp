@@ -156,7 +156,7 @@ void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
     DiE_Script dieScript;
 
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);// TODO optimize
+    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);  // TODO optimize
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
