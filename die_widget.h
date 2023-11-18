@@ -48,15 +48,6 @@ public:
         ST_FILE
     };
 
-    //    struct OPTIONS
-    //    {
-    //        bool bRecursiveScan;
-    //        bool bDeepScan;
-    //        bool bAllTypesScan;
-    //        QString sDatabasePath;
-    //        QString sInfoPath; // TODO make zip
-    //    };
-
     enum COLUMN {
         //        COLUMN_TYPE=0,
         COLUMN_STRING = 0,
