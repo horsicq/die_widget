@@ -48,6 +48,12 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 
 void DIEWidgetAdvanced::adjustView()
 {
+    QFont _font;
+    QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
+
+    if ((sFont != "") && _font.fromString(sFont)) {
+        ui->plainTextEditSignature->setFont(_font);
+    }
 }
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
