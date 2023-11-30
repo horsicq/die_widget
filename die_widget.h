@@ -84,6 +84,7 @@ private slots:
     void timerSlot();
     void on_pushButtonDieScanStart_clicked();
     void on_pushButtonDieScanStop_clicked();
+    void handleErrorString(const QString &sErrorString);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -107,6 +108,7 @@ private:
     QTimer *g_pTimer;
     bool g_bInitDatabase;
     ScanItemModel *g_pModel;
+    QList<QString> g_listErrors;
 };
 
 #endif  // DIE_WIDGET_H

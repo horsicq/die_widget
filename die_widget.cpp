@@ -32,6 +32,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
     connect(&g_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
+    connect(&g_dieScript, SIGNAL(errorMessage(QString)), this, SLOT(handleErrorString(QString)));
+
     ui->pushButtonDieLog->setEnabled(false);
 
     ui->checkBoxRecursiveScan->setChecked(true);
@@ -157,6 +159,8 @@ void DIE_Widget::process()
 
 void DIE_Widget::scan()
 {
+    g_listErrors.clear();
+
     if (g_scanType != ST_UNKNOWN) {
         if (g_scanType == ST_FILE) {
             emit scanStarted();
@@ -187,7 +191,7 @@ void DIE_Widget::onScanFinished()
 
     g_pTimer->stop();
 
-    qint32 nNumberOfErrors = g_scanResult.listErrors.count();
+    qint32 nNumberOfErrors = g_scanResult.listErrors.count() + g_listErrors.count();
 
     QString sLogButtonText;
 
@@ -266,7 +270,11 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    dialogInfo.setText(DiE_Script::getErrorsString(&g_scanResult));
+    QList<QString> listErrors;
+    listErrors.append(g_listErrors);
+    listErrors.append(DiE_Script::getErrorsStringList(&g_scanResult));
+
+    dialogInfo.setStringList(listErrors);
     dialogInfo.setTitle(tr("Log"));
 
     dialogInfo.exec();
@@ -441,4 +449,9 @@ void DIE_Widget::on_pushButtonDieScanStop_clicked()
     ui->pushButtonDieScanStop->setEnabled(false);
     process();
     ui->pushButtonDieScanStop->setEnabled(true);
+}
+
+void DIE_Widget::handleErrorString(const QString &sErrorString)
+{
+    g_listErrors.append(sErrorString);
 }
