@@ -104,11 +104,11 @@ void DIE_Widget::adjustView()
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
-    ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
-    ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
-    ui->checkBoxVerbose->setChecked(pXOptions->isVerboseScan());
-    ui->checkBoxRecursiveScan->setChecked(pXOptions->isRecursiveScan());
+    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_ALLTYPES).toBool());
+    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_DEEP).toBool());
+    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_RECURSIVE).toBool());
+    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_HEURISTIC).toBool());
+    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_VERBOSE).toBool());
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
@@ -140,6 +140,12 @@ void DIE_Widget::process()
         g_scanOptions.bShowType = true;
         g_scanOptions.fileType = g_fileType;
         g_scanOptions.bDebug = true;
+
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_ALLTYPES, g_scanOptions.bAllTypesScan);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_DEEP, g_scanOptions.bIsDeepScan);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_RECURSIVE, g_scanOptions.bIsRecursiveScan);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_HEURISTIC, g_scanOptions.bIsHeuristicScan);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_VERBOSE, g_scanOptions.bIsVerbose);
 
         g_pTimer->start(200);  // TODO const
 

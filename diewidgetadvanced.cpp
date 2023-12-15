@@ -58,11 +58,11 @@ void DIEWidgetAdvanced::adjustView()
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    ui->checkBoxAllTypesScan->setChecked(pXOptions->isAllTypesScan());
-    ui->checkBoxDeepScan->setChecked(pXOptions->isDeepScan());
-    ui->checkBoxHeuristicScan->setChecked(pXOptions->isHeuristicScan());
-    ui->checkBoxVerbose->setChecked(pXOptions->isVerboseScan());
-    ui->checkBoxRecursiveScan->setChecked(pXOptions->isRecursiveScan());
+    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_ALLTYPES).toBool());
+    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_DEEP).toBool());
+    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_RECURSIVE).toBool());
+    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_HEURISTIC).toBool());
+    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_VERBOSE).toBool());
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
