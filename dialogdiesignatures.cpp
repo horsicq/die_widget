@@ -54,6 +54,11 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     handleTreeItems(pRootItem, XBinary::FT_PE, "PE");
     handleTreeItems(pRootItem, XBinary::FT_MACHO, "MACH");
     handleTreeItems(pRootItem, XBinary::FT_ELF, "ELF");
+    handleTreeItems(pRootItem, XBinary::FT_ZIP, "ZIP");
+    handleTreeItems(pRootItem, XBinary::FT_JAR, "JAR");
+    handleTreeItems(pRootItem, XBinary::FT_APK, "APK");
+    handleTreeItems(pRootItem, XBinary::FT_IPA, "IPA");
+    handleTreeItems(pRootItem, XBinary::FT_DEX, "DEX");
 
     ui->treeWidgetSignatures->setSortingEnabled(true);
     ui->treeWidgetSignatures->sortByColumn(0, Qt::AscendingOrder);
