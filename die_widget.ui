@@ -60,7 +60,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageScan">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -245,6 +245,22 @@
        </property>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QProgressBar" name="progressBar0">
+           <property name="maximum">
+            <number>0</number>
+           </property>
+           <property name="value">
+            <number>0</number>
+           </property>
+           <property name="format">
+            <string/>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QProgressBar" name="progressBar1">
            <property name="maximum">
@@ -252,6 +268,9 @@
            </property>
            <property name="value">
             <number>0</number>
+           </property>
+           <property name="textVisible">
+            <bool>true</bool>
            </property>
            <property name="format">
             <string/>
@@ -273,6 +292,51 @@
             <string/>
            </property>
           </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="progressBar3">
+           <property name="maximum">
+            <number>0</number>
+           </property>
+           <property name="value">
+            <number>0</number>
+           </property>
+           <property name="textVisible">
+            <bool>true</bool>
+           </property>
+           <property name="format">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="progressBar4">
+           <property name="maximum">
+            <number>0</number>
+           </property>
+           <property name="value">
+            <number>0</number>
+           </property>
+           <property name="textVisible">
+            <bool>true</bool>
+           </property>
+           <property name="format">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>2</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>

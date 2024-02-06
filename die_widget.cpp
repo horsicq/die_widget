@@ -434,13 +434,11 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    ui->progressBar1->setMaximum(g_pdStruct._pdRecord[0].nTotal);
-    ui->progressBar1->setValue(g_pdStruct._pdRecord[0].nCurrent);
-    ui->progressBar1->setFormat(g_pdStruct._pdRecord[0].sStatus);
-
-    ui->progressBar2->setMaximum(g_pdStruct._pdRecord[1].nTotal);
-    ui->progressBar2->setValue(g_pdStruct._pdRecord[1].nCurrent);
-    ui->progressBar2->setFormat(g_pdStruct._pdRecord[1].sStatus);
+    XFormats::setProgressBar(ui->progressBar0, g_pdStruct._pdRecord[0]);
+    XFormats::setProgressBar(ui->progressBar1, g_pdStruct._pdRecord[1]);
+    XFormats::setProgressBar(ui->progressBar2, g_pdStruct._pdRecord[2]);
+    XFormats::setProgressBar(ui->progressBar3, g_pdStruct._pdRecord[3]);
+    XFormats::setProgressBar(ui->progressBar4, g_pdStruct._pdRecord[4]);
 }
 
 void DIE_Widget::on_pushButtonDieScanStart_clicked()
