@@ -149,6 +149,12 @@ void DIE_Widget::process()
 
         g_pTimer->start(200);  // TODO const
 
+        ui->progressBar0->hide();
+        ui->progressBar1->hide();
+        ui->progressBar2->hide();
+        ui->progressBar3->hide();
+        ui->progressBar4->hide();
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         QFuture<void> future = QtConcurrent::run(&DIE_Widget::scan, this);
 #else
