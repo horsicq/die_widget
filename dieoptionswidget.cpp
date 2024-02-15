@@ -60,6 +60,8 @@ void DIEOptionsWidget::save()
 #endif
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    } else if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
+        g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
     }
 
     g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
@@ -87,6 +89,9 @@ void DIEOptionsWidget::reload()
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         ui->groupBoxScanEngine->show();
         g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    } else if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
+        ui->groupBoxScanEngine->show();
+        g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
     } else {
         ui->groupBoxScanEngine->hide();
     }
