@@ -11,19 +11,28 @@ set(DIE_WIDGET_SOURCES
     ${XDIALOGPROCESS_SOURCES}
     ${DIALOGFINDTEXT_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.ui
-    ${CMAKE_CURRENT_LIST_DIR}/die_highlighter.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/die_signatureedit.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/die_widget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/die_widget.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatureselapsed.ui
+    ${CMAKE_CURRENT_LIST_DIR}/die_highlighter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/die_highlighter.h
+    ${CMAKE_CURRENT_LIST_DIR}/die_signatureedit.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/die_signatureedit.h
+    ${CMAKE_CURRENT_LIST_DIR}/die_widget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/die_widget.h
+    ${CMAKE_CURRENT_LIST_DIR}/die_widget.ui
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.h
     ${CMAKE_CURRENT_LIST_DIR}/dieoptionswidget.ui
     ${CMAKE_CURRENT_LIST_DIR}/diewidgetadvanced.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/diewidgetadvanced.h
     ${CMAKE_CURRENT_LIST_DIR}/diewidgetadvanced.ui
 )
