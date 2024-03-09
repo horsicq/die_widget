@@ -28,7 +28,6 @@ SOURCES += \
 
 FORMS += \
     $$PWD/dialogdiescandirectory.ui \
-    $$PWD/dialogdiescanprocess.ui \
     $$PWD/dialogdiesignatures.ui \
     $$PWD/dialogdiesignatureselapsed.ui \
     $$PWD/die_widget.ui \
