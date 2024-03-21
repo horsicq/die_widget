@@ -84,6 +84,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBoxHighlight">
+         <property name="text">
+          <string>Highlight</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBoxScanEngine">
          <property name="title">
           <string>Scan</string>

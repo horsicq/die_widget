@@ -103,7 +103,7 @@ void DIEWidgetAdvanced::process()
 
     QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(scanResult.listRecords));
 
-    g_pModel = new ScanItemModel(&_listRecords);
+    g_pModel = new ScanItemModel(&_listRecords, 1, getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool());
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 

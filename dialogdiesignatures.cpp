@@ -205,7 +205,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 
         QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
 
-        ScanItemModel model(&listResult);
+        ScanItemModel model(&listResult, 1, false);
 
         ui->plainTextEditResult->appendPlainText(model.toFormattedString());
 

@@ -103,7 +103,7 @@ void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
 
     QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
 
-    ScanItemModel model(&listResult);
+    ScanItemModel model(&listResult, 1, false);
 
     sResult += model.toFormattedString();
 
