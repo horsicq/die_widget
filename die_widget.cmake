@@ -10,6 +10,9 @@ set(DIE_WIDGET_SOURCES
     ${DIALOGTEXTINFO_SOURCES}
     ${XDIALOGPROCESS_SOURCES}
     ${DIALOGFINDTEXT_SOURCES}
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.ui
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.ui

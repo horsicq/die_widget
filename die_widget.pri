@@ -5,6 +5,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
+    $$PWD/dialogdiehexviewer.h \
     $$PWD/dialogdiescandirectory.h \
     $$PWD/dialogdiescanprocess.h \
     $$PWD/dialogdiesignatures.h \
@@ -16,6 +17,7 @@ HEADERS += \
     $$PWD/diewidgetadvanced.h
 
 SOURCES += \
+    $$PWD/dialogdiehexviewer.cpp \
     $$PWD/dialogdiescandirectory.cpp \
     $$PWD/dialogdiescanprocess.cpp \
     $$PWD/dialogdiesignatures.cpp \
@@ -27,6 +29,7 @@ SOURCES += \
     $$PWD/diewidgetadvanced.cpp
 
 FORMS += \
+    $$PWD/dialogdiehexviewer.ui \
     $$PWD/dialogdiescandirectory.ui \
     $$PWD/dialogdiesignatures.ui \
     $$PWD/dialogdiesignatureselapsed.ui \
