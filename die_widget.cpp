@@ -221,9 +221,7 @@ void DIE_Widget::onScanFinished()
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
-    QList<XBinary::SCANSTRUCT> _listRecords = DiE_Script::convert(&(g_scanResult.listRecords));
-
-    g_pModel = new ScanItemModel(&_listRecords, 3, getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool());
+    g_pModel = new ScanItemModel(&(g_scanResult.listRecords), 3, getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool());
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
@@ -269,9 +267,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(g_scanResult.listRecords));
-
-    ScanItemModel model(&listResult, 1, false);
+    ScanItemModel model(&(g_scanResult.listRecords), 1, false);
 
     dialogInfo.setText(model.toFormattedString());
 
