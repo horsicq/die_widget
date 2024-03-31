@@ -21,8 +21,7 @@
 #include "dialogdiehexviewer.h"
 #include "ui_dialogdiehexviewer.h"
 
-DialogDieHexViewer::DialogDieHexViewer(QWidget *pParent) : XShortcutsDialog(pParent),
-    ui(new Ui::DialogDieHexViewer)
+DialogDieHexViewer::DialogDieHexViewer(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogDieHexViewer)
 {
     ui->setupUi(this);
 }

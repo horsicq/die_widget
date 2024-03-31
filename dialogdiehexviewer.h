@@ -28,8 +28,7 @@ namespace Ui {
 class DialogDieHexViewer;
 }
 
-class DialogDieHexViewer : public XShortcutsDialog
-{
+class DialogDieHexViewer : public XShortcutsDialog {
     Q_OBJECT
 
 public:
@@ -43,4 +42,4 @@ private:
     Ui::DialogDieHexViewer *ui;
 };
 
-#endif // DIALOGDIEHEXVIEWER_H
+#endif  // DIALOGDIEHEXVIEWER_H
