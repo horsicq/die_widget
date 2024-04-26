@@ -85,7 +85,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        dieScript.loadDatabase(g_sDatabasePath, true);  // TODO initDB
+        dieScript.loadDatabase(g_sDatabasePath, true);
         dieScript.loadDatabase(g_sDatabasePathCustom, false);
 
         DialogDIEScanProcess ds(this, &dieScript);
