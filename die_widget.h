@@ -85,6 +85,7 @@ private slots:
     void on_pushButtonDieScanStart_clicked();
     void on_pushButtonDieScanStop_clicked();
     void handleErrorString(const QString &sErrorString);
+    void handleWarningString(const QString &sWarningString);
 
 protected:
     virtual void registerShortcuts(bool bState);
@@ -108,7 +109,7 @@ private:
     QTimer *g_pTimer;
     bool g_bInitDatabase;
     ScanItemModel *g_pModel;
-    QList<QString> g_listErrors;
+    QList<QString> g_listErrorsAndWarnings;
 };
 
 #endif  // DIE_WIDGET_H

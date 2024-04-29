@@ -84,6 +84,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBoxProfiling">
+         <property name="text">
+          <string>Profiling</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBoxHighlight">
          <property name="text">
           <string>Highlight</string>

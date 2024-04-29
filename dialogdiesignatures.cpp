@@ -32,9 +32,11 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 
     setWindowFlags(Qt::Window);
 
-    this->pDieScript = pDieScript;
+    this->g_pDieScript = pDieScript;
 
     connect(pDieScript, SIGNAL(infoMessage(QString)), this, SLOT(infoMessage(QString)));
+    connect(pDieScript, SIGNAL(warningMessage(QString)), this, SLOT(warningMessage(QString)));
+    connect(pDieScript, SIGNAL(errorMessage(QString)), this, SLOT(errorMessage(QString)));
 
     ui->plainTextEditSignature->setLineWrapMode(QPlainTextEdit::NoWrap);
 
@@ -74,6 +76,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     ui->checkBoxHeuristicScan->setChecked(true);
     ui->checkBoxRecursiveScan->setChecked(false);
     ui->checkBoxVerbose->setChecked(true);
+    ui->checkBoxProfiling->setChecked(false);
 
     ui->checkBoxReadOnly->setChecked(true);
 
@@ -122,7 +125,7 @@ qint32 DialogDIESignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary:
 {
     qint32 nResult = 0;
 
-    if (pDieScript->isSignaturesPresent(fileType)) {
+    if (g_pDieScript->isSignaturesPresent(fileType)) {
         QTreeWidgetItem *pItem = new QTreeWidgetItem(pRootItem);
         pItem->setText(0, sText);
         nResult = _handleTreeItems(pItem, fileType);
@@ -135,7 +138,7 @@ qint32 DialogDIESignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBina
 {
     qint32 nResult = 0;
 
-    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = pDieScript->getSignatures();
+    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = g_pDieScript->getSignatures();
 
     qint32 nNumberOfSignatures = pListSignatures->count();
 
@@ -176,6 +179,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
         scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
         scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        scanOptions.bIsProfiling = ui->checkBoxProfiling->isChecked();
 
         scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();
         scanOptions.fileType = (XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0, Qt::UserRole + UD_FILETYPE).toInt();
@@ -189,17 +193,17 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
             debugWindow->setWindowModality(Qt::WindowModal);
             debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
-            pDieScript->setDebugger(&debugger);
+            g_pDieScript->setDebugger(&debugger);
 #endif
 
-            scanResult = pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
+            scanResult = g_pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
         } else {
-            scanResult = pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
+            scanResult = g_pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
         }
 
         if (bIsDebug) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-            pDieScript->removeDebugger();
+            g_pDieScript->removeDebugger();
 #endif
         }
 
@@ -232,7 +236,7 @@ void DialogDIESignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidget
         }
 
         sCurrentSignatureFilePath = sSignatureFilePath;
-        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
+        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = g_pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
@@ -248,7 +252,7 @@ void DialogDIESignatures::on_pushButtonSave_clicked()
 
 void DialogDIESignatures::save()
 {
-    if (pDieScript->updateSignature(sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
+    if (g_pDieScript->updateSignature(sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
         g_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
     } else {
@@ -328,6 +332,16 @@ void DialogDIESignatures::enableControls(bool bState)
 void DialogDIESignatures::infoMessage(const QString &sInfoMessage)
 {
     ui->plainTextEditResult->appendPlainText(sInfoMessage);
+}
+
+void DialogDIESignatures::warningMessage(const QString &sWarningMessage)
+{
+    ui->plainTextEditResult->appendPlainText(sWarningMessage);
+}
+
+void DialogDIESignatures::errorMessage(const QString &sErrorMessage)
+{
+    ui->plainTextEditResult->appendPlainText(sErrorMessage);
 }
 
 void DialogDIESignatures::on_pushButtonFind_clicked()

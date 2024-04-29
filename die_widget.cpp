@@ -33,6 +33,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     connect(&g_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
     connect(&g_dieScript, SIGNAL(errorMessage(QString)), this, SLOT(handleErrorString(QString)));
+    connect(&g_dieScript, SIGNAL(warningMessage(QString)), this, SLOT(handleWarningString(QString)));
+    // connect(&g_dieScript, SIGNAL(infoMessage(QString)), this, SLOT(handleInfoString(QString)));
 
     ui->pushButtonDieLog->setEnabled(false);
 
@@ -130,6 +132,7 @@ void DIE_Widget::process()
         g_bProcess = true;
         // ui->progressBarProgress->setValue(0);
 
+        g_scanOptions.bShowType = true;
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowOptions = true;
         g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
@@ -137,9 +140,9 @@ void DIE_Widget::process()
         g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
         g_scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-        g_scanOptions.bShowType = true;
+        g_scanOptions.bIsProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_PROFILING).toBool();
         g_scanOptions.fileType = g_fileType;
-        g_scanOptions.bDebug = true;
+        g_scanOptions.bShowScanTime = true;
 
         getGlobalOptions()->setValue(XOptions::ID_SCAN_ALLTYPES, g_scanOptions.bAllTypesScan);
         getGlobalOptions()->setValue(XOptions::ID_SCAN_DEEP, g_scanOptions.bIsDeepScan);
@@ -171,7 +174,7 @@ void DIE_Widget::process()
 
 void DIE_Widget::scan()
 {
-    g_listErrors.clear();
+    g_listErrorsAndWarnings.clear();
 
     if (g_scanType != ST_UNKNOWN) {
         if (g_scanType == ST_FILE) {
@@ -203,7 +206,7 @@ void DIE_Widget::onScanFinished()
 
     g_pTimer->stop();
 
-    qint32 nNumberOfErrors = g_scanResult.listErrors.count() + g_listErrors.count();
+    qint32 nNumberOfErrors = g_scanResult.listErrors.count() + g_listErrorsAndWarnings.count();
 
     QString sLogButtonText;
 
@@ -278,11 +281,11 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
 {
     DialogTextInfo dialogInfo(this);
 
-    QList<QString> listErrors;
-    listErrors.append(g_listErrors);
-    listErrors.append(DiE_Script::getErrorsStringList(&g_scanResult));
+    QList<QString> listMessages;
+    listMessages.append(g_listErrorsAndWarnings);
+    listMessages.append(DiE_Script::getErrorsAndWarningsStringList(&g_scanResult));
 
-    dialogInfo.setStringList(listErrors);
+    dialogInfo.setStringList(listMessages);
     dialogInfo.setTitle(tr("Log"));
 
     dialogInfo.exec();
@@ -459,5 +462,10 @@ void DIE_Widget::on_pushButtonDieScanStop_clicked()
 
 void DIE_Widget::handleErrorString(const QString &sErrorString)
 {
-    g_listErrors.append(sErrorString);
+    g_listErrorsAndWarnings.append(sErrorString);
+}
+
+void DIE_Widget::handleWarningString(const QString &sWarningString)
+{
+    g_listErrorsAndWarnings.append(sWarningString);
 }

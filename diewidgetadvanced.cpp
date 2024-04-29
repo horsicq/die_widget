@@ -81,6 +81,7 @@ void DIEWidgetAdvanced::process()
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);
 
     DiE_Script::OPTIONS options = {};
+    options.bShowType = true;
     options.bShowVersion = true;
     options.bShowOptions = true;
     options.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
@@ -88,9 +89,9 @@ void DIEWidgetAdvanced::process()
     options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
     options.bIsVerbose = ui->checkBoxVerbose->isChecked();
     options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-    options.bShowType = true;
+    options.bIsProfiling = false;
+    options.bShowScanTime = false;
     options.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    options.bDebug = false;
 
     DialogDIEScanProcess ds(this, &dieScript);
     ds.setData(g_pDevice, options);

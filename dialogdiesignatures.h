@@ -76,6 +76,8 @@ private slots:
     bool _setTreeItem(QTreeWidget *pTree, QTreeWidgetItem *pItem, XBinary::FT fileType, const QString &sSignature);
     void enableControls(bool bState);
     void infoMessage(const QString &sInfoMessage);
+    void warningMessage(const QString &sWarningMessage);
+    void errorMessage(const QString &sErrorMessage);
     void on_pushButtonFind_clicked();
     void on_pushButtonFindNext_clicked();
     void findString();
@@ -86,7 +88,7 @@ protected:
 
 private:
     Ui::DialogDIESignatures *ui;
-    DiE_Script *pDieScript;
+    DiE_Script *g_pDieScript;
     QIODevice *g_pDevice;
     XBinary::FT g_fileType;
     QString g_sSignature;

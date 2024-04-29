@@ -51,6 +51,7 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_PROFILING);
     g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
@@ -77,6 +78,7 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
     g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
+    g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_PROFILING);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
@@ -109,6 +111,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_HEURISTIC, false);
     pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
+    pOptions->addID(XOptions::ID_SCAN_PROFILING, false);
     pOptions->addID(XOptions::ID_SCAN_HIGHLIGHT, true);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
     pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
