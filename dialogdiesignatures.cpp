@@ -26,7 +26,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 {
     ui->setupUi(this);
 
-    memset(shortCuts, 0, sizeof shortCuts);
+    memset(g_shortCuts, 0, sizeof g_shortCuts);
 
     g_data = {};
 
@@ -228,15 +228,15 @@ void DialogDIESignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidget
 
     QString sSignatureFilePath = pItemCurrent->data(0, Qt::UserRole).toString();
 
-    if (sSignatureFilePath != sCurrentSignatureFilePath) {
+    if (sSignatureFilePath != g_sCurrentSignatureFilePath) {
         const bool bBlocked1 = ui->plainTextEditSignature->blockSignals(true);
 
         if (g_bCurrentEdited) {
             // TODO handle warning
         }
 
-        sCurrentSignatureFilePath = sSignatureFilePath;
-        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = g_pDieScript->getSignatureByFilePath(sCurrentSignatureFilePath);
+        g_sCurrentSignatureFilePath = sSignatureFilePath;
+        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = g_pDieScript->getSignatureByFilePath(g_sCurrentSignatureFilePath);
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
@@ -252,7 +252,7 @@ void DialogDIESignatures::on_pushButtonSave_clicked()
 
 void DialogDIESignatures::save()
 {
-    if (g_pDieScript->updateSignature(sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
+    if (g_pDieScript->updateSignature(g_sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
         g_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
     } else {
@@ -378,14 +378,14 @@ void DialogDIESignatures::registerShortcuts(bool bState)
 {
     if (getShortcuts()) {
         if (bState) {
-            if (!shortCuts[SC_FIND_STRING])
-                shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
-            if (!shortCuts[SC_FIND_NEXT]) shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
+            if (!g_shortCuts[SC_FIND_STRING])
+                g_shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
+            if (!g_shortCuts[SC_FIND_NEXT]) g_shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
         } else {
             for (qint32 i = 0; i < __SC_SIZE; i++) {
-                if (shortCuts[i]) {
-                    delete shortCuts[i];
-                    shortCuts[i] = nullptr;
+                if (g_shortCuts[i]) {
+                    delete g_shortCuts[i];
+                    g_shortCuts[i] = nullptr;
                 }
             }
         }

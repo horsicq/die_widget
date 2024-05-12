@@ -92,10 +92,10 @@ private:
     QIODevice *g_pDevice;
     XBinary::FT g_fileType;
     QString g_sSignature;
-    QString sCurrentSignatureFilePath;
+    QString g_sCurrentSignatureFilePath;
     bool g_bCurrentEdited;
     DialogFindText::DATA g_data;
-    QShortcut *shortCuts[__SC_SIZE];
+    QShortcut *g_shortCuts[__SC_SIZE];
 };
 
 #endif  // DIALOGDIESIGNATURES_H
