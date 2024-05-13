@@ -49,6 +49,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 
     handleTreeItems(pRootItem, XBinary::FT_BINARY, "Binary");
     handleTreeItems(pRootItem, XBinary::FT_COM, "COM");
+    handleTreeItems(pRootItem, XBinary::FT_ARCHIVE, "Archive");
     handleTreeItems(pRootItem, XBinary::FT_MSDOS, "MSDOS");
     handleTreeItems(pRootItem, XBinary::FT_NE, "NE");
     handleTreeItems(pRootItem, XBinary::FT_LE, "LE");
