@@ -39,7 +39,7 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 {
     g_pDevice = pDevice;
 
-    XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType);
+    XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType, XBinary::TL_OPTION_ALL);
 
     if (bScan) {
         process();

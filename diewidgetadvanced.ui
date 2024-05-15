@@ -142,7 +142,11 @@
        <bool>false</bool>
       </attribute>
      </widget>
-     <widget class="DIE_SignatureEdit" name="plainTextEditSignature"/>
+     <widget class="DIE_SignatureEdit" name="plainTextEditSignature">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
