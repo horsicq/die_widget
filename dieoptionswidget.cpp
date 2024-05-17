@@ -108,7 +108,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
     pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
     pOptions->addID(XOptions::ID_SCAN_DEEP, true);
-    pOptions->addID(XOptions::ID_SCAN_HEURISTIC, false);
+    pOptions->addID(XOptions::ID_SCAN_HEURISTIC, true);
     pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_PROFILING, false);

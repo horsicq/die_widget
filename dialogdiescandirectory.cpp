@@ -27,10 +27,10 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &
 {
     ui->setupUi(this);
 
+    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
+
     g_sDatabasePath = sDatabasePath;
     g_sDatabasePathCustom = sDatabasePathCustom;
-
-    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
 
     //    Qt::WindowTitleHint
 

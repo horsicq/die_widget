@@ -25,6 +25,8 @@
 DialogDIESignaturesElapsed::DialogDIESignaturesElapsed(QWidget *pParent) : QDialog(pParent), ui(new Ui::DialogDIESignaturesElapsed)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::Window);
 }
 
 DialogDIESignaturesElapsed::~DialogDIESignaturesElapsed()
