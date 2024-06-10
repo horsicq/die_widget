@@ -30,3 +30,9 @@ DialogDieHexViewer::~DialogDieHexViewer()
 {
     delete ui;
 }
+
+void DialogDieHexViewer::on_pushButtonOK_clicked()
+{
+    this->close();
+}
+
