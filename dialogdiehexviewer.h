@@ -36,7 +36,7 @@ public:
     ~DialogDieHexViewer();
 
 signals:
-    void currentAddressChanged(XADDR nAddress, qint64 nSize); // TODO currentLocationChanged
+    void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
 
 private slots:
     void on_pushButtonOK_clicked();
