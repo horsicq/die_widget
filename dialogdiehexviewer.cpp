@@ -35,4 +35,3 @@ void DialogDieHexViewer::on_pushButtonOK_clicked()
 {
     this->close();
 }
-
