@@ -55,6 +55,7 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
+    g_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
 #ifdef USE_YARA
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
@@ -99,6 +100,7 @@ void DIEOptionsWidget::reload()
     } else {
         ui->groupBoxScanEngine->hide();
     }
+    g_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
 
     g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
@@ -115,6 +117,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_HIGHLIGHT, true);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
     pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
+    pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
 #ifdef Q_OS_WIN
     pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");
 #endif

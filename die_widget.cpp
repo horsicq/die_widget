@@ -143,6 +143,7 @@ void DIE_Widget::process()
         g_scanOptions.bIsProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_PROFILING).toBool();
         g_scanOptions.fileType = g_fileType;
         g_scanOptions.bShowScanTime = true;
+        g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
 
         getGlobalOptions()->setValue(XOptions::ID_SCAN_ALLTYPES, g_scanOptions.bAllTypesScan);
         getGlobalOptions()->setValue(XOptions::ID_SCAN_DEEP, g_scanOptions.bIsDeepScan);

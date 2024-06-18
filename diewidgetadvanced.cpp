@@ -92,6 +92,7 @@ void DIEWidgetAdvanced::process()
     options.bIsProfiling = false;
     options.bShowScanTime = false;
     options.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    options.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
 
     DialogDIEScanProcess ds(this, &dieScript);
     ds.setData(g_pDevice, options);
