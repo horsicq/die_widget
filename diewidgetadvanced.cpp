@@ -48,6 +48,8 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 
 void DIEWidgetAdvanced::adjustView()
 {
+    XShortcutsWidget::adjustView();
+
     QFont _font;
     QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
 
