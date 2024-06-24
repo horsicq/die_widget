@@ -60,7 +60,7 @@ public:
 
     //    void setOptions(OPTIONS *pOptions);
     void setData(const QString &sFileName, bool bScan = false, XBinary::FT fileType = XBinary::FT_UNKNOWN);
-    void adjustView();
+    virtual void adjustView();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 private slots:

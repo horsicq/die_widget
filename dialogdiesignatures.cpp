@@ -115,8 +115,6 @@ void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, cons
 
 void DialogDIESignatures::adjustView()
 {
-    XShortcutsDialog::adjustView();
-
     QFont _font;
     QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
 

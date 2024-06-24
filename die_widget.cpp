@@ -99,7 +99,6 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
 
 void DIE_Widget::adjustView()
 {
-    XShortcutsWidget::adjustView();
     this->g_sInfoPath = getGlobalOptions()->getInfoPath();
 
     g_bInitDatabase = false;

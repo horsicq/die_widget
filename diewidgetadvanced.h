@@ -37,7 +37,7 @@ public:
 
     void setData(QIODevice *pDevice, bool bScan, XBinary::FT fileType = XBinary::FT_UNKNOWN);
 
-    void adjustView();
+    virtual void adjustView();
     void setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions);
 
 protected:

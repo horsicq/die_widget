@@ -56,7 +56,7 @@ public:
 
     void setData(QIODevice *pDevice, XBinary::FT fileType, const QString &sSignature);
 
-    void adjustView();
+    virtual void adjustView();
 
 private slots:
     void on_treeWidgetSignatures_currentItemChanged(QTreeWidgetItem *pItemCurrent, QTreeWidgetItem *pItemPrevious);
