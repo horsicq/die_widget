@@ -21,22 +21,21 @@
 #ifndef DIEOPTIONSWIDGET_H
 #define DIEOPTIONSWIDGET_H
 
-#include <QFontDialog>
-#include <QWidget>
-
+#include "xshortcutswidget.h"
 #include "xbinary.h"
-#include "xoptions.h"
 
 namespace Ui {
 class DIEOptionsWidget;
 }
 
-class DIEOptionsWidget : public QWidget {
+class DIEOptionsWidget : public XShortcutsWidget {
     Q_OBJECT
 
 public:
     explicit DIEOptionsWidget(QWidget *pParent = nullptr);
     ~DIEOptionsWidget();
+
+    virtual void adjustView();
 
     void setOptions(XOptions *pOptions);
 
@@ -51,6 +50,9 @@ private slots:
     void on_toolButtonDIEDatabaseCustom_clicked();
     void on_toolButtonSignaturesEditorFont_clicked();
     void on_toolButtonYaraRules_clicked();
+
+protected:
+    virtual void registerShortcuts(bool bState);
 
 private:
     Ui::DIEOptionsWidget *ui;

@@ -22,7 +22,7 @@
 
 #include "ui_dieoptionswidget.h"
 
-DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new Ui::DIEOptionsWidget)
+DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIEOptionsWidget)
 {
     ui->setupUi(this);
 
@@ -34,6 +34,11 @@ DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : QWidget(pParent), ui(new 
 DIEOptionsWidget::~DIEOptionsWidget()
 {
     delete ui;
+}
+
+void DIEOptionsWidget::adjustView()
+{
+    // TODO
 }
 
 void DIEOptionsWidget::setOptions(XOptions *pOptions)
@@ -176,4 +181,9 @@ void DIEOptionsWidget::on_toolButtonYaraRules_clicked()
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditYaraRules->setText(sDirectoryName);
     }
+}
+
+void DIEOptionsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }
