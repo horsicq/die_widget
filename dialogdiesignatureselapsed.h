@@ -21,24 +21,29 @@
 #ifndef DIALOGDIESIGNATURESELAPSED_H
 #define DIALOGDIESIGNATURESELAPSED_H
 
-#include <QDialog>
-
+#include "xshortcutsdialog.h"
 #include "die_script.h"
 
 namespace Ui {
 class DialogDIESignaturesElapsed;
 }
 
-class DialogDIESignaturesElapsed : public QDialog {
+class DialogDIESignaturesElapsed : public XShortcutsDialog {
     Q_OBJECT
 
 public:
     explicit DialogDIESignaturesElapsed(QWidget *pParent = nullptr);
     ~DialogDIESignaturesElapsed();
+
+    virtual void adjustView() {}
+
     void setData(DiE_Script::SCAN_RESULT *pScanResult);
 
 private slots:
     void on_pushButtonOK_clicked();
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogDIESignaturesElapsed *ui;

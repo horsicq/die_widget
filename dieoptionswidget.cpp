@@ -71,8 +71,6 @@ void DIEOptionsWidget::save()
     } else if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
         g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
     }
-
-    g_pOptions->getLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
 void DIEOptionsWidget::reload()
@@ -106,8 +104,6 @@ void DIEOptionsWidget::reload()
         ui->groupBoxScanEngine->hide();
     }
     g_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
-
-    g_pOptions->setLineEdit(ui->lineEditSignaturesEditorFont, XOptions::ID_SCAN_EDITORFONT);
 }
 
 void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
@@ -123,15 +119,6 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
     pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
     pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
-#ifdef Q_OS_WIN
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Courier,10,-1,5,50,0,0,0,0,0");
-#endif
-#ifdef Q_OS_LINUX
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0");
-#endif
-#ifdef Q_OS_MACOS
-    pOptions->addID(XOptions::ID_SCAN_EDITORFONT, "Menlo,10,-1,5,50,0,0,0,0,0");  // TODO Check
-#endif
 }
 
 void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
@@ -155,19 +142,6 @@ void DIEOptionsWidget::on_toolButtonDIEDatabaseCustom_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabaseCustom->setText(sDirectoryName);
-    }
-}
-
-void DIEOptionsWidget::on_toolButtonSignaturesEditorFont_clicked()
-{
-    QFont _font;
-    _font.fromString(ui->lineEditSignaturesEditorFont->text());
-
-    bool bOK = false;
-    _font = QFontDialog::getFont(&bOK, _font, this);
-
-    if (bOK) {
-        ui->lineEditSignaturesEditorFont->setText(_font.toString());
     }
 }
 

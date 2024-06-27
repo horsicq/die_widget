@@ -30,8 +30,6 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 
     g_data = {};
 
-    setWindowFlags(Qt::Window);
-
     this->g_pDieScript = pDieScript;
 
     connect(pDieScript, SIGNAL(infoMessage(QString)), this, SLOT(infoMessage(QString)));
@@ -115,12 +113,7 @@ void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, cons
 
 void DialogDIESignatures::adjustView()
 {
-    QFont _font;
-    QString sFont = getGlobalOptions()->getValue(XOptions::ID_SCAN_EDITORFONT).toString();
-
-    if ((sFont != "") && _font.fromString(sFont)) {
-        ui->plainTextEditSignature->setFont(_font);
-    }
+    getGlobalOptions()->adjustWidget(ui->plainTextEditSignature, XOptions::ID_VIEW_FONT_TEXTEDITS);
 }
 
 qint32 DialogDIESignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary::FT fileType, const QString &sText)

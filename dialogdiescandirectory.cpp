@@ -23,7 +23,7 @@
 #include "ui_dialogdiescandirectory.h"
 
 DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom)
-    : QDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
+    : XShortcutsDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
 

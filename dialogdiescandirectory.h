@@ -21,18 +21,21 @@
 #ifndef DIALOGDIESCANDIRECTORY_H
 #define DIALOGDIESCANDIRECTORY_H
 
+#include "xshortcutsdialog.h"
 #include "dialogdiescanprocess.h"
 
 namespace Ui {
 class DialogDIEScanDirectory;
 }
 
-class DialogDIEScanDirectory : public QDialog {
+class DialogDIEScanDirectory : public XShortcutsDialog {
     Q_OBJECT
 
 public:
     explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom);
     ~DialogDIEScanDirectory();
+
+    virtual void adjustView() {}
 
 private slots:
     void on_pushButtonOpenDirectory_clicked();
@@ -46,6 +49,9 @@ private slots:
 
 signals:
     void resultSignal(const QString &sText);
+
+protected:
+    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
 
 private:
     Ui::DialogDIEScanDirectory *ui;
