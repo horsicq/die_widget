@@ -35,7 +35,9 @@ public:
     explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom);
     ~DialogDIEScanDirectory();
 
-    virtual void adjustView() {}
+    virtual void adjustView()
+    {
+    }
 
 private slots:
     void on_pushButtonOpenDirectory_clicked();
@@ -51,7 +53,10 @@ signals:
     void resultSignal(const QString &sText);
 
 protected:
-    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
+    virtual void registerShortcuts(bool bState)
+    {
+        Q_UNUSED(bState)
+    }
 
 private:
     Ui::DialogDIEScanDirectory *ui;

@@ -35,7 +35,9 @@ public:
     explicit DialogDieHexViewer(QWidget *pParent = nullptr);
     ~DialogDieHexViewer();
 
-    virtual void adjustView() {}
+    virtual void adjustView()
+    {
+    }
 
 signals:
     void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
@@ -44,7 +46,10 @@ private slots:
     void on_pushButtonOK_clicked();
 
 protected:
-    virtual void registerShortcuts(bool bState) { Q_UNUSED(bState) }
+    virtual void registerShortcuts(bool bState)
+    {
+        Q_UNUSED(bState)
+    }
 
 private:
     Ui::DialogDieHexViewer *ui;

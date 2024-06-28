@@ -80,7 +80,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         options.bIsVerbose = ui->checkBoxVerbose->isChecked();
         options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
         options.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        options.nBufferSize = 2 * 1024 * 1024; // TODO
+        options.nBufferSize = 2 * 1024 * 1024;  // TODO
         // TODO Filter
         // |flags|x all|
 
