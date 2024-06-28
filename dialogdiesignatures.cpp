@@ -26,6 +26,8 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 {
     ui->setupUi(this);
 
+    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
+
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 
     g_data = {};

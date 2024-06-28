@@ -281,6 +281,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 void DIE_Widget::on_pushButtonDieLog_clicked()
 {
     DialogTextInfo dialogInfo(this);
+    dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     QList<QString> listMessages;
     listMessages.append(g_listErrorsAndWarnings);
@@ -384,7 +385,7 @@ void DIE_Widget::copyResult()
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
     DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath(), getGlobalOptions()->getDatabasePath(), getGlobalOptions()->getCustomDatabasePath());
-
+    dds.setGlobal(getShortcuts(), getGlobalOptions());
     dds.exec();
 }
 
@@ -398,6 +399,7 @@ void DIE_Widget::on_toolButtonElapsedTime_clicked()
     DialogDIESignaturesElapsed dialogElapsed(this);
 
     dialogElapsed.setData(&g_scanResult);
+    dialogElapsed.setGlobal(getShortcuts(), getGlobalOptions());
 
     dialogElapsed.exec();
 }
