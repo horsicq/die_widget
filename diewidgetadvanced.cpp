@@ -49,6 +49,7 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 void DIEWidgetAdvanced::adjustView()
 {
     getGlobalOptions()->adjustWidget(ui->plainTextEditSignature, XOptions::ID_VIEW_FONT_TEXTEDITS);
+    getGlobalOptions()->adjustTreeView(ui->treeViewResult, XOptions::ID_VIEW_FONT_TREEVIEWS);
 }
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
