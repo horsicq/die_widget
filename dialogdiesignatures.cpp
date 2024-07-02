@@ -115,6 +115,7 @@ void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, cons
 
 void DialogDIESignatures::adjustView()
 {
+    getGlobalOptions()->adjustWidget(this, XOptions::ID_VIEW_FONT_CONTROLS);
     getGlobalOptions()->adjustWidget(ui->plainTextEditSignature, XOptions::ID_VIEW_FONT_TEXTEDITS);
 }
 
