@@ -91,6 +91,7 @@ void DIEWidgetAdvanced::process()
     options.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
 
     DialogDIEScanProcess ds(this, &dieScript);
+    ds.setGlobal(getShortcuts(), getGlobalOptions());
     ds.setData(g_pDevice, options);
     ds.exec();
 

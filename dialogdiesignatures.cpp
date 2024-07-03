@@ -356,7 +356,7 @@ void DialogDIESignatures::on_pushButtonFindNext_clicked()
 void DialogDIESignatures::findString()
 {
     DialogFindText dialogFindText(this);
-
+    dialogFindText.setGlobal(getShortcuts(), getGlobalOptions());
     dialogFindText.setData(&g_data);
 
     if (dialogFindText.exec() == QDialog::Accepted) {

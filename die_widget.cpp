@@ -270,6 +270,7 @@ void DIE_Widget::on_pushButtonDieSignatures_clicked()
 void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
 {
     DialogTextInfo dialogInfo(this);
+    dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     ScanItemModel model(&(g_scanResult.listRecords), 1, false);
 
@@ -300,7 +301,7 @@ void DIE_Widget::showInfo(const QString &sName)
 
         if (XBinary::isFileExists(sFileName)) {
             DialogTextInfo dialogInfo(this);
-
+            dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
             dialogInfo.setFileName(sFileName);
 
             dialogInfo.exec();
@@ -397,9 +398,8 @@ void DIE_Widget::registerShortcuts(bool bState)
 void DIE_Widget::on_toolButtonElapsedTime_clicked()
 {
     DialogDIESignaturesElapsed dialogElapsed(this);
-
-    dialogElapsed.setData(&g_scanResult);
     dialogElapsed.setGlobal(getShortcuts(), getGlobalOptions());
+    dialogElapsed.setData(&g_scanResult);
 
     dialogElapsed.exec();
 }

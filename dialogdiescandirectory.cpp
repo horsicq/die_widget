@@ -90,6 +90,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         dieScript.loadDatabase(g_sDatabasePathCustom, false);
 
         DialogDIEScanProcess ds(this, &dieScript);
+        ds.setGlobal(getShortcuts(), getGlobalOptions());
         connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
         ds.setData(sDirectoryName, options);
         ds.exec();
