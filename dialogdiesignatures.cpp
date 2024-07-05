@@ -22,11 +22,9 @@
 
 #include "ui_dialogdiesignatures.h"
 
-DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript) : XShortcutsDialog(pParent), ui(new Ui::DialogDIESignatures)
+DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScript) : XShortcutsDialog(pParent, true), ui(new Ui::DialogDIESignatures)
 {
     ui->setupUi(this);
-
-    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
 
     memset(g_shortCuts, 0, sizeof g_shortCuts);
 

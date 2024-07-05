@@ -23,11 +23,9 @@
 #include "ui_dialogdiescandirectory.h"
 
 DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom)
-    : XShortcutsDialog(pParent), ui(new Ui::DialogDIEScanDirectory)
+    : XShortcutsDialog(pParent, true), ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
-
-    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
 
     g_sDatabasePath = sDatabasePath;
     g_sDatabasePathCustom = sDatabasePathCustom;

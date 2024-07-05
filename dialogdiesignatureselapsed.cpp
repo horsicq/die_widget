@@ -22,7 +22,7 @@
 
 #include "ui_dialogdiesignatureselapsed.h"
 
-DialogDIESignaturesElapsed::DialogDIESignaturesElapsed(QWidget *pParent) : XShortcutsDialog(pParent), ui(new Ui::DialogDIESignaturesElapsed)
+DialogDIESignaturesElapsed::DialogDIESignaturesElapsed(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogDIESignaturesElapsed)
 {
     ui->setupUi(this);
 }
