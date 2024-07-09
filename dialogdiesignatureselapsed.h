@@ -39,7 +39,7 @@ public:
     {
     }
 
-    void setData(DiE_Script::SCAN_RESULT *pScanResult);
+    void setData(XBinary::SCAN_RESULT *pScanResult);
 
 private slots:
     void on_pushButtonOK_clicked();
@@ -52,7 +52,7 @@ protected:
 
 private:
     Ui::DialogDIESignaturesElapsed *ui;
-    DiE_Script::SCAN_RESULT *g_pScanResult;
+    XBinary::SCAN_RESULT *g_pScanResult;
 };
 
 #endif  // DIALOGDIESIGNATURESELAPSED_H

@@ -55,7 +55,7 @@ private:
     Ui::DIEWidgetAdvanced *ui;
     QIODevice *g_pDevice;
     ScanItemModel *g_pModel;
-    DiE_Script::SCAN_RESULT g_scanResult;
+    XBinary::SCAN_RESULT g_scanResult;
 };
 
 #endif  // DIEWIDGETADVANCED_H

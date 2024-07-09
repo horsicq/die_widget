@@ -71,7 +71,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
-        DiE_Script::OPTIONS options = {};
+        XBinary::SCAN_OPTIONS options = {};
         options.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
         options.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
         options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
@@ -95,7 +95,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
     }
 }
 
-void DialogDIEScanDirectory::scanResult(DiE_Script::SCAN_RESULT scanResult)
+void DialogDIEScanDirectory::scanResult(XBinary::SCAN_RESULT scanResult)
 {
     // TODO
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));

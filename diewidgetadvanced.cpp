@@ -76,7 +76,7 @@ void DIEWidgetAdvanced::process()
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);  // TODO optimize
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);
 
-    DiE_Script::OPTIONS options = {};
+    XBinary::SCAN_OPTIONS options = {};
     options.bShowType = true;
     options.bShowVersion = true;
     options.bShowOptions = true;
@@ -95,7 +95,7 @@ void DIEWidgetAdvanced::process()
     ds.setData(g_pDevice, options);
     ds.exec();
 
-    DiE_Script::SCAN_RESULT scanResult = dieScript.getScanResultProcess();
+    XBinary::SCAN_RESULT scanResult = dieScript.getScanResultProcess();
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;

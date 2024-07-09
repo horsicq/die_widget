@@ -98,8 +98,8 @@ private:
     Ui::DIE_Widget *ui;
     ST g_scanType;
     DiE_Script g_dieScript;
-    DiE_Script::OPTIONS g_scanOptions;
-    DiE_Script::SCAN_RESULT g_scanResult;
+    XBinary::SCAN_OPTIONS g_scanOptions;
+    XBinary::SCAN_RESULT g_scanResult;
     QFutureWatcher<void> g_watcher;
     QString g_sFileName;
     XBinary::FT g_fileType;
