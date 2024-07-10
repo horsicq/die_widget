@@ -166,7 +166,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 
         ui->plainTextEditResult->clear();
 
-        XBinary::SCAN_OPTIONS scanOptions = {};
+        XScanEngine::SCAN_OPTIONS scanOptions = {};
 
         scanOptions.bShowType = ui->checkBoxShowType->isChecked();
         scanOptions.bShowOptions = ui->checkBoxShowOptions->isChecked();
@@ -181,7 +181,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
         scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();
         scanOptions.fileType = (XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0, Qt::UserRole + UD_FILETYPE).toInt();
 
-        XBinary::SCAN_RESULT scanResult = {};
+        XScanEngine::SCAN_RESULT scanResult = {};
 
         if (bIsDebug) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)

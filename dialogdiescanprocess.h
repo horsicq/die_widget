@@ -42,12 +42,12 @@ public:
     explicit DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScript);
     ~DialogDIEScanProcess();
 
-    void setData(const QString &sDirectoryName, const XBinary::SCAN_OPTIONS &options);
-    void setData(QIODevice *pDevice, const XBinary::SCAN_OPTIONS &options);
+    void setData(const QString &sDirectoryName, const XScanEngine::SCAN_OPTIONS &options);
+    void setData(QIODevice *pDevice, const XScanEngine::SCAN_OPTIONS &options);
 
 signals:
     void scanFileStarted(const QString &sFileName);
-    void scanResult(const XBinary::SCAN_RESULT &scanResult);
+    void scanResult(const XScanEngine::SCAN_RESULT &scanResult);
 
 private:
     DiE_Script *g_pDieScript;

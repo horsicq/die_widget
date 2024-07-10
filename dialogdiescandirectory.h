@@ -23,6 +23,7 @@
 
 #include "xshortcutsdialog.h"
 #include "dialogdiescanprocess.h"
+#include "scanitemmodel.h"
 
 namespace Ui {
 class DialogDIEScanDirectory;
@@ -43,7 +44,7 @@ private slots:
     void on_pushButtonOpenDirectory_clicked();
     void on_pushButtonScan_clicked();
     void scanDirectory(const QString &sDirectoryName);
-    void scanResult(XBinary::SCAN_RESULT scanResult);
+    void scanResult(XScanEngine::SCAN_RESULT scanResult);
     void appendResult(const QString &sResult);
     void on_pushButtonOK_clicked();
     void on_pushButtonClear_clicked();

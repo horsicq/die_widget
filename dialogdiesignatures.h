@@ -28,6 +28,7 @@
 #include "dialogfindtext.h"
 #include "die_script.h"
 #include "xshortcutsdialog.h"
+#include "scanitemmodel.h"
 
 namespace Ui {
 class DialogDIESignatures;
