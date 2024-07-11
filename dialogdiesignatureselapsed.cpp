@@ -32,6 +32,11 @@ DialogDIESignaturesElapsed::~DialogDIESignaturesElapsed()
     delete ui;
 }
 
+void DialogDIESignaturesElapsed::adjustView()
+{
+
+}
+
 void DialogDIESignaturesElapsed::setData(XScanEngine::SCAN_RESULT *pScanResult)
 {
     g_pScanResult = pScanResult;

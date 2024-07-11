@@ -35,9 +35,7 @@ public:
     explicit DialogDIESignaturesElapsed(QWidget *pParent = nullptr);
     ~DialogDIESignaturesElapsed();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
     void setData(XScanEngine::SCAN_RESULT *pScanResult);
 
