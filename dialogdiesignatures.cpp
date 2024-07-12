@@ -180,6 +180,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 
         scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();
         scanOptions.fileType = (XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0, Qt::UserRole + UD_FILETYPE).toInt();
+        scanOptions.sDetectFunction = sFunction;
 
         XScanEngine::SCAN_RESULT scanResult = {};
 
@@ -193,9 +194,9 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
             g_pDieScript->setDebugger(&debugger);
 #endif
 
-            scanResult = g_pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
+            scanResult = g_pDieScript->scanDevice(g_pDevice, &scanOptions);
         } else {
-            scanResult = g_pDieScript->processDevice(g_pDevice, &scanOptions, sFunction);
+            scanResult = g_pDieScript->scanDevice(g_pDevice, &scanOptions);
         }
 
         if (bIsDebug) {

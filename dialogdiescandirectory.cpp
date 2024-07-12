@@ -71,14 +71,14 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
-        XScanEngine::SCAN_OPTIONS options = {};
-        options.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        options.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-        options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-        options.bIsVerbose = ui->checkBoxVerbose->isChecked();
-        options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-        options.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        options.nBufferSize = 2 * 1024 * 1024;  // TODO
+        XScanEngine::SCAN_OPTIONS scanOptions = {};
+        scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+        scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+        scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+        scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
+        scanOptions.nBufferSize = 2 * 1024 * 1024;  // TODO
         // TODO Filter
         // |flags|x all|
 
@@ -89,13 +89,13 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DialogDIEScanProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
-        connect(&ds, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), this, SLOT(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
-        ds.setData(sDirectoryName, options);
+        connect(&ds, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
+        ds.setData(sDirectoryName, &scanOptions);
         ds.exec();
     }
 }
 
-void DialogDIEScanDirectory::scanResult(XScanEngine::SCAN_RESULT scanResult)
+void DialogDIEScanDirectory::scanResult(const XScanEngine::SCAN_RESULT &scanResult)
 {
     // TODO
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));

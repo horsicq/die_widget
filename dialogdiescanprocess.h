@@ -42,8 +42,8 @@ public:
     explicit DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScript);
     ~DialogDIEScanProcess();
 
-    void setData(const QString &sDirectoryName, const XScanEngine::SCAN_OPTIONS &options);
-    void setData(QIODevice *pDevice, const XScanEngine::SCAN_OPTIONS &options);
+    void setData(const QString &sDirectoryName, XScanEngine::SCAN_OPTIONS *pOptions);
+    void setData(QIODevice *pDevice, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult);
 
 signals:
     void scanFileStarted(const QString &sFileName);

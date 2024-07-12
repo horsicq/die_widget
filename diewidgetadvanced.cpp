@@ -76,26 +76,26 @@ void DIEWidgetAdvanced::process()
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);  // TODO optimize
     dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);
 
-    XScanEngine::SCAN_OPTIONS options = {};
-    options.bShowType = true;
-    options.bShowVersion = true;
-    options.bShowOptions = true;
-    options.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-    options.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-    options.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-    options.bIsVerbose = ui->checkBoxVerbose->isChecked();
-    options.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-    options.bIsProfiling = false;
-    options.bShowScanTime = false;
-    options.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    options.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+    XScanEngine::SCAN_OPTIONS scanOptions = {};
+    scanOptions.bShowType = true;
+    scanOptions.bShowVersion = true;
+    scanOptions.bShowOptions = true;
+    scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+    scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+    scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+    scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+    scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+    scanOptions.bIsProfiling = false;
+    scanOptions.bShowScanTime = false;
+    scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+
+    XScanEngine::SCAN_RESULT scanResult = {};
 
     DialogDIEScanProcess ds(this, &dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    ds.setData(g_pDevice, options);
+    ds.setData(g_pDevice, &scanOptions, &scanResult);
     ds.exec();
-
-    XScanEngine::SCAN_RESULT scanResult = dieScript.getScanResultProcess();
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;

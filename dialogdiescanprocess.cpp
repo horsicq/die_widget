@@ -28,22 +28,22 @@ DialogDIEScanProcess::DialogDIEScanProcess(QWidget *pParent, DiE_Script *pDieScr
     g_pDieScript->moveToThread(g_pThread);
 
     connect(g_pThread, SIGNAL(started()), g_pDieScript, SLOT(process()));
-    connect(g_pDieScript, SIGNAL(scanCompleted(qint64)), this, SLOT(onCompleted(qint64)));
+    connect(g_pDieScript, SIGNAL(completed(qint64)), this, SLOT(onCompleted(qint64)));
 }
 
-void DialogDIEScanProcess::setData(const QString &sDirectoryName, const XScanEngine::SCAN_OPTIONS &options)
+void DialogDIEScanProcess::setData(const QString &sDirectoryName, XScanEngine::SCAN_OPTIONS *pOptions)
 {
-    g_pDieScript->setData(sDirectoryName, options, getPdStruct());
+    g_pDieScript->setData(sDirectoryName, pOptions, getPdStruct());
 
-    connect(g_pDieScript, SIGNAL(directoryScanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
-    connect(g_pDieScript, SIGNAL(directoryScanResult(DiE_Script::SCAN_RESULT)), this, SIGNAL(scanResult(DiE_Script::SCAN_RESULT)), Qt::DirectConnection);
+    connect(g_pDieScript, SIGNAL(scanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
+    connect(g_pDieScript, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
 
     g_pThread->start();
 }
 
-void DialogDIEScanProcess::setData(QIODevice *pDevice, const XScanEngine::SCAN_OPTIONS &options)
+void DialogDIEScanProcess::setData(QIODevice *pDevice, XScanEngine::SCAN_OPTIONS *pOptions, XScanEngine::SCAN_RESULT *pScanResult)
 {
-    g_pDieScript->setData(pDevice, options, getPdStruct());
+    g_pDieScript->setData(pDevice, pOptions, pScanResult, getPdStruct());
 
     g_pThread->start();
 }
