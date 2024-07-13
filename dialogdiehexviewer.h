@@ -35,9 +35,7 @@ public:
     explicit DialogDieHexViewer(QWidget *pParent = nullptr);
     ~DialogDieHexViewer();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
 signals:
     void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
