@@ -34,7 +34,6 @@ DialogDIESignaturesElapsed::~DialogDIESignaturesElapsed()
 
 void DialogDIESignaturesElapsed::adjustView()
 {
-
 }
 
 void DialogDIESignaturesElapsed::setData(XScanEngine::SCAN_RESULT *pScanResult)
