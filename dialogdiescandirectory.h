@@ -36,9 +36,7 @@ public:
     explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom);
     ~DialogDIEScanDirectory();
 
-    virtual void adjustView()
-    {
-    }
+    virtual void adjustView();
 
 private slots:
     void on_pushButtonOpenDirectory_clicked();
