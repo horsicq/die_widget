@@ -47,6 +47,11 @@ DialogDIEScanDirectory::~DialogDIEScanDirectory()
     delete ui;
 }
 
+void DialogDIEScanDirectory::adjustView()
+{
+
+}
+
 void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked()
 {
     QString sInitDirectory = ui->lineEditDirectoryName->text();
