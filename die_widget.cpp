@@ -144,6 +144,7 @@ void DIE_Widget::process()
         g_scanOptions.fileType = g_fileType;
         g_scanOptions.bShowScanTime = true;
         g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+        g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
         getGlobalOptions()->setValue(XOptions::ID_SCAN_ALLTYPES, g_scanOptions.bAllTypesScan);
         getGlobalOptions()->setValue(XOptions::ID_SCAN_DEEP, g_scanOptions.bIsDeepScan);
@@ -225,7 +226,7 @@ void DIE_Widget::onScanFinished()
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
-    g_pModel = new ScanItemModel(&(g_scanResult.listRecords), 3, getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool());
+    g_pModel = new ScanItemModel(&g_scanOptions, &(g_scanResult.listRecords), 3);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
@@ -272,7 +273,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
     DialogTextInfo dialogInfo(this);
     dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
-    ScanItemModel model(&(g_scanResult.listRecords), 1, false);
+    ScanItemModel model(&g_scanOptions, &(g_scanResult.listRecords), 1);
 
     dialogInfo.setText(model.toFormattedString());
 

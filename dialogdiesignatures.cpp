@@ -205,7 +205,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 #endif
         }
 
-        ScanItemModel model(&(scanResult.listRecords), 1, false);
+        ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1);
 
         ui->plainTextEditResult->appendPlainText(model.toFormattedString());
 

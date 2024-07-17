@@ -61,6 +61,7 @@ private:
     Ui::DialogDIEScanDirectory *ui;
     QString g_sDatabasePath;
     QString g_sDatabasePathCustom;
+    XScanEngine::SCAN_OPTIONS g_scanOptions;
 };
 
 #endif  // DIALOGDIESCANDIRECTORY_H

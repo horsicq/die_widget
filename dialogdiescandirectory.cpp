@@ -40,6 +40,8 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &
     if (sDirName != "") {
         ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirName));
     }
+
+    g_scanOptions = {};
 }
 
 DialogDIEScanDirectory::~DialogDIEScanDirectory()
@@ -76,14 +78,13 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
-        XScanEngine::SCAN_OPTIONS scanOptions = {};
-        scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-        scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-        scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-        scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-        scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        scanOptions.nBufferSize = 2 * 1024 * 1024;  // TODO
+        g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+        g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+        g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+        g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+        g_scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        g_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
+        g_scanOptions.nBufferSize = 2 * 1024 * 1024;  // TODO
         // TODO Filter
         // |flags|x all|
 
@@ -95,7 +96,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         DialogDIEScanProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
         connect(&ds, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
-        ds.setData(sDirectoryName, &scanOptions);
+        ds.setData(sDirectoryName, &g_scanOptions);
         ds.exec();
     }
 }
@@ -106,7 +107,7 @@ void DialogDIEScanDirectory::scanResult(const XScanEngine::SCAN_RESULT &scanResu
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
     sResult += "\r\n";
 
-    ScanItemModel model(&(scanResult.listRecords), 1, false);
+    ScanItemModel model(&g_scanOptions, &(scanResult.listRecords), 1);
 
     sResult += model.toFormattedString();
 

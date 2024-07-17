@@ -89,6 +89,7 @@ void DIEWidgetAdvanced::process()
     scanOptions.bShowScanTime = false;
     scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+    scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
@@ -100,7 +101,7 @@ void DIEWidgetAdvanced::process()
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
-    g_pModel = new ScanItemModel(&(scanResult.listRecords), 1, getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool());
+    g_pModel = new ScanItemModel(&scanOptions, &(scanResult.listRecords), 1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
