@@ -40,3 +40,8 @@ void DialogDieHexViewer::on_pushButtonOK_clicked()
 {
     this->close();
 }
+
+void DialogDieHexViewer::registerShortcuts(bool bState)
+{
+
+}
