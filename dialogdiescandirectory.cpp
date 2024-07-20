@@ -51,7 +51,6 @@ DialogDIEScanDirectory::~DialogDIEScanDirectory()
 
 void DialogDIEScanDirectory::adjustView()
 {
-
 }
 
 void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked()

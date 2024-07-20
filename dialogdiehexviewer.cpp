@@ -33,7 +33,6 @@ DialogDieHexViewer::~DialogDieHexViewer()
 
 void DialogDieHexViewer::adjustView()
 {
-
 }
 
 void DialogDieHexViewer::on_pushButtonOK_clicked()
@@ -43,5 +42,4 @@ void DialogDieHexViewer::on_pushButtonOK_clicked()
 
 void DialogDieHexViewer::registerShortcuts(bool bState)
 {
-
 }
