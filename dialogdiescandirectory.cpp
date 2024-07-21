@@ -145,3 +145,8 @@ void DialogDIEScanDirectory::on_pushButtonSave_clicked()
         }
     }
 }
+
+void DialogDIEScanDirectory::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
