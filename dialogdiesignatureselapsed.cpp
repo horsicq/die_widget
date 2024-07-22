@@ -77,3 +77,8 @@ void DialogDIESignaturesElapsed::on_pushButtonOK_clicked()
 {
     this->close();
 }
+
+void DialogDIESignaturesElapsed::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
+}
