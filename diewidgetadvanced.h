@@ -56,6 +56,9 @@ private:
     QIODevice *g_pDevice;
     ScanItemModel *g_pModel;
     XScanEngine::SCAN_RESULT g_scanResult;
+    DiE_Script g_dieScript;
+    XScanEngine::SCAN_OPTIONS g_scanOptions;
+    bool g_bInitDatabase;
 };
 
 #endif  // DIEWIDGETADVANCED_H

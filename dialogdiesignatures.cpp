@@ -70,7 +70,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     ui->pushButtonSave->setEnabled(false);
 
     ui->checkBoxShowType->setChecked(true);
-    ui->checkBoxShowOptions->setChecked(true);
+    ui->checkBoxShowInfo->setChecked(true);
     ui->checkBoxShowVersion->setChecked(true);
     ui->checkBoxDeepScan->setChecked(true);
     ui->checkBoxHeuristicScan->setChecked(true);
@@ -169,13 +169,13 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
         XScanEngine::SCAN_OPTIONS scanOptions = {};
 
         scanOptions.bShowType = ui->checkBoxShowType->isChecked();
-        scanOptions.bShowOptions = ui->checkBoxShowOptions->isChecked();
+        scanOptions.bShowInfo = ui->checkBoxShowInfo->isChecked();
         scanOptions.bShowVersion = ui->checkBoxShowVersion->isChecked();
         scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
         scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
         scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        scanOptions.bIsProfiling = ui->checkBoxProfiling->isChecked();
+        scanOptions.bLogProfiling = ui->checkBoxProfiling->isChecked();
         scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toLongLong();
 
         scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();

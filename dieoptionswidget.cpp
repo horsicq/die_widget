@@ -50,15 +50,16 @@ void DIEOptionsWidget::setOptions(XOptions *pOptions)
 
 void DIEOptionsWidget::save()
 {
-    g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
+    g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
     g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
-    g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_PROFILING);
+    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
+    g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_EXTRADATABASEPATH);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
     g_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
 #ifdef USE_YARA
@@ -76,14 +77,15 @@ void DIEOptionsWidget::save()
 void DIEOptionsWidget::reload()
 {
     g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_RECURSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_DEEP);
-    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_HEURISTIC);
-    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_VERBOSE);
-    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_ALLTYPES);
+    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
+    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
-    g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_PROFILING);
+    g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_EXTRADATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
 
@@ -109,14 +111,15 @@ void DIEOptionsWidget::reload()
 void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
 {
     pOptions->addID(XOptions::ID_SCAN_SCANAFTEROPEN, true);
-    pOptions->addID(XOptions::ID_SCAN_RECURSIVE, true);
-    pOptions->addID(XOptions::ID_SCAN_DEEP, true);
-    pOptions->addID(XOptions::ID_SCAN_HEURISTIC, true);
-    pOptions->addID(XOptions::ID_SCAN_VERBOSE, true);
-    pOptions->addID(XOptions::ID_SCAN_ALLTYPES, false);
-    pOptions->addID(XOptions::ID_SCAN_PROFILING, false);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_RECURSIVE, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_DEEP, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_HEURISTIC, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_VERBOSE, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_ALLTYPES, false);
+    pOptions->addID(XOptions::ID_SCAN_LOG_PROFILING, false);
     pOptions->addID(XOptions::ID_SCAN_HIGHLIGHT, true);
     pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
+    pOptions->addID(XOptions::ID_SCAN_EXTRADATABASEPATH, "$data/db_extra");
     pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
     pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
 }
@@ -130,6 +133,18 @@ void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabase->setText(sDirectoryName);
+    }
+}
+
+void DIEOptionsWidget::on_toolButtonDIEDatabaseExtra_clicked()
+{
+    QString sText = ui->lineEditDIEDatabaseExtra->text();
+    QString sInitDirectory = XBinary::convertPathName(sText);
+
+    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
+
+    if (!sDirectoryName.isEmpty()) {
+        ui->lineEditDIEDatabaseExtra->setText(sDirectoryName);
     }
 }
 

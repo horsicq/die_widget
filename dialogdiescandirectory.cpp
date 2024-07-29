@@ -22,13 +22,10 @@
 
 #include "ui_dialogdiescandirectory.h"
 
-DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom)
+DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName)
     : XShortcutsDialog(pParent, true), ui(new Ui::DialogDIEScanDirectory)
 {
     ui->setupUi(this);
-
-    g_sDatabasePath = sDatabasePath;
-    g_sDatabasePathCustom = sDatabasePathCustom;
 
     //    Qt::WindowTitleHint
 
@@ -81,7 +78,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
         g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
         g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-        g_scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        g_scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
         g_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
         g_scanOptions.nBufferSize = 2 * 1024 * 1024;  // TODO
         // TODO Filter
@@ -89,8 +86,10 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        dieScript.loadDatabase(g_sDatabasePath, true);
-        dieScript.loadDatabase(g_sDatabasePathCustom, false);
+        dieScript.initDatabase();
+        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getDatabasePath(), "main");
+        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getExtraDatabasePath(), "extra");
+        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getCustomDatabasePath(), "custom");
 
         DialogDIEScanProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());

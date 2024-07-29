@@ -28,6 +28,9 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
     g_scanResult = {};
     g_pDevice = nullptr;
     g_pModel = nullptr;
+
+    g_bInitDatabase = false;
+    g_scanOptions = {};
 }
 
 DIEWidgetAdvanced::~DIEWidgetAdvanced()
@@ -54,11 +57,11 @@ void DIEWidgetAdvanced::adjustView()
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_ALLTYPES).toBool());
-    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_DEEP).toBool());
-    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_RECURSIVE).toBool());
-    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_HEURISTIC).toBool());
-    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_VERBOSE).toBool());
+    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_ALLTYPES).toBool());
+    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_DEEP).toBool());
+    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_RECURSIVE).toBool());
+    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_HEURISTIC).toBool());
+    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_VERBOSE).toBool());
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
@@ -71,37 +74,40 @@ void DIEWidgetAdvanced::registerShortcuts(bool bState)
 
 void DIEWidgetAdvanced::process()
 {
-    DiE_Script dieScript;
+    g_scanOptions.bShowType = true;
+    g_scanOptions.bShowVersion = true;
+    g_scanOptions.bShowInfo = true;
+    g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
+    g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
+    g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
+    g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
+    g_scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+    g_scanOptions.bLogProfiling = false;
+    g_scanOptions.bShowScanTime = false;
+    g_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+    g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);  // TODO optimize
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);
+    if (!g_bInitDatabase) {
+        g_dieScript.initDatabase();
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), "main");  // TODO optimize
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_EXTRADATABASEPATH).toString(), "extra");
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), "custom");
 
-    XScanEngine::SCAN_OPTIONS scanOptions = {};
-    scanOptions.bShowType = true;
-    scanOptions.bShowVersion = true;
-    scanOptions.bShowOptions = true;
-    scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-    scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-    scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-    scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-    scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-    scanOptions.bIsProfiling = false;
-    scanOptions.bShowScanTime = false;
-    scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
-    scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
+        g_bInitDatabase = true;
+    }
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
-    DialogDIEScanProcess ds(this, &dieScript);
+    DialogDIEScanProcess ds(this, &g_dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    ds.setData(g_pDevice, &scanOptions, &scanResult);
+    ds.setData(g_pDevice, &g_scanOptions, &scanResult);
     ds.exec();
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = g_pModel;
 
-    g_pModel = new ScanItemModel(&scanOptions, &(scanResult.listRecords), 1);
+    g_pModel = new ScanItemModel(&g_scanOptions, &(scanResult.listRecords), 1);
     ui->treeViewResult->setModel(g_pModel);
     ui->treeViewResult->expandAll();
 
@@ -157,12 +163,16 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
 {
-    DiE_Script dieScript;
+    if (g_bInitDatabase) {
+        g_dieScript.initDatabase();
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), "main");  // TODO optimize
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_EXTRADATABASEPATH).toString(), "extra");
+        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), "custom");
 
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), true);
-    dieScript.loadDatabase(getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), false);  // TODO optimize
+        g_bInitDatabase = true;
+    }
 
-    DialogDIESignatures dialogSignatures(this, &dieScript);
+    DialogDIESignatures dialogSignatures(this, &g_dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
     dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
 

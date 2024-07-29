@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>869</width>
-    <height>636</height>
+    <width>873</width>
+    <height>645</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,42 +88,24 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBoxRecursiveScan">
-             <property name="text">
-              <string>Recursive scan</string>
+            <widget class="XComboBoxEx" name="comboBoxFlags">
+             <property name="minimumSize">
+              <size>
+               <width>150</width>
+               <height>0</height>
+              </size>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBoxDeepScan">
-             <property name="text">
-              <string>Deep scan</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="checkBoxHeuristicScan">
-             <property name="text">
-              <string>Heuristic scan</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="checkBoxVerbose">
-             <property name="text">
-              <string>Verbose</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer">
+            <spacer name="horizontalSpacer_4">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
             </spacer>
@@ -147,21 +129,14 @@
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBoxAllTypesScan">
-             <property name="text">
-              <string>All types</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <spacer name="horizontalSpacer_2">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
             </spacer>
@@ -365,6 +340,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>XComboBoxEx</class>
+   <extends>QComboBox</extends>
+   <header>xcomboboxex.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

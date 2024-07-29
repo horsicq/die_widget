@@ -33,7 +33,7 @@ class DialogDIEScanDirectory : public XShortcutsDialog {
     Q_OBJECT
 
 public:
-    explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName, const QString &sDatabasePath, const QString &sDatabasePathCustom);
+    explicit DialogDIEScanDirectory(QWidget *pParent, const QString &sDirName);
     ~DialogDIEScanDirectory();
 
     virtual void adjustView();
@@ -56,8 +56,6 @@ protected:
 
 private:
     Ui::DialogDIEScanDirectory *ui;
-    QString g_sDatabasePath;
-    QString g_sDatabasePathCustom;
     XScanEngine::SCAN_OPTIONS g_scanOptions;
 };
 

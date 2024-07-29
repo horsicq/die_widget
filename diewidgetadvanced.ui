@@ -182,6 +182,12 @@
       </attribute>
      </widget>
      <widget class="DIE_SignatureEdit" name="plainTextEditSignature">
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="lineWrapMode">
+       <enum>QPlainTextEdit::NoWrap</enum>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>

@@ -38,14 +38,14 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
     ui->pushButtonDieLog->setEnabled(false);
 
-    ui->checkBoxRecursiveScan->setChecked(true);
-
     g_pTimer = new QTimer(this);
     connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
     clear();
 
     g_bInitDatabase = false;
+
+    ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
 
     ui->stackedWidgetDieScan->setCurrentIndex(0);
 }
@@ -105,12 +105,10 @@ void DIE_Widget::adjustView()
 }
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
-{
-    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_ALLTYPES).toBool());
-    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_DEEP).toBool());
-    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_RECURSIVE).toBool());
-    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_HEURISTIC).toBool());
-    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_VERBOSE).toBool());
+{    
+    quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(pXOptions);
+
+    ui->comboBoxFlags->setValue(nFlags);
 
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
@@ -134,23 +132,17 @@ void DIE_Widget::process()
 
         g_scanOptions.bShowType = true;
         g_scanOptions.bShowVersion = true;
-        g_scanOptions.bShowOptions = true;
-        g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-        g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-        g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-        g_scanOptions.bAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
-        g_scanOptions.bIsProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_PROFILING).toBool();
+        g_scanOptions.bShowInfo = true;
+        g_scanOptions.bLogProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_LOG_PROFILING).toBool();
         g_scanOptions.fileType = g_fileType;
         g_scanOptions.bShowScanTime = true;
         g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
         g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
-        getGlobalOptions()->setValue(XOptions::ID_SCAN_ALLTYPES, g_scanOptions.bAllTypesScan);
-        getGlobalOptions()->setValue(XOptions::ID_SCAN_DEEP, g_scanOptions.bIsDeepScan);
-        getGlobalOptions()->setValue(XOptions::ID_SCAN_RECURSIVE, g_scanOptions.bIsRecursiveScan);
-        getGlobalOptions()->setValue(XOptions::ID_SCAN_HEURISTIC, g_scanOptions.bIsHeuristicScan);
-        getGlobalOptions()->setValue(XOptions::ID_SCAN_VERBOSE, g_scanOptions.bIsVerbose);
+        quint64 nFlags=ui->comboBoxFlags->getValue().toULongLong();
+        XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+
+        XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
 
         g_pTimer->start(200);  // TODO const
 
@@ -185,8 +177,10 @@ void DIE_Widget::scan()
             g_pdStruct = XBinary::createPdStruct();
 
             if (!g_bInitDatabase) {
-                g_dieScript.loadDatabase(getGlobalOptions()->getDatabasePath(), true);
-                g_dieScript.loadDatabase(getGlobalOptions()->getCustomDatabasePath(), false);
+                g_dieScript.initDatabase();
+                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getDatabasePath(), "main");
+                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getExtraDatabasePath(), "extra");
+                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getCustomDatabasePath(), "custom");
                 g_bInitDatabase = true;
             }
 
@@ -345,11 +339,7 @@ void DIE_Widget::enableControls(bool bState)
     }
 
     ui->treeViewResult->setEnabled(bState);
-    ui->checkBoxRecursiveScan->setEnabled(bState);
-    ui->checkBoxDeepScan->setEnabled(bState);
-    ui->checkBoxHeuristicScan->setEnabled(bState);
-    ui->checkBoxVerbose->setEnabled(bState);
-    ui->checkBoxAllTypesScan->setEnabled(bState);
+    ui->comboBoxFlags->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
     ui->pushButtonDieExtraInformation->setEnabled(bState);
@@ -386,7 +376,7 @@ void DIE_Widget::copyResult()
 
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
-    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath(), getGlobalOptions()->getDatabasePath(), getGlobalOptions()->getCustomDatabasePath());
+    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath());
     dds.setGlobal(getShortcuts(), getGlobalOptions());
     dds.exec();
 }

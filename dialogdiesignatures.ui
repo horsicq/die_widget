@@ -232,16 +232,16 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBoxShowOptions">
+             <widget class="QCheckBox" name="checkBoxShowVersion">
               <property name="text">
-               <string>Show options</string>
+               <string>Show version</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBoxShowVersion">
+             <widget class="QCheckBox" name="checkBoxShowInfo">
               <property name="text">
-               <string>Show version</string>
+               <string>Show info</string>
               </property>
              </widget>
             </item>
