@@ -57,6 +57,11 @@ FORMS += \
     include($$PWD/../FormatDialogs/dialogfindtext.pri)
 }
 
+!contains(XCONFIG, xcomboboxex) {
+    XCONFIG += xcomboboxex
+    include($$PWD/../Controls/xcomboboxex.pri)
+}
+
 DISTFILES += \
     $$PWD/LICENSE \
     $$PWD/README.md \
