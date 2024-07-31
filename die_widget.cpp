@@ -46,6 +46,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     g_bInitDatabase = false;
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
+    ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
 
     ui->stackedWidgetDieScan->setCurrentIndex(0);
 }
@@ -100,16 +101,14 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
 void DIE_Widget::adjustView()
 {
     this->g_sInfoPath = getGlobalOptions()->getInfoPath();
-
     g_bInitDatabase = false;
+
+    quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(getGlobalOptions());
+    ui->comboBoxFlags->setValue(nFlags);
 }
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {    
-    quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(pXOptions);
-
-    ui->comboBoxFlags->setValue(nFlags);
-
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
@@ -177,11 +176,7 @@ void DIE_Widget::scan()
             g_pdStruct = XBinary::createPdStruct();
 
             if (!g_bInitDatabase) {
-                g_dieScript.initDatabase();
-                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getDatabasePath(), "main");
-                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getExtraDatabasePath(), "extra");
-                g_dieScript.loadDatabase(&g_scanOptions,getGlobalOptions()->getCustomDatabasePath(), "custom");
-                g_bInitDatabase = true;
+                g_bInitDatabase  = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
             }
 
             g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);

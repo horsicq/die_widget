@@ -89,12 +89,7 @@ void DIEWidgetAdvanced::process()
     g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
     if (!g_bInitDatabase) {
-        g_dieScript.initDatabase();
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), "main");  // TODO optimize
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_EXTRADATABASEPATH).toString(), "extra");
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), "custom");
-
-        g_bInitDatabase = true;
+        g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
     }
 
     XScanEngine::SCAN_RESULT scanResult = {};
@@ -163,13 +158,8 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
 {
-    if (g_bInitDatabase) {
-        g_dieScript.initDatabase();
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASEPATH).toString(), "main");  // TODO optimize
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_EXTRADATABASEPATH).toString(), "extra");
-        g_dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getValue(XOptions::ID_SCAN_CUSTOMDATABASEPATH).toString(), "custom");
-
-        g_bInitDatabase = true;
+    if (!g_bInitDatabase) {
+        g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
     }
 
     DialogDIESignatures dialogSignatures(this, &g_dieScript);

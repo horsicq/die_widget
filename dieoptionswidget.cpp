@@ -58,10 +58,12 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_EXTRADATABASEPATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
+    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
     g_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
+    g_pOptions->getCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
+    g_pOptions->getCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
 #ifdef USE_YARA
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
@@ -84,10 +86,12 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASEPATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_EXTRADATABASEPATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_CUSTOMDATABASEPATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
+    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
     g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+    g_pOptions->setCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
+    g_pOptions->setCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
 
     if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         ui->groupBoxYaraRules->show();
@@ -118,9 +122,11 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_FLAG_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_LOG_PROFILING, false);
     pOptions->addID(XOptions::ID_SCAN_HIGHLIGHT, true);
-    pOptions->addID(XOptions::ID_SCAN_DATABASEPATH, "$data/db");
-    pOptions->addID(XOptions::ID_SCAN_EXTRADATABASEPATH, "$data/db_extra");
-    pOptions->addID(XOptions::ID_SCAN_CUSTOMDATABASEPATH, "$data/db_custom");
+    pOptions->addID(XOptions::ID_SCAN_DATABASE_MAIN_PATH, "$data/db");
+    pOptions->addID(XOptions::ID_SCAN_DATABASE_EXTRA_PATH, "$data/db_extra");
+    pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH, "$data/db_custom");
+    pOptions->addID(XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED, true);
+    pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED, true);
     pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
 }
 

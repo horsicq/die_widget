@@ -86,10 +86,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        dieScript.initDatabase();
-        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getDatabasePath(), "main");
-        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getExtraDatabasePath(), "extra");
-        dieScript.loadDatabase(&g_scanOptions, getGlobalOptions()->getCustomDatabasePath(), "custom");
+        dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
 
         DialogDIEScanProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
