@@ -48,6 +48,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
     ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
 
+    ui->comboBoxDatabases->setItemEnabled(1, false);
+
     ui->stackedWidgetDieScan->setCurrentIndex(0);
 }
 
@@ -105,10 +107,13 @@ void DIE_Widget::adjustView()
 
     quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(getGlobalOptions());
     ui->comboBoxFlags->setValue(nFlags);
+
+    quint64 nDatabases = XScanEngine::getDatabasesFromGlobalOptions(getGlobalOptions());
+    ui->comboBoxDatabases->setValue(nDatabases);
 }
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
-{    
+{
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
@@ -138,10 +143,13 @@ void DIE_Widget::process()
         g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
         g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
 
-        quint64 nFlags=ui->comboBoxFlags->getValue().toULongLong();
+        quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
         XScanEngine::setScanFlags(&g_scanOptions, nFlags);
 
-        XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
+        quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
+        XScanEngine::setDatabases(&g_scanOptions, nDatabases);
+
+        XScanEngine::setDatabasesToGlobalOptions(getGlobalOptions(), nDatabases);
 
         g_pTimer->start(200);  // TODO const
 
@@ -176,7 +184,7 @@ void DIE_Widget::scan()
             g_pdStruct = XBinary::createPdStruct();
 
             if (!g_bInitDatabase) {
-                g_bInitDatabase  = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
+                g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
             }
 
             g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);
