@@ -86,10 +86,10 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
     //    }
 
     // TODO
-    if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_DEX))  // TODO
-    {
-        fileType = XBinary::FT_BINARY;
-    }
+    // if ((fileType == XBinary::FT_ZIP) || (fileType == XBinary::FT_DEX))  // TODO
+    // {
+    //     fileType = XBinary::FT_BINARY;
+    // }
 
     this->g_sFileName = sFileName;
     this->g_fileType = fileType;
@@ -149,6 +149,7 @@ void DIE_Widget::process()
         quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
         XScanEngine::setDatabases(&g_scanOptions, nDatabases);
 
+        XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         XScanEngine::setDatabasesToGlobalOptions(getGlobalOptions(), nDatabases);
 
         g_pTimer->start(200);  // TODO const
