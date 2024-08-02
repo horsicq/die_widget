@@ -31,13 +31,14 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &
     connect(this, SIGNAL(resultSignal(QString)), this, SLOT(appendResult(QString)));
 
     ui->checkBoxScanSubdirectories->setChecked(true);
-    ui->checkBoxRecursiveScan->setChecked(true);
 
     if (sDirName != "") {
         ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirName));
     }
 
     g_scanOptions = {};
+
+    ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
 }
 
 DialogDIEScanDirectory::~DialogDIEScanDirectory()
@@ -47,6 +48,8 @@ DialogDIEScanDirectory::~DialogDIEScanDirectory()
 
 void DialogDIEScanDirectory::adjustView()
 {
+    quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(getGlobalOptions());
+    ui->comboBoxFlags->setValue(nFlags);
 }
 
 void DialogDIEScanDirectory::on_pushButtonOpenDirectory_clicked()
@@ -73,13 +76,16 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
-        g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-        g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-        g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-        g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-        g_scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
+        g_scanOptions.bShowType = true;
+        g_scanOptions.bShowVersion = true;
+        g_scanOptions.bShowInfo = true;
         g_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        g_scanOptions.nBufferSize = 2 * 1024 * 1024;  // TODO
+        g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+
+        quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
+        XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+
+        XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         // TODO Filter
         // |flags|x all|
 
