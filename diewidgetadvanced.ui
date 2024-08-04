@@ -77,37 +77,22 @@
          <number>2</number>
         </property>
         <item>
-         <widget class="QCheckBox" name="checkBoxDeepScan">
-          <property name="text">
-           <string>Deep scan</string>
+         <widget class="XComboBoxEx" name="comboBoxFlags">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBoxRecursiveScan">
-          <property name="text">
-           <string>Recursive scan</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxHeuristicScan">
-          <property name="text">
-           <string>Heuristic scan</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxVerbose">
-          <property name="text">
-           <string>Verbose</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxAllTypesScan">
-          <property name="text">
-           <string>All types</string>
+         <widget class="XComboBoxEx" name="comboBoxDatabases">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -234,6 +219,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>XComboBoxEx</class>
+   <extends>QComboBox</extends>
+   <header>xcomboboxex.h</header>
+  </customwidget>
   <customwidget>
    <class>DIE_SignatureEdit</class>
    <extends>QPlainTextEdit</extends>

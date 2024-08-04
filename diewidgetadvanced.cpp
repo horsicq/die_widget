@@ -31,6 +31,9 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
 
     g_bInitDatabase = false;
     g_scanOptions = {};
+
+    ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
+    ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
 }
 
 DIEWidgetAdvanced::~DIEWidgetAdvanced()
@@ -53,16 +56,16 @@ void DIEWidgetAdvanced::adjustView()
 {
     getGlobalOptions()->adjustWidget(ui->plainTextEditSignature, XOptions::ID_VIEW_FONT_TEXTEDITS);
     getGlobalOptions()->adjustTreeView(ui->treeViewResult, XOptions::ID_VIEW_FONT_TREEVIEWS);
+
+    quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(getGlobalOptions());
+    ui->comboBoxFlags->setValue(nFlags);
+
+    quint64 nDatabases = XScanEngine::getDatabasesFromGlobalOptions(getGlobalOptions());
+    ui->comboBoxDatabases->setValue(nDatabases);
 }
 
 void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
 {
-    ui->checkBoxAllTypesScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_ALLTYPES).toBool());
-    ui->checkBoxDeepScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_DEEP).toBool());
-    ui->checkBoxRecursiveScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_RECURSIVE).toBool());
-    ui->checkBoxHeuristicScan->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_HEURISTIC).toBool());
-    ui->checkBoxVerbose->setChecked(pXOptions->getValue(XOptions::ID_SCAN_FLAG_VERBOSE).toBool());
-
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
@@ -77,11 +80,6 @@ void DIEWidgetAdvanced::process()
     g_scanOptions.bShowType = true;
     g_scanOptions.bShowVersion = true;
     g_scanOptions.bShowInfo = true;
-    g_scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
-    g_scanOptions.bIsDeepScan = ui->checkBoxDeepScan->isChecked();
-    g_scanOptions.bIsHeuristicScan = ui->checkBoxHeuristicScan->isChecked();
-    g_scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
-    g_scanOptions.bIsAllTypesScan = ui->checkBoxAllTypesScan->isChecked();
     g_scanOptions.bLogProfiling = false;
     g_scanOptions.bShowScanTime = false;
     g_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
@@ -91,6 +89,12 @@ void DIEWidgetAdvanced::process()
     if (!g_bInitDatabase) {
         g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
     }
+
+    quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
+    XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+
+    quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
+    XScanEngine::setDatabases(&g_scanOptions, nDatabases);
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
