@@ -42,4 +42,5 @@ void DialogDieHexViewer::on_pushButtonOK_clicked()
 
 void DialogDieHexViewer::registerShortcuts(bool bState)
 {
+    Q_UNUSED(bState)
 }
