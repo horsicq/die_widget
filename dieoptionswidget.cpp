@@ -54,6 +54,7 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
     g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
     g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->getCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
     g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
     g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
@@ -82,6 +83,7 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
     g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
     g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    g_pOptions->setCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
     g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
@@ -118,6 +120,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_FLAG_RECURSIVE, true);
     pOptions->addID(XOptions::ID_SCAN_FLAG_DEEP, true);
     pOptions->addID(XOptions::ID_SCAN_FLAG_HEURISTIC, true);
+    pOptions->addID(XOptions::ID_SCAN_FLAG_AGGRESSIVE, false);
     pOptions->addID(XOptions::ID_SCAN_FLAG_VERBOSE, true);
     pOptions->addID(XOptions::ID_SCAN_FLAG_ALLTYPES, false);
     pOptions->addID(XOptions::ID_SCAN_LOG_PROFILING, false);
