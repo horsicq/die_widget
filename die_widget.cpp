@@ -306,7 +306,7 @@ void DIE_Widget::showInfo(const QString &sName)
             dialogInfo.exec();
         } else {
             QString _sName = QUrl::toPercentEncoding(sName);
-            QString sLink = QString("http://www.google.com/search?q=%1").arg(_sName);
+            QString sLink = QString("http://www.google.com/search?q=%1").arg(_sName); // TODO Set Search Engine
             QDesktopServices::openUrl(QUrl(sLink));
         }
     }
