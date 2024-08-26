@@ -28,6 +28,7 @@ namespace Ui {
 class DIEOptionsWidget;
 }
 
+// TODO remove, use ScanOptionsWidget
 class DIEOptionsWidget : public XShortcutsWidget {
     Q_OBJECT
 

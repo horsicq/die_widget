@@ -137,6 +137,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBoxSort">
+         <property name="text">
+          <string>Sort</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBoxHighlight">
          <property name="text">
           <string>Highlight</string>

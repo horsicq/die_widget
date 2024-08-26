@@ -85,6 +85,7 @@ void DIEWidgetAdvanced::process()
     g_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
     g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
     g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
+    g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
 
     if (!g_bInitDatabase) {
         g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
