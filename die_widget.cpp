@@ -191,6 +191,7 @@ void DIE_Widget::scan()
 
             g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);
 
+            emit currentFileType(g_scanResult.ftInit);
             emit scanFinished();
         }
     }

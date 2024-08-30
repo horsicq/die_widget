@@ -93,6 +93,7 @@ protected:
 signals:
     void scanStarted();
     void scanFinished();
+    void currentFileType(qint32 nFT);
 
 private:
     Ui::DIE_Widget *ui;
