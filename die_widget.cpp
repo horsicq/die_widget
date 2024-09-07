@@ -254,17 +254,19 @@ void DIE_Widget::onScanFinished()
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    QFile file;
-    file.setFileName(g_sFileName);
+    if (g_sFileName != "") {
+        QFile file;
+        file.setFileName(g_sFileName);
 
-    if (file.open(QIODevice::ReadOnly)) {
-        DialogDIESignatures dialogSignatures(this, &g_dieScript);
-        dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
-        dialogSignatures.setData(&file, g_scanOptions.fileType, "");
+        if (file.open(QIODevice::ReadOnly)) {
+            DialogDIESignatures dialogSignatures(this, &g_dieScript);
+            dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
+            dialogSignatures.setData(&file, g_scanOptions.fileType, "");
 
-        dialogSignatures.exec();
+            dialogSignatures.exec();
 
-        file.close();
+            file.close();
+        }
     }
 }
 
