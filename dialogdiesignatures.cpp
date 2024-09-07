@@ -168,6 +168,8 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 
         XScanEngine::SCAN_OPTIONS scanOptions = {};
 
+        scanOptions.bUseCustomDatabase = true;
+        scanOptions.bUseExtraDatabase = true;
         scanOptions.bShowType = ui->checkBoxShowType->isChecked();
         scanOptions.bShowInfo = ui->checkBoxShowInfo->isChecked();
         scanOptions.bShowVersion = ui->checkBoxShowVersion->isChecked();

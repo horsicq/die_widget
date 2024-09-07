@@ -76,6 +76,8 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
+        g_scanOptions.bUseCustomDatabase = true;
+        g_scanOptions.bUseExtraDatabase = true;
         g_scanOptions.bShowType = true;
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowInfo = true;

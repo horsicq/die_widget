@@ -134,6 +134,8 @@ void DIE_Widget::process()
         g_bProcess = true;
         // ui->progressBarProgress->setValue(0);
 
+        g_scanOptions.bUseCustomDatabase = true;
+        g_scanOptions.bUseExtraDatabase = true;
         g_scanOptions.bShowType = true;
         g_scanOptions.bShowVersion = true;
         g_scanOptions.bShowInfo = true;
