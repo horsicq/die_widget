@@ -45,11 +45,11 @@ protected:
 
 private slots:
     void process();
-    void on_pushButtonSave_clicked();
-    void on_pushButtonScan_clicked();
+    void on_toolButtonSave_clicked();
+    void on_toolButtonScan_clicked();
     void onSelectionChanged(const QItemSelection &itemSelected, const QItemSelection &itemDeselected);
     void on_comboBoxType_currentIndexChanged(int nIndex);
-    void on_pushButtonSignatures_clicked();
+    void on_toolButtonSignatures_clicked();
 
 private:
     Ui::DIEWidgetAdvanced *ui;

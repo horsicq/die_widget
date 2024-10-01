@@ -25,6 +25,20 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
 {
     ui->setupUi(this);
 
+    XOptions::adjustToolButton(ui->toolButtonScan, XOptions::ICONTYPE_SCAN);
+    XOptions::adjustToolButton(ui->toolButtonSave, XOptions::ICONTYPE_SAVE);
+    XOptions::adjustToolButton(ui->toolButtonSignatures, XOptions::ICONTYPE_SIGNATURE);
+
+    ui->comboBoxType->setToolTip(tr("Type"));
+    ui->comboBoxFlags->setToolTip(tr("Flags"));
+    ui->comboBoxDatabases->setToolTip(tr("Database"));
+    ui->treeViewResult->setToolTip(tr("Result"));
+    ui->plainTextEditSignature->setToolTip(tr("Signature"));
+    ui->lineEditSignatureName->setToolTip(tr("Signature name"));
+    ui->toolButtonSave->setToolTip(tr("Save"));
+    ui->toolButtonScan->setToolTip(tr("Scan"));
+    ui->toolButtonSignatures->setToolTip(tr("Signatures"));
+
     g_scanResult = {};
     g_pDevice = nullptr;
     g_pModel = nullptr;
@@ -119,7 +133,7 @@ void DIEWidgetAdvanced::process()
     delete pOldModel;
 }
 
-void DIEWidgetAdvanced::on_pushButtonSave_clicked()
+void DIEWidgetAdvanced::on_toolButtonSave_clicked()
 {
     QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(QString("DiE")));
 
@@ -132,7 +146,7 @@ void DIEWidgetAdvanced::on_pushButtonSave_clicked()
     }
 }
 
-void DIEWidgetAdvanced::on_pushButtonScan_clicked()
+void DIEWidgetAdvanced::on_toolButtonScan_clicked()
 {
     process();
 }
@@ -163,7 +177,7 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
     process();
 }
 
-void DIEWidgetAdvanced::on_pushButtonSignatures_clicked()
+void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 {
     if (!g_bInitDatabase) {
         g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
