@@ -151,6 +151,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBoxHideUnknown">
+         <property name="text">
+          <string>Hide unknown</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBoxBufferSize">
          <property name="title">
           <string>Buffer size</string>

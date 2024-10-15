@@ -60,6 +60,7 @@ void DIEOptionsWidget::save()
     g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->getCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
+    g_pOptions->getCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
     g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
@@ -89,6 +90,7 @@ void DIEOptionsWidget::reload()
     g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
     g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
     g_pOptions->setCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
+    g_pOptions->setCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
     g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
     g_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
@@ -128,6 +130,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_LOG_PROFILING, false);
     pOptions->addID(XOptions::ID_SCAN_HIGHLIGHT, true);
     pOptions->addID(XOptions::ID_SCAN_SORT, true);
+    pOptions->addID(XOptions::ID_SCAN_HIDEUNKNOWN, false);
     pOptions->addID(XOptions::ID_SCAN_DATABASE_MAIN_PATH, "$data/db");
     pOptions->addID(XOptions::ID_SCAN_DATABASE_EXTRA_PATH, "$data/db_extra");
     pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH, "$data/db_custom");
