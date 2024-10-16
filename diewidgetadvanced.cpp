@@ -43,7 +43,6 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
     g_pDevice = nullptr;
     g_pModel = nullptr;
 
-    g_bInitDatabase = false;
     g_scanOptions = {};
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
@@ -104,9 +103,8 @@ void DIEWidgetAdvanced::process()
     g_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
     g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
 
-    if (!g_bInitDatabase) {
-        g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
-    }
+    DiE_Script dieScript;
+    dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
 
     quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
     XScanEngine::setScanFlags(&g_scanOptions, nFlags);
@@ -116,7 +114,7 @@ void DIEWidgetAdvanced::process()
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
-    DialogDIEScanProcess ds(this, &g_dieScript);
+    DialogDIEScanProcess ds(this, &dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
     ds.setData(g_pDevice, &g_scanOptions, &scanResult);
     ds.exec();
@@ -180,11 +178,10 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 {
-    if (!g_bInitDatabase) {
-        g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
-    }
+    DiE_Script dieScript;
+    dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
 
-    DialogDIESignatures dialogSignatures(this, &g_dieScript);
+    DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
     dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
 
