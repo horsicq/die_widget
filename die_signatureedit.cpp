@@ -86,7 +86,7 @@ void DIE_SignatureEdit::keyPressEvent(QKeyEvent *pEvent)
     if (pEvent->key() == Qt::Key_Tab) {
         qint32 nPosition = textCursor().positionInBlock();
 
-        qint32 nAppend = nPosition % 4;
+        qint32 nAppend = nPosition % 4; // TODO options
 
         QString sAppend;
 

@@ -194,7 +194,10 @@ void DIE_Widget::scan()
 
             g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);
 
-            emit currentFileType(g_scanResult.ftInit);
+            if (g_scanResult.ftInit == XBinary::FT_COM) {
+                emit currentFileType(g_scanResult.ftInit);
+            }
+
             emit scanFinished();
         }
     }
@@ -430,7 +433,7 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
         if (index.column() == 0) {
             QString sString = ui->treeViewResult->model()->data(index).toString();
 
-            QMenu contextMenu(this);
+            QMenu contextMenu(this); // TODO
 
             QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"), sString), this);
             connect(&actionCopy, SIGNAL(triggered()), this, SLOT(copyResult()));
