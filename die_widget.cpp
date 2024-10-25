@@ -433,6 +433,7 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
         if (index.column() == 0) {
             QString sString = ui->treeViewResult->model()->data(index).toString();
 
+            // TODO more
             QMenu contextMenu(this);  // TODO
 
             QAction actionCopy(QString("%1 \"%2\"").arg(tr("Copy as"), sString), this);
