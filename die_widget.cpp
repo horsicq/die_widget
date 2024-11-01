@@ -52,7 +52,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
     ui->stackedWidgetDieScan->setCurrentIndex(0);
 
-    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(0).arg(tr("msec"))); // TODO Function
+    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(0).arg(tr("msec")));  // TODO Function
 }
 
 DIE_Widget::~DIE_Widget()
