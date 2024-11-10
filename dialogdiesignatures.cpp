@@ -62,6 +62,8 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     handleTreeItems(pRootItem, XBinary::FT_DEX, "DEX");
     handleTreeItems(pRootItem, XBinary::FT_NPM, "NPM");
     handleTreeItems(pRootItem, XBinary::FT_DEB, "DEB");
+    handleTreeItems(pRootItem, XBinary::FT_DOS16M, "DOS16M");
+    handleTreeItems(pRootItem, XBinary::FT_DOS4G, "DOS4G");
     handleTreeItems(pRootItem, XBinary::FT_AMIGAHUNK, "Amiga");
 
     ui->treeWidgetSignatures->setSortingEnabled(true);
