@@ -40,7 +40,6 @@ private:
         QTextCharFormat format;
     };
     QVector<HighlightingRule> highlightingRules;
-
     QRegularExpression commentStartExpression;
     QRegularExpression commentEndExpression;
     QTextCharFormat keywordFormat;
