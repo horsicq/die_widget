@@ -37,9 +37,6 @@ public:
 
     virtual void adjustView();
 
-signals:
-    void currentLocationChanged(quint64 nLocation, qint32 nLocationType, qint64 nSize);
-
 private slots:
     void on_pushButtonOK_clicked();
 
