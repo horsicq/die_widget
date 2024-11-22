@@ -139,6 +139,13 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
 }
 
+void DIEOptionsWidget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+
+    reload();
+}
+
 void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 {
     QString sText = ui->lineEditDIEDatabase->text();
