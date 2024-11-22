@@ -82,6 +82,13 @@ void DIEWidgetAdvanced::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
+void DIEWidgetAdvanced::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+    // TODO
+    process();
+}
+
 void DIEWidgetAdvanced::registerShortcuts(bool bState)
 {
     Q_UNUSED(bState)
