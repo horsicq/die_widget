@@ -119,6 +119,12 @@ void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
     XShortcutsWidget::setGlobal(pShortcuts, pXOptions);
 }
 
+void DIE_Widget::reloadData(bool bSaveSelection)
+{
+    Q_UNUSED(bSaveSelection)
+    process();
+}
+
 void DIE_Widget::clear()
 {
     g_scanType = ST_UNKNOWN;
