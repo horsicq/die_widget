@@ -4,14 +4,18 @@ if (NOT DEFINED DIE_SCRIPT_SOURCES)
     include(${CMAKE_CURRENT_LIST_DIR}/../die_script/die_script.cmake)
     set(DIE_WIDGET_SOURCES ${DIE_WIDGET_SOURCES} ${DIE_SCRIPT_SOURCES})
 endif()
+if (NOT DEFINED DIALOGTEXTINFO_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/dialogtextinfo.cmake)
+    set(DIE_WIDGET_SOURCES ${DIE_WIDGET_SOURCES} ${DIALOGTEXTINFO_SOURCES})
+endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/dialogtextinfo.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/xdialogprocess.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/dialogfindtext.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xcomboboxex.cmake)
 
 set(DIE_WIDGET_SOURCES
     ${DIE_WIDGET_SOURCES}
+    ${DIE_SCRIPT_SOURCES}
     ${DIALOGTEXTINFO_SOURCES}
     ${XDIALOGPROCESS_SOURCES}
     ${DIALOGFINDTEXT_SOURCES}
