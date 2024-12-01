@@ -12,8 +12,11 @@ if (NOT DEFINED XDIALOGPROCESS_SOURCES)
     include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/xdialogprocess.cmake)
     set(DIE_WIDGET_SOURCES ${DIE_WIDGET_SOURCES} ${XDIALOGPROCESS_SOURCES})
 endif()
+if (NOT DEFINED DIALOGFINDTEXT_SOURCES)
+    include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/dialogfindtext.cmake)
+    set(DIE_WIDGET_SOURCES ${DIE_WIDGET_SOURCES} ${DIALOGFINDTEXT_SOURCES})
+endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/../FormatDialogs/dialogfindtext.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/../Controls/xcomboboxex.cmake)
 
 set(DIE_WIDGET_SOURCES
