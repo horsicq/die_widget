@@ -23,11 +23,6 @@ endif()
 
 set(DIE_WIDGET_SOURCES
     ${DIE_WIDGET_SOURCES}
-    ${DIE_SCRIPT_SOURCES}
-    ${DIALOGTEXTINFO_SOURCES}
-    ${XDIALOGPROCESS_SOURCES}
-    ${DIALOGFINDTEXT_SOURCES}
-    ${XCOMBOBOXEX_SOURCES}
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiehexviewer.ui
