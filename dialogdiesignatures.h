@@ -84,9 +84,6 @@ private slots:
     void findString();
     void findNext();
 
-protected:
-    virtual void registerShortcuts(bool bState);
-
 private:
     Ui::DialogDIESignatures *ui;
     DiE_Script *g_pDieScript;
@@ -96,7 +93,6 @@ private:
     QString g_sCurrentSignatureFilePath;
     bool g_bCurrentEdited;
     DialogFindText::DATA g_data;
-    QShortcut *g_shortCuts[__SC_SIZE];
 };
 
 #endif  // DIALOGDIESIGNATURES_H

@@ -26,7 +26,8 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 {
     ui->setupUi(this);
 
-    memset(g_shortCuts, 0, sizeof g_shortCuts);
+    addShortcut(X_ID_SCAN_EDITOR_FIND_STRING, this, SLOT(findString()));
+    addShortcut(X_ID_SCAN_EDITOR_FIND_NEXT, this, SLOT(findNext()));
 
     g_data = {};
 
@@ -378,20 +379,3 @@ void DialogDIESignatures::findNext()
     }
 }
 
-void DialogDIESignatures::registerShortcuts(bool bState)
-{
-    if (getShortcuts()) {
-        if (bState) {
-            if (!g_shortCuts[SC_FIND_STRING])
-                g_shortCuts[SC_FIND_STRING] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_STRING), this, SLOT(findString()));
-            if (!g_shortCuts[SC_FIND_NEXT]) g_shortCuts[SC_FIND_NEXT] = new QShortcut(getShortcuts()->getShortcut(X_ID_SCAN_EDITOR_FIND_NEXT), this, SLOT(findNext()));
-        } else {
-            for (qint32 i = 0; i < __SC_SIZE; i++) {
-                if (g_shortCuts[i]) {
-                    delete g_shortCuts[i];
-                    g_shortCuts[i] = nullptr;
-                }
-            }
-        }
-    }
-}
