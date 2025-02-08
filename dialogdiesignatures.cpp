@@ -378,4 +378,3 @@ void DialogDIESignatures::findNext()
         ui->plainTextEditSignature->find(g_data.sText);
     }
 }
-
