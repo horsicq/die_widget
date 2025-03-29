@@ -67,6 +67,8 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     handleTreeItems(pRootItem, XBinary::FT_DOS16M, "DOS16M");
     handleTreeItems(pRootItem, XBinary::FT_DOS4G, "DOS4G");
     handleTreeItems(pRootItem, XBinary::FT_AMIGAHUNK, "Amiga");
+    handleTreeItems(pRootItem, XBinary::FT_JAVACLASS, "JavaClass");
+    handleTreeItems(pRootItem, XBinary::FT_PDF, "PDF");
 
     ui->treeWidgetSignatures->setSortingEnabled(true);
     ui->treeWidgetSignatures->sortByColumn(0, Qt::AscendingOrder);
