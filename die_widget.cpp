@@ -22,6 +22,11 @@
 
 #include "ui_die_widget.h"
 
+// bool _scanEngineCallback(const QString &sCurrentSignature, qint32 nNumberOfSignatures, qint32 nCurrentIndex, void *pUserData)
+// {
+//     return false;
+// }
+
 DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIE_Widget)
 {
     ui->setupUi(this);
@@ -154,6 +159,8 @@ void DIE_Widget::process()
         g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
         g_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
         g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
+        // g_scanOptions.scanEngineCallback = _scanEngineCallback;
+        // g_scanOptions.pUserData = (void *)123;
 
         quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
         XScanEngine::setScanFlags(&g_scanOptions, nFlags);
