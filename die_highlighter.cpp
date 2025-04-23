@@ -34,31 +34,31 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
     for (const QString &pattern : keywordPatterns) {
         rule.pattern = QRegularExpression(pattern);
         rule.format = keywordFormat;
-        highlightingRules.append(rule);
+        listHighlightingRules.append(rule);
     }
 
     classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
     rule.pattern = QRegularExpression(QStringLiteral("\\bQ[A-Za-z]+\\b"));
     rule.format = classFormat;
-    highlightingRules.append(rule);
+    listHighlightingRules.append(rule);
 
     quotationFormat.setForeground(Qt::darkGreen);
     // rule.pattern = QRegularExpression(QStringLiteral("\".*\""));
     rule.pattern = QRegularExpression(QStringLiteral("\".*?\""));
     rule.format = quotationFormat;
-    highlightingRules.append(rule);
+    listHighlightingRules.append(rule);
 
     functionFormat.setFontItalic(true);
     functionFormat.setForeground(Qt::blue);
     rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
     rule.format = functionFormat;
-    highlightingRules.append(rule);
+    listHighlightingRules.append(rule);
 
     singleLineCommentFormat.setForeground(Qt::red);
     rule.pattern = QRegularExpression(QStringLiteral("//[^\n]*"));
     rule.format = singleLineCommentFormat;
-    highlightingRules.append(rule);
+    listHighlightingRules.append(rule);
 
     multiLineCommentFormat.setForeground(Qt::red);
 
@@ -69,7 +69,7 @@ DIE_Highlighter::DIE_Highlighter(QObject *pParent) : QSyntaxHighlighter(pParent)
 void DIE_Highlighter::highlightBlock(const QString &text)
 {
     // TODO Check qConst
-    for (const HighlightingRule &rule : highlightingRules) {
+    for (const HighlightingRule &rule : listHighlightingRules) {
         QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
 
         while (matchIterator.hasNext()) {

@@ -39,7 +39,7 @@ private:
         QRegularExpression pattern;
         QTextCharFormat format;
     };
-    QVector<HighlightingRule> highlightingRules;
+    QVector<HighlightingRule> listHighlightingRules;
     QRegularExpression commentStartExpression;
     QRegularExpression commentEndExpression;
     QTextCharFormat keywordFormat;
