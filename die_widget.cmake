@@ -29,8 +29,6 @@ set(DIE_WIDGET_SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiescandirectory.ui
-    ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/dialogdiescanprocess.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.cpp
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.h
     ${CMAKE_CURRENT_LIST_DIR}/dialogdiesignatures.ui

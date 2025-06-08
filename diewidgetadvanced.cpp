@@ -111,6 +111,7 @@ void DIEWidgetAdvanced::process()
     g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
 
     DiE_Script dieScript;
+
     dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
 
     quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
@@ -121,9 +122,10 @@ void DIEWidgetAdvanced::process()
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
-    DialogDIEScanProcess ds(this, &dieScript);
+    XDialogProcess ds(this, &dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    ds.setData(g_pDevice, &g_scanOptions, &scanResult);
+    dieScript.setData(g_pDevice, &g_scanOptions, &scanResult, ds.getPdStruct());
+    ds.start();
     ds.exec();
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();

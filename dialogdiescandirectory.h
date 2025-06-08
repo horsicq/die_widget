@@ -22,8 +22,9 @@
 #define DIALOGDIESCANDIRECTORY_H
 
 #include "xshortcutsdialog.h"
-#include "dialogdiescanprocess.h"
+#include "xdialogprocess.h"
 #include "scanitemmodel.h"
+#include "die_script.h"
 
 namespace Ui {
 class DialogDIEScanDirectory;

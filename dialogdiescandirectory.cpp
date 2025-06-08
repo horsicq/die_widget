@@ -93,12 +93,15 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
+        // connect(&dieScript, SIGNAL(scanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
+        connect(&dieScript, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
+
         dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
 
-        DialogDIEScanProcess ds(this, &dieScript);
+        XDialogProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
-        connect(&ds, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
-        ds.setData(sDirectoryName, &g_scanOptions);
+        dieScript.setData(sDirectoryName, &g_scanOptions, ds.getPdStruct());
+        ds.start();
         ds.exec();
     }
 }

@@ -7,7 +7,6 @@ DEPENDPATH += $$PWD
 HEADERS += \
     $$PWD/dialogdiehexviewer.h \
     $$PWD/dialogdiescandirectory.h \
-    $$PWD/dialogdiescanprocess.h \
     $$PWD/dialogdiesignatures.h \
     $$PWD/dialogdiesignatureselapsed.h \
     $$PWD/die_highlighter.h \
@@ -19,7 +18,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/dialogdiehexviewer.cpp \
     $$PWD/dialogdiescandirectory.cpp \
-    $$PWD/dialogdiescanprocess.cpp \
     $$PWD/dialogdiesignatures.cpp \
     $$PWD/dialogdiesignatureselapsed.cpp \
     $$PWD/die_highlighter.cpp \
