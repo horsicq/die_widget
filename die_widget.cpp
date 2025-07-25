@@ -468,6 +468,21 @@ void DIE_Widget::timerSlot()
     XFormats::setProgressBar(ui->progressBar2, g_pdStruct._pdRecord[2]);
     XFormats::setProgressBar(ui->progressBar3, g_pdStruct._pdRecord[3]);
     XFormats::setProgressBar(ui->progressBar4, g_pdStruct._pdRecord[4]);
+	
+	qint64 nOverallCurrent = 0;
+    qint64 nOverallTotal = 0;
+
+    for (int i = 0; i < 5; i++) {
+        nOverallCurrent += g_pdStruct._pdRecord[i].nCurrent;
+        nOverallTotal += g_pdStruct._pdRecord[i].nTotal;
+    }
+
+    qint32 nOverallProgress = 0;
+    if (nOverallTotal > 0) {
+        nOverallProgress = (qint32)((qreal)nOverallCurrent / nOverallTotal * 100);
+    }
+
+    emit scanProgress(nOverallProgress);
 }
 
 void DIE_Widget::on_pushButtonDieScanStart_clicked()

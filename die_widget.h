@@ -95,6 +95,7 @@ signals:
     void scanStarted();
     void scanFinished();
     void currentFileType(qint32 nFT);
+	void scanProgress(int value);
 
 private:
     Ui::DIE_Widget *ui;
