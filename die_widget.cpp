@@ -468,8 +468,8 @@ void DIE_Widget::timerSlot()
     XFormats::setProgressBar(ui->progressBar2, g_pdStruct._pdRecord[2]);
     XFormats::setProgressBar(ui->progressBar3, g_pdStruct._pdRecord[3]);
     XFormats::setProgressBar(ui->progressBar4, g_pdStruct._pdRecord[4]);
-	
-	qint64 nOverallCurrent = 0;
+
+    qint64 nOverallCurrent = 0;
     qint64 nOverallTotal = 0;
 
     for (int i = 0; i < 5; i++) {
