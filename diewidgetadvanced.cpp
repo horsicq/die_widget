@@ -40,7 +40,7 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
     ui->toolButtonSignatures->setToolTip(tr("Signatures"));
 
     g_scanResult = {};
-    g_pDevice = nullptr;
+    m_pDevice = nullptr;
     g_pModel = nullptr;
 
     g_scanOptions = {};
@@ -56,7 +56,7 @@ DIEWidgetAdvanced::~DIEWidgetAdvanced()
 
 void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT fileType)
 {
-    g_pDevice = pDevice;
+    m_pDevice = pDevice;
 
     XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType, XBinary::TL_OPTION_ALL);
 
@@ -124,7 +124,7 @@ void DIEWidgetAdvanced::process()
 
     XDialogProcess ds(this, &dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    dieScript.setData(g_pDevice, &g_scanOptions, &scanResult, ds.getPdStruct());
+    dieScript.setData(m_pDevice, &g_scanOptions, &scanResult, ds.getPdStruct());
     ds.start();
     ds.exec();
 
@@ -143,7 +143,7 @@ void DIEWidgetAdvanced::process()
 
 void DIEWidgetAdvanced::on_toolButtonSave_clicked()
 {
-    QString sSaveFileName = XBinary::getResultFileName(g_pDevice, QString("%1.txt").arg(QString("DiE")));
+    QString sSaveFileName = XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(QString("DiE")));
 
     QString _sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sSaveFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files"), tr("All files")));
 
@@ -192,7 +192,7 @@ void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogSignatures.setData(g_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
+    dialogSignatures.setData(m_pDevice, (XBinary::FT)(ui->comboBoxType->currentData().toInt()), "");
 
     dialogSignatures.exec();
 }
