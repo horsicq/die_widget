@@ -54,7 +54,7 @@ private slots:
 
 private:
     Ui::DIEWidgetAdvanced *ui;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     ScanItemModel *g_pModel;
     XScanEngine::SCAN_RESULT g_scanResult;
     XScanEngine::SCAN_OPTIONS g_scanOptions;

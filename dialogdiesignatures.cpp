@@ -103,7 +103,7 @@ DialogDIESignatures::~DialogDIESignatures()
 
 void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, const QString &sSignature)
 {
-    this->g_pDevice = pDevice;
+    this->m_pDevice = pDevice;
     this->g_fileType = fileType;
     this->g_sSignature = sSignature;
 
@@ -205,9 +205,9 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
             g_pDieScript->setDebugger(&debugger);
 #endif
 
-            scanResult = g_pDieScript->scanDevice(g_pDevice, &scanOptions);
+            scanResult = g_pDieScript->scanDevice(m_pDevice, &scanOptions);
         } else {
-            scanResult = g_pDieScript->scanDevice(g_pDevice, &scanOptions);
+            scanResult = g_pDieScript->scanDevice(m_pDevice, &scanOptions);
         }
 
         if (bIsDebug) {

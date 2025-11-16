@@ -87,7 +87,7 @@ private slots:
 private:
     Ui::DialogDIESignatures *ui;
     DiE_Script *g_pDieScript;
-    QIODevice *g_pDevice;
+    QIODevice *m_pDevice;
     XBinary::FT g_fileType;
     QString g_sSignature;
     QString g_sCurrentSignatureFilePath;
