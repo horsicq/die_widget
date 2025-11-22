@@ -57,7 +57,7 @@ protected:
 
 private:
     Ui::DialogDIEScanDirectory *ui;
-    XScanEngine::SCAN_OPTIONS g_scanOptions;
+    XScanEngine::SCAN_OPTIONS m_scanOptions;
 };
 
 #endif  // DIALOGDIESCANDIRECTORY_H

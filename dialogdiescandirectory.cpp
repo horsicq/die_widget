@@ -36,7 +36,7 @@ DialogDIEScanDirectory::DialogDIEScanDirectory(QWidget *pParent, const QString &
         ui->lineEditDirectoryName->setText(QDir().toNativeSeparators(sDirName));
     }
 
-    g_scanOptions = {};
+    m_scanOptions = {};
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
 }
@@ -76,16 +76,16 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         ui->textBrowserResult->clear();
 
         // TODO
-        g_scanOptions.bUseCustomDatabase = true;
-        g_scanOptions.bUseExtraDatabase = true;
-        g_scanOptions.bShowType = true;
-        g_scanOptions.bShowVersion = true;
-        g_scanOptions.bShowInfo = true;
-        g_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+        m_scanOptions.bUseCustomDatabase = true;
+        m_scanOptions.bUseExtraDatabase = true;
+        m_scanOptions.bShowType = true;
+        m_scanOptions.bShowVersion = true;
+        m_scanOptions.bShowInfo = true;
+        m_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
+        m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
 
         quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
-        XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+        XScanEngine::setScanFlags(&m_scanOptions, nFlags);
 
         XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         // TODO Filter
@@ -100,7 +100,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         XDialogProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
-        dieScript.setData(sDirectoryName, &g_scanOptions, ds.getPdStruct());
+        dieScript.setData(sDirectoryName, &m_scanOptions, ds.getPdStruct());
         ds.start();
         ds.exec();
     }
@@ -112,7 +112,7 @@ void DialogDIEScanDirectory::scanResult(const XScanEngine::SCAN_RESULT &scanResu
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
     sResult += "\r\n";
 
-    ScanItemModel model(&g_scanOptions, &(scanResult.listRecords), 1);
+    ScanItemModel model(&m_scanOptions, &(scanResult.listRecords), 1);
 
     sResult += model.toFormattedString();
 
