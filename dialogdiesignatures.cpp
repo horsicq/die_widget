@@ -29,9 +29,9 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     addShortcut(X_ID_SCAN_EDITOR_FIND_STRING, this, SLOT(findString()));
     addShortcut(X_ID_SCAN_EDITOR_FIND_NEXT, this, SLOT(findNext()));
 
-    g_data = {};
+    m_data = {};
 
-    this->g_pDieScript = pDieScript;
+    this->m_pDieScript = pDieScript;
 
     connect(pDieScript, SIGNAL(infoMessage(QString)), this, SLOT(infoMessage(QString)));
     connect(pDieScript, SIGNAL(warningMessage(QString)), this, SLOT(warningMessage(QString)));
@@ -75,7 +75,7 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
     ui->treeWidgetSignatures->setSortingEnabled(true);
     ui->treeWidgetSignatures->sortByColumn(0, Qt::AscendingOrder);
 
-    g_bCurrentEdited = false;
+    m_bCurrentEdited = false;
     ui->pushButtonSave->setEnabled(false);
 
     ui->checkBoxShowType->setChecked(true);
@@ -104,10 +104,10 @@ DialogDIESignatures::~DialogDIESignatures()
 void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, const QString &sSignature)
 {
     this->m_pDevice = pDevice;
-    this->g_fileType = fileType;
-    this->g_sSignature = sSignature;
+    this->m_fileType = fileType;
+    this->m_sSignature = sSignature;
 
-    if (g_fileType != XBinary::FT_UNKNOWN) {
+    if (m_fileType != XBinary::FT_UNKNOWN) {
         qint32 nNumberOfTopLevelItems = ui->treeWidgetSignatures->topLevelItemCount();
 
         for (qint32 i = 0; i < nNumberOfTopLevelItems; i++) {
@@ -130,7 +130,7 @@ qint32 DialogDIESignatures::handleTreeItems(QTreeWidgetItem *pRootItem, XBinary:
 {
     qint32 nResult = 0;
 
-    if (g_pDieScript->isSignaturesPresent(fileType)) {
+    if (m_pDieScript->isSignaturesPresent(fileType)) {
         QTreeWidgetItem *pItem = new QTreeWidgetItem(pRootItem);
         pItem->setText(0, sText);
         nResult = _handleTreeItems(pItem, fileType);
@@ -143,7 +143,7 @@ qint32 DialogDIESignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBina
 {
     qint32 nResult = 0;
 
-    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = g_pDieScript->getSignatures();
+    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = m_pDieScript->getSignatures();
 
     qint32 nNumberOfSignatures = pListSignatures->count();
 
@@ -169,7 +169,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
     QTreeWidgetItem *pItemCurrent = ui->treeWidgetSignatures->currentItem();
 
     if (pItemCurrent) {
-        if (g_bCurrentEdited) {
+        if (m_bCurrentEdited) {
             save();
         }
 
@@ -202,17 +202,17 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
             debugWindow->setWindowModality(Qt::WindowModal);
             debugWindow->setWindowTitle(tr("Debugger"));
             //        debugWindow->resize(600,350);
-            g_pDieScript->setDebugger(&debugger);
+            m_pDieScript->setDebugger(&debugger);
 #endif
 
-            scanResult = g_pDieScript->scanDevice(m_pDevice, &scanOptions);
+            scanResult = m_pDieScript->scanDevice(m_pDevice, &scanOptions);
         } else {
-            scanResult = g_pDieScript->scanDevice(m_pDevice, &scanOptions);
+            scanResult = m_pDieScript->scanDevice(m_pDevice, &scanOptions);
         }
 
         if (bIsDebug) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-            g_pDieScript->removeDebugger();
+            m_pDieScript->removeDebugger();
 #endif
         }
 
@@ -237,15 +237,15 @@ void DialogDIESignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidget
 
     QString sSignatureFilePath = pItemCurrent->data(0, Qt::UserRole).toString();
 
-    if (sSignatureFilePath != g_sCurrentSignatureFilePath) {
+    if (sSignatureFilePath != m_sCurrentSignatureFilePath) {
         const bool bBlocked1 = ui->plainTextEditSignature->blockSignals(true);
 
-        if (g_bCurrentEdited) {
+        if (m_bCurrentEdited) {
             // TODO handle warning
         }
 
-        g_sCurrentSignatureFilePath = sSignatureFilePath;
-        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = g_pDieScript->getSignatureByFilePath(g_sCurrentSignatureFilePath);
+        m_sCurrentSignatureFilePath = sSignatureFilePath;
+        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = m_pDieScript->getSignatureByFilePath(m_sCurrentSignatureFilePath);
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
@@ -261,8 +261,8 @@ void DialogDIESignatures::on_pushButtonSave_clicked()
 
 void DialogDIESignatures::save()
 {
-    if (g_pDieScript->updateSignature(g_sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
-        g_bCurrentEdited = false;
+    if (m_pDieScript->updateSignature(m_sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
+        m_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
     } else {
         // Handle error
@@ -291,7 +291,7 @@ void DialogDIESignatures::on_pushButtonClose_clicked()
 
 void DialogDIESignatures::on_plainTextEditSignature_textChanged()
 {
-    g_bCurrentEdited = true;
+    m_bCurrentEdited = true;
     ui->pushButtonSave->setEnabled(true);
 }
 
@@ -333,7 +333,7 @@ void DialogDIESignatures::enableControls(bool bState)
     ui->pushButtonDebug->setEnabled(bState);
     ui->pushButtonRun->setEnabled(bState);
 
-    if (g_bCurrentEdited) {
+    if (m_bCurrentEdited) {
         ui->pushButtonSave->setEnabled(bState);
     }
 }
@@ -367,7 +367,7 @@ void DialogDIESignatures::findString()
 {
     DialogFindText dialogFindText(this);
     dialogFindText.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogFindText.setData(&g_data);
+    dialogFindText.setData(&m_data);
 
     if (dialogFindText.exec() == QDialog::Accepted) {
         findNext();
@@ -376,9 +376,9 @@ void DialogDIESignatures::findString()
 
 void DialogDIESignatures::findNext()
 {
-    if (g_data.bIsMatchCase) {
-        ui->plainTextEditSignature->find(g_data.sText, QTextDocument::FindCaseSensitively);
+    if (m_data.bIsMatchCase) {
+        ui->plainTextEditSignature->find(m_data.sText, QTextDocument::FindCaseSensitively);
     } else {
-        ui->plainTextEditSignature->find(g_data.sText);
+        ui->plainTextEditSignature->find(m_data.sText);
     }
 }

@@ -86,13 +86,13 @@ private slots:
 
 private:
     Ui::DialogDIESignatures *ui;
-    DiE_Script *g_pDieScript;
+    DiE_Script *m_pDieScript;
     QIODevice *m_pDevice;
-    XBinary::FT g_fileType;
-    QString g_sSignature;
-    QString g_sCurrentSignatureFilePath;
-    bool g_bCurrentEdited;
-    DialogFindText::DATA g_data;
+    XBinary::FT m_fileType;
+    QString m_sSignature;
+    QString m_sCurrentSignatureFilePath;
+    bool m_bCurrentEdited;
+    DialogFindText::DATA m_data;
 };
 
 #endif  // DIALOGDIESIGNATURES_H
