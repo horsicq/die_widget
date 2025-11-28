@@ -24,6 +24,8 @@
 
 DialogDIESignaturesElapsed::DialogDIESignaturesElapsed(QWidget *pParent) : XShortcutsDialog(pParent, true), ui(new Ui::DialogDIESignaturesElapsed)
 {
+    m_pScanResult = nullptr;
+
     ui->setupUi(this);
 }
 
@@ -38,7 +40,7 @@ void DialogDIESignaturesElapsed::adjustView()
 
 void DialogDIESignaturesElapsed::setData(XScanEngine::SCAN_RESULT *pScanResult)
 {
-    g_pScanResult = pScanResult;
+    m_pScanResult = pScanResult;
 
     qint32 nNumberOfRecords = pScanResult->listDebugRecords.count();
 

@@ -47,7 +47,7 @@ protected:
 
 private:
     Ui::DialogDIESignaturesElapsed *ui;
-    XScanEngine::SCAN_RESULT *g_pScanResult;
+    XScanEngine::SCAN_RESULT *m_pScanResult;
 };
 
 #endif  // DIALOGDIESIGNATURESELAPSED_H
