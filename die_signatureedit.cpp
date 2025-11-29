@@ -22,11 +22,11 @@
 
 DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent)
 {
-    pHighlighter = new DIE_Highlighter(this->document());
+    m_pHighlighter = new DIE_Highlighter(this->document());
 
-    pHighlighter->setDocument(this->document());
+    m_pHighlighter->setDocument(this->document());
 
-    g_pLineNumberArea = new DIE_LineNumberArea(this);
+    m_pLineNumberArea = new DIE_LineNumberArea(this);
 
     connect(this, &DIE_SignatureEdit::blockCountChanged, this, &DIE_SignatureEdit::updateLineNumberAreaWidth);
     connect(this, &DIE_SignatureEdit::updateRequest, this, &DIE_SignatureEdit::updateLineNumberArea);
@@ -38,7 +38,7 @@ DIE_SignatureEdit::DIE_SignatureEdit(QWidget *pParent) : QPlainTextEdit(pParent)
 
 void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
 {
-    QPainter painter(g_pLineNumberArea);
+    QPainter painter(m_pLineNumberArea);
     painter.fillRect(pEvent->rect(), Qt::lightGray);
 
     QTextBlock block = firstVisibleBlock();
@@ -50,7 +50,7 @@ void DIE_SignatureEdit::lineNumberAreaPaintEvent(QPaintEvent *pEvent)
         if (block.isVisible() && (nBottom >= pEvent->rect().top())) {
             QString number = QString::number(nBlockNumber + 1);
             painter.setPen(Qt::black);
-            painter.drawText(0, nTop, g_pLineNumberArea->width() - 5, fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(0, nTop, m_pLineNumberArea->width() - 5, fontMetrics().height(), Qt::AlignRight, number);
         }
 
         block = block.next();
@@ -78,7 +78,7 @@ void DIE_SignatureEdit::setPlainText(const QString &sText)
 
     highlightCurrentLine();
 
-    g_pLineNumberArea->update();
+    m_pLineNumberArea->update();
 }
 
 void DIE_SignatureEdit::keyPressEvent(QKeyEvent *pEvent)
@@ -106,7 +106,7 @@ void DIE_SignatureEdit::resizeEvent(QResizeEvent *pEvent)
     QPlainTextEdit::resizeEvent(pEvent);
 
     QRect cr = contentsRect();
-    g_pLineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+    m_pLineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
 void DIE_SignatureEdit::updateLineNumberAreaWidth(qint32 newBlockCount)
@@ -138,9 +138,9 @@ void DIE_SignatureEdit::highlightCurrentLine()
 void DIE_SignatureEdit::updateLineNumberArea(const QRect &rect, qint32 nDy)
 {
     if (nDy) {
-        g_pLineNumberArea->scroll(0, nDy);
+        m_pLineNumberArea->scroll(0, nDy);
     } else {
-        g_pLineNumberArea->update(0, rect.y(), g_pLineNumberArea->width(), rect.height());
+        m_pLineNumberArea->update(0, rect.y(), m_pLineNumberArea->width(), rect.height());
     }
 
     if (rect.contains(viewport()->rect())) {

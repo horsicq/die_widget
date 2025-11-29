@@ -46,8 +46,8 @@ private slots:
     void updateLineNumberArea(const QRect &rect, qint32 nDy);
 
 private:
-    DIE_Highlighter *pHighlighter;
-    QWidget *g_pLineNumberArea;
+    DIE_Highlighter *m_pHighlighter;
+    QWidget *m_pLineNumberArea;
 };
 
 class DIE_LineNumberArea : public QWidget {
