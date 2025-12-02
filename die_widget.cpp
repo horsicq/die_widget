@@ -31,24 +31,24 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 {
     ui->setupUi(this);
 
-    g_pdStruct = XBinary::createPdStruct();
-    g_pModel = nullptr;
-    g_bProcess = false;
+    m_pdStruct = XBinary::createPdStruct();
+    m_pModel = nullptr;
+    m_bProcess = false;
 
-    connect(&g_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
+    connect(&m_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
-    connect(&g_dieScript, SIGNAL(errorMessage(QString)), this, SLOT(handleErrorString(QString)));
-    connect(&g_dieScript, SIGNAL(warningMessage(QString)), this, SLOT(handleWarningString(QString)));
-    // connect(&g_dieScript, SIGNAL(infoMessage(QString)), this, SLOT(handleInfoString(QString)));
+    connect(&m_dieScript, SIGNAL(errorMessage(QString)), this, SLOT(handleErrorString(QString)));
+    connect(&m_dieScript, SIGNAL(warningMessage(QString)), this, SLOT(handleWarningString(QString)));
+    // connect(&m_dieScript, SIGNAL(infoMessage(QString)), this, SLOT(handleInfoString(QString)));
 
     ui->pushButtonDieLog->setEnabled(false);
 
-    g_pTimer = new QTimer(this);
-    connect(g_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
+    m_pTimer = new QTimer(this);
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
     clear();
 
-    g_bInitDatabase = false;
+    m_bInitDatabase = false;
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
     ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
@@ -62,9 +62,9 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
 DIE_Widget::~DIE_Widget()
 {
-    if (g_bProcess) {
+    if (m_bProcess) {
         stop();
-        g_watcher.waitForFinished();
+        m_watcher.waitForFinished();
     }
 
     delete ui;
@@ -76,9 +76,9 @@ DIE_Widget::~DIE_Widget()
 //     ui->checkBoxDeepScan->setChecked(pOptions->bDeepScan);
 //     ui->checkBoxAllTypes->setChecked(pOptions->bAllTypesScan);
 
-//    if(g_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
+//    if(m_dieScript.getDatabasePath()!=pOptions->sDatabasePath)
 //    {
-//        g_dieScript.loadDatabase(pOptions->sDatabasePath);
+//        m_dieScript.loadDatabase(pOptions->sDatabasePath);
 //    }
 //}
 
@@ -98,9 +98,9 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
     //     fileType = XBinary::FT_BINARY;
     // }
 
-    this->g_sFileName = sFileName;
-    this->g_fileType = fileType;
-    g_scanType = ST_FILE;
+    this->m_sFileName = sFileName;
+    this->m_fileType = fileType;
+    m_scanType = ST_FILE;
 
     if (bScan) {
         process();
@@ -109,8 +109,8 @@ void DIE_Widget::setData(const QString &sFileName, bool bScan, XBinary::FT fileT
 
 void DIE_Widget::adjustView()
 {
-    this->g_sInfoPath = getGlobalOptions()->getInfoPath();
-    g_bInitDatabase = false;
+    this->m_sInfoPath = getGlobalOptions()->getInfoPath();
+    m_bInitDatabase = false;
 
     quint64 nFlags = XScanEngine::getScanFlagsFromGlobalOptions(getGlobalOptions());
     ui->comboBoxFlags->setValue(nFlags);
@@ -132,46 +132,46 @@ void DIE_Widget::reloadData(bool bSaveSelection)
 
 void DIE_Widget::clear()
 {
-    g_scanType = ST_UNKNOWN;
-    g_scanOptions = {};
-    g_scanResult = {};
-    g_bProcess = false;
+    m_scanType = ST_UNKNOWN;
+    m_scanOptions = {};
+    m_scanResult = {};
+    m_bProcess = false;
 
     ui->treeViewResult->setModel(0);
 }
 
 void DIE_Widget::process()
 {
-    if (!g_bProcess) {
+    if (!m_bProcess) {
         enableControls(false);
-        g_bProcess = true;
+        m_bProcess = true;
         // ui->progressBarProgress->setValue(0);
 
-        g_scanOptions.bUseCustomDatabase = true;
-        g_scanOptions.bUseExtraDatabase = true;
-        g_scanOptions.bShowType = true;
-        g_scanOptions.bShowVersion = true;
-        g_scanOptions.bShowInfo = true;
-        g_scanOptions.bLogProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_LOG_PROFILING).toBool();
-        g_scanOptions.fileType = g_fileType;
-        g_scanOptions.bShowScanTime = true;
-        g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
-        g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
-        g_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
-        g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
-        // g_scanOptions.scanEngineCallback = _scanEngineCallback;
-        // g_scanOptions.pUserData = (void *)123;
+        m_scanOptions.bUseCustomDatabase = true;
+        m_scanOptions.bUseExtraDatabase = true;
+        m_scanOptions.bShowType = true;
+        m_scanOptions.bShowVersion = true;
+        m_scanOptions.bShowInfo = true;
+        m_scanOptions.bLogProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_LOG_PROFILING).toBool();
+        m_scanOptions.fileType = m_fileType;
+        m_scanOptions.bShowScanTime = true;
+        m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+        m_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
+        m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
+        m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
+        // m_scanOptions.scanEngineCallback = _scanEngineCallback;
+        // m_scanOptions.pUserData = (void *)123;
 
         quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
-        XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+        XScanEngine::setScanFlags(&m_scanOptions, nFlags);
 
         quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
-        XScanEngine::setDatabases(&g_scanOptions, nDatabases);
+        XScanEngine::setDatabases(&m_scanOptions, nDatabases);
 
         XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         XScanEngine::setDatabasesToGlobalOptions(getGlobalOptions(), nDatabases);
 
-        g_pTimer->start(200);  // TODO const
+        m_pTimer->start(200);  // TODO const
 
         ui->progressBar0->hide();
         ui->progressBar1->hide();
@@ -185,32 +185,32 @@ void DIE_Widget::process()
         QFuture<void> future = QtConcurrent::run(this, &DIE_Widget::scan);
 #endif
 
-        g_watcher.setFuture(future);
+        m_watcher.setFuture(future);
     } else {
         stop();
-        g_watcher.waitForFinished();
+        m_watcher.waitForFinished();
         enableControls(true);
     }
 }
 
 void DIE_Widget::scan()
 {
-    g_listErrorsAndWarnings.clear();
+    m_listErrorsAndWarnings.clear();
 
-    if (g_scanType != ST_UNKNOWN) {
-        if (g_scanType == ST_FILE) {
+    if (m_scanType != ST_UNKNOWN) {
+        if (m_scanType == ST_FILE) {
             emit scanStarted();
 
-            g_pdStruct = XBinary::createPdStruct();
+            m_pdStruct = XBinary::createPdStruct();
 
-            if (!g_bInitDatabase) {
-                g_bInitDatabase = g_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
+            if (!m_bInitDatabase) {
+                m_bInitDatabase = m_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
             }
 
-            g_scanResult = g_dieScript.scanFile(g_sFileName, &g_scanOptions, &g_pdStruct);
+            m_scanResult = m_dieScript.scanFile(m_sFileName, &m_scanOptions, &m_pdStruct);
 
-            if (g_scanResult.ftInit == XBinary::FT_COM) {
-                emit currentFileType(g_scanResult.ftInit);
+            if (m_scanResult.ftInit == XBinary::FT_COM) {
+                emit currentFileType(m_scanResult.ftInit);
             }
 
             emit scanFinished();
@@ -220,16 +220,16 @@ void DIE_Widget::scan()
 
 void DIE_Widget::stop()
 {
-    g_pdStruct.bIsStop = true;
+    m_pdStruct.bIsStop = true;
 }
 
 void DIE_Widget::onScanFinished()
 {
-    g_bProcess = false;
+    m_bProcess = false;
 
-    g_pTimer->stop();
+    m_pTimer->stop();
 
-    qint32 nNumberOfErrors = g_scanResult.listErrors.count() + g_listErrorsAndWarnings.count();
+    qint32 nNumberOfErrors = m_scanResult.listErrors.count() + m_listErrorsAndWarnings.count();
 
     QString sLogButtonText;
 
@@ -242,13 +242,13 @@ void DIE_Widget::onScanFinished()
     ui->pushButtonDieLog->setText(sLogButtonText);
     ui->pushButtonDieLog->setEnabled(nNumberOfErrors);
 
-    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(g_scanResult.nScanTime).arg(tr("msec")));
+    ui->toolButtonElapsedTime->setText(QString("%1 %2").arg(m_scanResult.nScanTime).arg(tr("msec")));
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
-    ScanItemModel *pOldModel = g_pModel;
+    ScanItemModel *pOldModel = m_pModel;
 
-    g_pModel = new ScanItemModel(&g_scanOptions, &(g_scanResult.listRecords), 3);
-    ui->treeViewResult->setModel(g_pModel);
+    m_pModel = new ScanItemModel(&m_scanOptions, &(m_scanResult.listRecords), 3);
+    ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
     if (pOldModel) {
@@ -275,14 +275,14 @@ void DIE_Widget::onScanFinished()
 
 void DIE_Widget::on_pushButtonDieSignatures_clicked()
 {
-    if (g_sFileName != "") {
+    if (m_sFileName != "") {
         QFile file;
-        file.setFileName(g_sFileName);
+        file.setFileName(m_sFileName);
 
         if (file.open(QIODevice::ReadOnly)) {
-            DialogDIESignatures dialogSignatures(this, &g_dieScript);
+            DialogDIESignatures dialogSignatures(this, &m_dieScript);
             dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
-            dialogSignatures.setData(&file, g_scanOptions.fileType, "");
+            dialogSignatures.setData(&file, m_scanOptions.fileType, "");
 
             dialogSignatures.exec();
 
@@ -296,7 +296,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
     DialogTextInfo dialogInfo(this);
     dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
-    ScanItemModel model(&g_scanOptions, &(g_scanResult.listRecords), 1);
+    ScanItemModel model(&m_scanOptions, &(m_scanResult.listRecords), 1);
 
     dialogInfo.setText(model.toFormattedString());
 
@@ -309,8 +309,8 @@ void DIE_Widget::on_pushButtonDieLog_clicked()
     dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
     QList<QString> listMessages;
-    listMessages.append(g_listErrorsAndWarnings);
-    listMessages.append(DiE_Script::getErrorsAndWarningsStringList(&g_scanResult));
+    listMessages.append(m_listErrorsAndWarnings);
+    listMessages.append(DiE_Script::getErrorsAndWarningsStringList(&m_scanResult));
 
     dialogInfo.setStringList(listMessages);
     dialogInfo.setTitle(tr("Log"));
@@ -341,10 +341,10 @@ void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 {
     if (sName != "") {
         QFile file;
-        file.setFileName(g_sFileName);
+        file.setFileName(m_sFileName);
 
         if (file.open(QIODevice::ReadOnly)) {
-            DialogDIESignatures dialogSignatures(this, &g_dieScript);
+            DialogDIESignatures dialogSignatures(this, &m_dieScript);
             dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());
             dialogSignatures.setData(&file, fileType, sName);
 
@@ -358,12 +358,12 @@ void DIE_Widget::showSignature(XBinary::FT fileType, const QString &sName)
 void DIE_Widget::enableControls(bool bState)
 {
     if (!bState) {
-        ScanItemModel *pOldModel = g_pModel;
+        ScanItemModel *pOldModel = m_pModel;
         ui->treeViewResult->setModel(0);
 
         if (pOldModel) {
             delete pOldModel;
-            g_pModel = nullptr;
+            m_pModel = nullptr;
         }
     }
 
@@ -384,7 +384,7 @@ void DIE_Widget::enableControls(bool bState)
 
 QString DIE_Widget::getInfoFileName(const QString &sName)
 {
-    QString sResult = XBinary::convertPathName(g_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
+    QString sResult = XBinary::convertPathName(m_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
 
     return sResult;
 }
@@ -405,7 +405,7 @@ void DIE_Widget::copyResult()
 
 void DIE_Widget::on_pushButtonDieScanDirectory_clicked()
 {
-    DialogDIEScanDirectory dds(this, QFileInfo(g_sFileName).absolutePath());
+    DialogDIEScanDirectory dds(this, QFileInfo(m_sFileName).absolutePath());
     dds.setGlobal(getShortcuts(), getGlobalOptions());
     dds.exec();
 }
@@ -419,7 +419,7 @@ void DIE_Widget::on_toolButtonElapsedTime_clicked()
 {
     DialogDIESignaturesElapsed dialogElapsed(this);
     dialogElapsed.setGlobal(getShortcuts(), getGlobalOptions());
-    dialogElapsed.setData(&g_scanResult);
+    dialogElapsed.setData(&m_scanResult);
 
     dialogElapsed.exec();
 }
@@ -463,18 +463,18 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    XFormats::setProgressBar(ui->progressBar0, g_pdStruct._pdRecord[0]);
-    XFormats::setProgressBar(ui->progressBar1, g_pdStruct._pdRecord[1]);
-    XFormats::setProgressBar(ui->progressBar2, g_pdStruct._pdRecord[2]);
-    XFormats::setProgressBar(ui->progressBar3, g_pdStruct._pdRecord[3]);
-    XFormats::setProgressBar(ui->progressBar4, g_pdStruct._pdRecord[4]);
+    XFormats::setProgressBar(ui->progressBar0, m_pdStruct._pdRecord[0]);
+    XFormats::setProgressBar(ui->progressBar1, m_pdStruct._pdRecord[1]);
+    XFormats::setProgressBar(ui->progressBar2, m_pdStruct._pdRecord[2]);
+    XFormats::setProgressBar(ui->progressBar3, m_pdStruct._pdRecord[3]);
+    XFormats::setProgressBar(ui->progressBar4, m_pdStruct._pdRecord[4]);
 
     qint64 nOverallCurrent = 0;
     qint64 nOverallTotal = 0;
 
     for (int i = 0; i < 5; i++) {
-        nOverallCurrent += g_pdStruct._pdRecord[i].nCurrent;
-        nOverallTotal += g_pdStruct._pdRecord[i].nTotal;
+        nOverallCurrent += m_pdStruct._pdRecord[i].nCurrent;
+        nOverallTotal += m_pdStruct._pdRecord[i].nTotal;
     }
 
     qint32 nOverallProgress = 0;
@@ -501,10 +501,10 @@ void DIE_Widget::on_pushButtonDieScanStop_clicked()
 
 void DIE_Widget::handleErrorString(const QString &sErrorString)
 {
-    g_listErrorsAndWarnings.append(sErrorString);
+    m_listErrorsAndWarnings.append(sErrorString);
 }
 
 void DIE_Widget::handleWarningString(const QString &sWarningString)
 {
-    g_listErrorsAndWarnings.append(sWarningString);
+    m_listErrorsAndWarnings.append(sWarningString);
 }

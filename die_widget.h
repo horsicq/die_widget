@@ -99,20 +99,20 @@ signals:
 
 private:
     Ui::DIE_Widget *ui;
-    ST g_scanType;
-    DiE_Script g_dieScript;
-    XScanEngine::SCAN_OPTIONS g_scanOptions;
-    XScanEngine::SCAN_RESULT g_scanResult;
-    QFutureWatcher<void> g_watcher;
-    QString g_sFileName;
-    XBinary::FT g_fileType;
-    bool g_bProcess;
-    QString g_sInfoPath;
-    XBinary::PDSTRUCT g_pdStruct;
-    QTimer *g_pTimer;
-    bool g_bInitDatabase;
-    ScanItemModel *g_pModel;
-    QList<QString> g_listErrorsAndWarnings;
+    ST m_scanType;
+    DiE_Script m_dieScript;
+    XScanEngine::SCAN_OPTIONS m_scanOptions;
+    XScanEngine::SCAN_RESULT m_scanResult;
+    QFutureWatcher<void> m_watcher;
+    QString m_sFileName;
+    XBinary::FT m_fileType;
+    bool m_bProcess;
+    QString m_sInfoPath;
+    XBinary::PDSTRUCT m_pdStruct;
+    QTimer *m_pTimer;
+    bool m_bInitDatabase;
+    ScanItemModel *m_pModel;
+    QList<QString> m_listErrorsAndWarnings;
 };
 
 #endif  // DIE_WIDGET_H
