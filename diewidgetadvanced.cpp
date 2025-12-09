@@ -39,11 +39,11 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
     ui->toolButtonScan->setToolTip(tr("Scan"));
     ui->toolButtonSignatures->setToolTip(tr("Signatures"));
 
-    g_scanResult = {};
+    m_scanResult = {};
     m_pDevice = nullptr;
-    g_pModel = nullptr;
+    m_pModel = nullptr;
 
-    g_scanOptions = {};
+    m_scanOptions = {};
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
     ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
@@ -97,42 +97,42 @@ void DIEWidgetAdvanced::registerShortcuts(bool bState)
 
 void DIEWidgetAdvanced::process()
 {
-    g_scanOptions.bUseCustomDatabase = true;
-    g_scanOptions.bUseExtraDatabase = true;
-    g_scanOptions.bShowType = true;
-    g_scanOptions.bShowVersion = true;
-    g_scanOptions.bShowInfo = true;
-    g_scanOptions.bLogProfiling = false;
-    g_scanOptions.bShowScanTime = false;
-    g_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    g_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
-    g_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
-    g_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
-    g_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
+    m_scanOptions.bUseCustomDatabase = true;
+    m_scanOptions.bUseExtraDatabase = true;
+    m_scanOptions.bShowType = true;
+    m_scanOptions.bShowVersion = true;
+    m_scanOptions.bShowInfo = true;
+    m_scanOptions.bLogProfiling = false;
+    m_scanOptions.bShowScanTime = false;
+    m_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
+    m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toULongLong();
+    m_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
+    m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
+    m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
 
     DiE_Script dieScript;
 
     dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
 
     quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
-    XScanEngine::setScanFlags(&g_scanOptions, nFlags);
+    XScanEngine::setScanFlags(&m_scanOptions, nFlags);
 
     quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
-    XScanEngine::setDatabases(&g_scanOptions, nDatabases);
+    XScanEngine::setDatabases(&m_scanOptions, nDatabases);
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
     XDialogProcess ds(this, &dieScript);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    dieScript.setData(m_pDevice, &g_scanOptions, &scanResult, ds.getPdStruct());
+    dieScript.setData(m_pDevice, &m_scanOptions, &scanResult, ds.getPdStruct());
     ds.start();
     ds.exec();
 
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
-    ScanItemModel *pOldModel = g_pModel;
+    ScanItemModel *pOldModel = m_pModel;
 
-    g_pModel = new ScanItemModel(&g_scanOptions, &(scanResult.listRecords), 1);
-    ui->treeViewResult->setModel(g_pModel);
+    m_pModel = new ScanItemModel(&m_scanOptions, &(scanResult.listRecords), 1);
+    ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
     connect(ui->treeViewResult->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SLOT(onSelectionChanged(QItemSelection, QItemSelection)));
