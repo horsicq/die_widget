@@ -58,7 +58,7 @@ protected:
 
 private:
     Ui::DIEOptionsWidget *ui;
-    XOptions *g_pOptions;
+    XOptions *m_pOptions;
 };
 
 #endif  // DIEOPTIONSWIDGET_H

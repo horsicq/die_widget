@@ -43,81 +43,81 @@ void DIEOptionsWidget::adjustView()
 
 void DIEOptionsWidget::setOptions(XOptions *pOptions)
 {
-    g_pOptions = pOptions;
+    m_pOptions = pOptions;
 
     reload();
 }
 
 void DIEOptionsWidget::save()
 {
-    g_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
-    g_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
-    g_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
-    g_pOptions->getCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
-    g_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
-    g_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
-    g_pOptions->getCheckBox(ui->checkBoxFormatResult, XOptions::ID_SCAN_FORMATRESULT);
-    g_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
-    g_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
-    g_pOptions->getCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
-    g_pOptions->getCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
-    g_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
-    g_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
-    g_pOptions->getCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
-    g_pOptions->getCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
+    m_pOptions->getCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
+    m_pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
+    m_pOptions->getCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    m_pOptions->getCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    m_pOptions->getCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
+    m_pOptions->getCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    m_pOptions->getCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
+    m_pOptions->getCheckBox(ui->checkBoxFormatResult, XOptions::ID_SCAN_FORMATRESULT);
+    m_pOptions->getCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
+    m_pOptions->getCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
+    m_pOptions->getCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
+    m_pOptions->getCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
+    m_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
+    m_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
+    m_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
+    m_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
+    m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
+    m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
 #ifdef USE_YARA
-    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
-        g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+    if (m_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
+        m_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
     }
 #endif
-    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
-        g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
-    } else if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
-        g_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
+    if (m_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
+        m_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    } else if (m_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
+        m_pOptions->getComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
     }
 }
 
 void DIEOptionsWidget::reload()
 {
-    g_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
-    g_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
-    g_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
-    g_pOptions->setCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
-    g_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
-    g_pOptions->setCheckBox(ui->checkBoxFormatResult, XOptions::ID_SCAN_FORMATRESULT);
-    g_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
-    g_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
-    g_pOptions->setCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
-    g_pOptions->setCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
-    g_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
-    g_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
-    g_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
-    g_pOptions->setCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
-    g_pOptions->setCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
+    m_pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCAN_SCANAFTEROPEN);
+    m_pOptions->setCheckBox(ui->checkBoxRecursiveScan, XOptions::ID_SCAN_FLAG_RECURSIVE);
+    m_pOptions->setCheckBox(ui->checkBoxDeepScan, XOptions::ID_SCAN_FLAG_DEEP);
+    m_pOptions->setCheckBox(ui->checkBoxHeuristicScan, XOptions::ID_SCAN_FLAG_HEURISTIC);
+    m_pOptions->setCheckBox(ui->checkBoxAggressiveScan, XOptions::ID_SCAN_FLAG_AGGRESSIVE);
+    m_pOptions->setCheckBox(ui->checkBoxVerbose, XOptions::ID_SCAN_FLAG_VERBOSE);
+    m_pOptions->setCheckBox(ui->checkBoxFormatResult, XOptions::ID_SCAN_FORMATRESULT);
+    m_pOptions->setCheckBox(ui->checkBoxAllTypesScan, XOptions::ID_SCAN_FLAG_ALLTYPES);
+    m_pOptions->setCheckBox(ui->checkBoxHighlight, XOptions::ID_SCAN_HIGHLIGHT);
+    m_pOptions->setCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
+    m_pOptions->setCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
+    m_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
+    m_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
+    m_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
+    m_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
+    m_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+    m_pOptions->setCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
+    m_pOptions->setCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
 
-    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
+    if (m_pOptions->isIDPresent(XOptions::ID_SCAN_YARARULESPATH)) {
         ui->groupBoxYaraRules->show();
-        g_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
+        m_pOptions->getLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARARULESPATH);
     } else {
         ui->groupBoxYaraRules->hide();
     }
 
-    if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
+    if (m_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE)) {
         ui->groupBoxScanEngine->show();
-        g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
-    } else if (g_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
+        m_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE);
+    } else if (m_pOptions->isIDPresent(XOptions::ID_SCAN_ENGINE_EMPTY)) {
         ui->groupBoxScanEngine->show();
-        g_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
+        m_pOptions->setComboBox(ui->comboBoxScanEngine, XOptions::ID_SCAN_ENGINE_EMPTY);
     } else {
         ui->groupBoxScanEngine->hide();
     }
-    g_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
+    m_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
 }
 
 void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
