@@ -187,7 +187,7 @@ void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
         scanOptions.bIsVerbose = ui->checkBoxVerbose->isChecked();
         scanOptions.bIsRecursiveScan = ui->checkBoxRecursiveScan->isChecked();
         scanOptions.bLogProfiling = ui->checkBoxProfiling->isChecked();
-        scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_SCAN_BUFFERSIZE).toLongLong();
+        scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_ENGINE_BUFFERSIZE).toLongLong();
 
         scanOptions.sSignatureName = pItemCurrent->data(0, Qt::UserRole + UD_NAME).toString();
         scanOptions.fileType = (XBinary::FT)ui->treeWidgetSignatures->currentItem()->data(0, Qt::UserRole + UD_FILETYPE).toInt();

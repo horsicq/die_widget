@@ -65,7 +65,7 @@ void DIEOptionsWidget::save()
     m_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DATABASE_MAIN_PATH);
     m_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_PATH);
     m_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_PATH);
-    m_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
+    m_pOptions->getComboBox(ui->comboBoxBufferSize, XOptions::ID_ENGINE_BUFFERSIZE);
     m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED);
     m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED);
 #ifdef USE_YARA
@@ -117,7 +117,7 @@ void DIEOptionsWidget::reload()
     } else {
         ui->groupBoxScanEngine->hide();
     }
-    m_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_SCAN_BUFFERSIZE);
+    m_pOptions->setComboBox(ui->comboBoxBufferSize, XOptions::ID_ENGINE_BUFFERSIZE);
 }
 
 void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
@@ -139,7 +139,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH, "$data/db_custom");
     pOptions->addID(XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED, true);
     pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED, true);
-    pOptions->addID(XOptions::ID_SCAN_BUFFERSIZE, 2 * 1024 * 1024);
+    pOptions->addID(XOptions::ID_ENGINE_BUFFERSIZE, 2 * 1024 * 1024);
 }
 
 void DIEOptionsWidget::reloadData(bool bSaveSelection)
