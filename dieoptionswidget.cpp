@@ -137,7 +137,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH, "$data/db_custom");
     pOptions->addID(XOptions::ID_SCAN_DATABASE_EXTRA_ENABLED, true);
     pOptions->addID(XOptions::ID_SCAN_DATABASE_CUSTOM_ENABLED, true);
-    pOptions->addID(XOptions::ID_ENGINE_BUFFERSIZE, 2 * 1024 * 1024); // Obsolete TODO remove
+    pOptions->addID(XOptions::ID_ENGINE_BUFFERSIZE, 2 * 1024 * 1024);  // Obsolete TODO remove
 }
 
 void DIEOptionsWidget::reloadData(bool bSaveSelection)
