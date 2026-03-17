@@ -144,7 +144,7 @@ qint32 DialogDIESignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBina
 {
     qint32 nResult = 0;
 
-    QList<DiE_ScriptEngine::SIGNATURE_RECORD> *pListSignatures = m_pDieScript->getSignatures();
+    QList<XScanEngine::SIGNATURE_RECORD> *pListSignatures = m_pDieScript->getSignatures();
 
     qint32 nNumberOfSignatures = pListSignatures->count();
 
@@ -246,7 +246,7 @@ void DialogDIESignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidget
         }
 
         m_sCurrentSignatureFilePath = sSignatureFilePath;
-        DiE_ScriptEngine::SIGNATURE_RECORD signatureRecord = m_pDieScript->getSignatureByFilePath(m_sCurrentSignatureFilePath);
+        XScanEngine::SIGNATURE_RECORD signatureRecord = m_pDieScript->getSignatureByFilePath(m_sCurrentSignatureFilePath);
 
         ui->plainTextEditSignature->setPlainText(signatureRecord.sText);
         ui->pushButtonSave->setEnabled(false);
