@@ -109,10 +109,13 @@ void DIEWidgetAdvanced::process()
     m_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
     m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
     m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
+    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
+    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
+    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
 
     DiE_Script dieScript;
 
-    dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());  // TODO optimize
+    dieScript.loadDatabase(&m_scanOptions, nullptr);
 
     quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
     XScanEngine::setScanFlags(&m_scanOptions, nFlags);
@@ -188,7 +191,10 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 {
     DiE_Script dieScript;
-    dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
+    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
+    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
+    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+    dieScript.loadDatabase(&m_scanOptions, nullptr);
 
     DialogDIESignatures dialogSignatures(this, &dieScript);
     dialogSignatures.setGlobal(getShortcuts(), getGlobalOptions());

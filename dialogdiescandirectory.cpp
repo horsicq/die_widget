@@ -83,6 +83,9 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         m_scanOptions.bShowInfo = true;
         m_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
         m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_ENGINE_BUFFERSIZE).toULongLong();
+        m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
+        m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
+        m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
 
         quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
         XScanEngine::setScanFlags(&m_scanOptions, nFlags);
@@ -96,7 +99,7 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         // connect(&dieScript, SIGNAL(scanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
         connect(&dieScript, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
 
-        dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
+        dieScript.loadDatabase(&m_scanOptions, nullptr);
 
         XDialogProcess ds(this, &dieScript);
         ds.setGlobal(getShortcuts(), getGlobalOptions());

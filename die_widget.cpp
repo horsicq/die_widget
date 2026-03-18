@@ -201,10 +201,14 @@ void DIE_Widget::scan()
         if (m_scanType == ST_FILE) {
             emit scanStarted();
 
+            m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
+            m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
+            m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+
             m_pdStruct = XBinary::createPdStruct();
 
             if (!m_bInitDatabase) {
-                m_bInitDatabase = m_dieScript.loadDatabaseFromGlobalOptions(getGlobalOptions());
+                m_bInitDatabase = m_dieScript.loadDatabase(&m_scanOptions, nullptr);
             }
 
             m_scanResult = m_dieScript.scanFile(m_sFileName, &m_scanOptions, &m_pdStruct);
@@ -331,8 +335,8 @@ void DIE_Widget::showInfo(const QString &sName)
             dialogInfo.exec();
         } else {
             QString _sName = QUrl::toPercentEncoding(sName);
-            QString sSearchEngine = QString("http://www.google.com/search?q=%1").arg(_sName);
-            QDesktopServices::openUrl(QUrl(sSearchEngine));
+            QString sLink = QString("http://www.google.com/search?q=%1").arg(_sName);  // TODO Set Search Engine
+            QDesktopServices::openUrl(QUrl(sLink));
         }
     }
 }
