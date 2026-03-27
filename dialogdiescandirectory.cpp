@@ -82,10 +82,9 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
         m_scanOptions.bShowVersion = true;
         m_scanOptions.bShowInfo = true;
         m_scanOptions.bSubdirectories = ui->checkBoxScanSubdirectories->isChecked();
-        m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_ENGINE_BUFFERSIZE).toULongLong();
-        m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
-        m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
-        m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+        m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
+        m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
+        m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
 
         quint64 nFlags = ui->comboBoxFlags->getValue().toULongLong();
         XScanEngine::setScanFlags(&m_scanOptions, nFlags);
@@ -115,7 +114,7 @@ void DialogDIEScanDirectory::scanResult(const XScanEngine::SCAN_RESULT &scanResu
     QString sResult = QString("%1 %2 %3").arg(QDir().toNativeSeparators(scanResult.sFileName), QString::number(scanResult.nScanTime), tr("msec"));
     sResult += "\r\n";
 
-    ScanItemModel model(&m_scanOptions, &(scanResult.listRecords), 1);
+    ScanItemModel model(&m_scanOptions, &(scanResult.listRecords), 1, getGlobalOptions());
 
     sResult += model.toFormattedString();
 

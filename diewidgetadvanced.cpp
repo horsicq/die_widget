@@ -105,13 +105,11 @@ void DIEWidgetAdvanced::process()
     m_scanOptions.bLogProfiling = false;
     m_scanOptions.bShowScanTime = false;
     m_scanOptions.fileType = (XBinary::FT)(ui->comboBoxType->currentData().toInt());
-    m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_ENGINE_BUFFERSIZE).toULongLong();
-    m_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
     m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
     m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
-    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
-    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
-    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
+    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
+    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
 
     DiE_Script dieScript;
 
@@ -134,7 +132,7 @@ void DIEWidgetAdvanced::process()
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = m_pModel;
 
-    m_pModel = new ScanItemModel(&m_scanOptions, &(scanResult.listRecords), 1);
+    m_pModel = new ScanItemModel(&m_scanOptions, &(scanResult.listRecords), 1, getGlobalOptions());
     ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
@@ -191,9 +189,9 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 {
     DiE_Script dieScript;
-    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
-    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
-    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+    m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
+    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
+    m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
     dieScript.loadDatabase(&m_scanOptions, nullptr);
 
     DialogDIESignatures dialogSignatures(this, &dieScript);

@@ -155,8 +155,6 @@ void DIE_Widget::process()
         m_scanOptions.bLogProfiling = getGlobalOptions()->getValue(XOptions::ID_SCAN_LOG_PROFILING).toBool();
         m_scanOptions.fileType = m_fileType;
         m_scanOptions.bShowScanTime = true;
-        m_scanOptions.nBufferSize = getGlobalOptions()->getValue(XOptions::ID_ENGINE_BUFFERSIZE).toULongLong();
-        m_scanOptions.bIsHighlight = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIGHLIGHT).toBool();
         m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
         m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
         // m_scanOptions.scanEngineCallback = _scanEngineCallback;
@@ -201,9 +199,9 @@ void DIE_Widget::scan()
         if (m_scanType == ST_FILE) {
             emit scanStarted();
 
-            m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_MAIN_PATH).toString();
-            m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_EXTRA_PATH).toString();
-            m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DATABASE_CUSTOM_PATH).toString();
+            m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
+            m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
+            m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
 
             m_pdStruct = XBinary::createPdStruct();
 
@@ -251,7 +249,7 @@ void DIE_Widget::onScanFinished()
     // QAbstractItemModel *pOldModel = ui->treeViewResult->model();
     ScanItemModel *pOldModel = m_pModel;
 
-    m_pModel = new ScanItemModel(&m_scanOptions, &(m_scanResult.listRecords), 3);
+    m_pModel = new ScanItemModel(&m_scanOptions, &(m_scanResult.listRecords), 3, getGlobalOptions());
     ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
@@ -300,7 +298,7 @@ void DIE_Widget::on_pushButtonDieExtraInformation_clicked()
     DialogTextInfo dialogInfo(this);
     dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
 
-    ScanItemModel model(&m_scanOptions, &(m_scanResult.listRecords), 1);
+    ScanItemModel model(&m_scanOptions, &(m_scanResult.listRecords), 1, getGlobalOptions());
 
     dialogInfo.setText(model.toFormattedString());
 
@@ -388,7 +386,7 @@ void DIE_Widget::enableControls(bool bState)
 
 QString DIE_Widget::getInfoFileName(const QString &sName)
 {
-    QString sResult = XBinary::convertPathName(m_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
+    QString sResult = XOptions::convertPathName(m_sInfoPath) + QDir::separator() + QString("html") + QDir::separator() + QString("%1.html").arg(sName);
 
     return sResult;
 }
