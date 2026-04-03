@@ -123,9 +123,11 @@ void DIEWidgetAdvanced::process()
 
     XScanEngine::SCAN_RESULT scanResult = {};
 
-    XDialogProcess ds(this, &dieScript);
+    XScanEngineProcess scanEngineProcess(&dieScript);
+
+    XDialogProcess ds(this, &scanEngineProcess);
     ds.setGlobal(getShortcuts(), getGlobalOptions());
-    dieScript.setData(m_pDevice, &m_scanOptions, &scanResult, ds.getPdStruct());
+    scanEngineProcess.setData(m_pDevice, &m_scanOptions, &scanResult, ds.getPdStruct());
     ds.start();
     ds.exec();
 

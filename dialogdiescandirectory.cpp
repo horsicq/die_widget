@@ -100,9 +100,11 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         dieScript.loadDatabase(&m_scanOptions, nullptr);
 
-        XDialogProcess ds(this, &dieScript);
+        XScanEngineProcess scanEngineProcess(&dieScript);
+
+        XDialogProcess ds(this, &scanEngineProcess);
         ds.setGlobal(getShortcuts(), getGlobalOptions());
-        dieScript.setData(sDirectoryName, &m_scanOptions, ds.getPdStruct());
+        scanEngineProcess.setData(sDirectoryName, &m_scanOptions, ds.getPdStruct());
         ds.start();
         ds.exec();
     }
