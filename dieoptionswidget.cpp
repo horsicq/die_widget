@@ -24,6 +24,8 @@
 
 DIEOptionsWidget::DIEOptionsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::DIEOptionsWidget)
 {
+    m_pOptions = nullptr;
+
     ui->setupUi(this);
 
 #ifndef USE_YARA

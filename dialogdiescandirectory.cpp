@@ -95,8 +95,8 @@ void DialogDIEScanDirectory::scanDirectory(const QString &sDirectoryName)
 
         DiE_Script dieScript;
 
-        // connect(&dieScript, SIGNAL(scanFileStarted(QString)), this, SIGNAL(scanFileStarted(QString)), Qt::DirectConnection);
-        connect(&dieScript, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::DirectConnection);
+        qRegisterMetaType<XScanEngine::SCAN_RESULT>("XScanEngine::SCAN_RESULT");
+        connect(&dieScript, SIGNAL(scanResult(const XScanEngine::SCAN_RESULT &)), this, SLOT(scanResult(const XScanEngine::SCAN_RESULT &)), Qt::QueuedConnection);
 
         dieScript.loadDatabase(&m_scanOptions, nullptr);
 

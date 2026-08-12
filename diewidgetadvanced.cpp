@@ -51,6 +51,9 @@ DIEWidgetAdvanced::DIEWidgetAdvanced(QWidget *pParent) : XShortcutsWidget(pParen
 
 DIEWidgetAdvanced::~DIEWidgetAdvanced()
 {
+    ui->treeViewResult->setModel(nullptr);
+    delete m_pModel;
+
     delete ui;
 }
 
@@ -97,6 +100,10 @@ void DIEWidgetAdvanced::registerShortcuts(bool bState)
 
 void DIEWidgetAdvanced::process()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     m_scanOptions.bUseCustomDatabase = true;
     m_scanOptions.bUseExtraDatabase = true;
     m_scanOptions.bShowType = true;
@@ -135,6 +142,7 @@ void DIEWidgetAdvanced::process()
     ScanItemModel *pOldModel = m_pModel;
 
     m_pModel = new ScanItemModel(&m_scanOptions, &(scanResult.listRecords), 1, getGlobalOptions());
+    m_pModel->setParent(this);
     ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
@@ -146,12 +154,16 @@ void DIEWidgetAdvanced::process()
 
 void DIEWidgetAdvanced::on_toolButtonSave_clicked()
 {
+    if (!m_pDevice || !m_pModel) {
+        return;
+    }
+
     QString sSaveFileName = XBinary::getResultFileName(m_pDevice, QString("%1.txt").arg(QString("DiE")));
 
     QString _sFileName = QFileDialog::getSaveFileName(this, tr("Save"), sSaveFileName, QString("%1 (*.txt);;%2 (*)").arg(tr("Text files")).arg(tr("All files")));
 
     if (!_sFileName.isEmpty()) {
-        if (!XOptions::saveTreeView(ui->treeViewResult, sSaveFileName)) {
+        if (!XOptions::saveTreeView(ui->treeViewResult, _sFileName)) {
             QMessageBox::critical(XOptions::getMainWidget(this), tr("Error"), QString("%1: %2").arg(tr("Cannot save file")).arg(_sFileName));
         }
     }
@@ -190,6 +202,10 @@ void DIEWidgetAdvanced::on_comboBoxType_currentIndexChanged(int nIndex)
 
 void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 {
+    if (!m_pDevice) {
+        return;
+    }
+
     DiE_Script dieScript;
     m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
     m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();

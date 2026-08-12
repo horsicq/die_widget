@@ -95,6 +95,8 @@ DialogDIESignatures::DialogDIESignatures(QWidget *pParent, DiE_Script *pDieScrip
 #ifndef QT_SCRIPTTOOLS_LIB
     ui->pushButtonDebug->hide();
 #endif
+
+    enableControls(true);
 }
 
 DialogDIESignatures::~DialogDIESignatures()
@@ -107,6 +109,7 @@ void DialogDIESignatures::setData(QIODevice *pDevice, XBinary::FT fileType, cons
     this->m_pDevice = pDevice;
     this->m_fileType = fileType;
     this->m_sSignature = sSignature;
+    enableControls(true);
 
     if (m_fileType != XBinary::FT_UNKNOWN) {
         qint32 nNumberOfTopLevelItems = ui->treeWidgetSignatures->topLevelItemCount();
@@ -165,6 +168,10 @@ qint32 DialogDIESignatures::_handleTreeItems(QTreeWidgetItem *pItemParent, XBina
 
 void DialogDIESignatures::runScript(const QString &sFunction, bool bIsDebug)
 {
+    if (!m_pDevice || !m_pDieScript) {
+        return;
+    }
+
     enableControls(false);
 
     QTreeWidgetItem *pItemCurrent = ui->treeWidgetSignatures->currentItem();
@@ -235,6 +242,10 @@ void DialogDIESignatures::on_treeWidgetSignatures_currentItemChanged(QTreeWidget
 {
     Q_UNUSED(pItemPrevious)
 
+    if (!pItemCurrent || !m_pDieScript) {
+        return;
+    }
+
     QString sSignatureFilePath = pItemCurrent->data(0, Qt::UserRole).toString();
 
     if (sSignatureFilePath != m_sCurrentSignatureFilePath) {
@@ -261,6 +272,10 @@ void DialogDIESignatures::on_pushButtonSave_clicked()
 
 void DialogDIESignatures::save()
 {
+    if (!m_pDieScript || m_sCurrentSignatureFilePath.isEmpty()) {
+        return;
+    }
+
     if (m_pDieScript->updateSignature(m_sCurrentSignatureFilePath, ui->plainTextEditSignature->toPlainText())) {
         m_bCurrentEdited = false;
         ui->pushButtonSave->setEnabled(false);
@@ -330,8 +345,9 @@ void DialogDIESignatures::enableControls(bool bState)
     ui->treeWidgetSignatures->setEnabled(bState);
     ui->pushButtonClearResult->setEnabled(bState);
     ui->pushButtonClose->setEnabled(bState);
-    ui->pushButtonDebug->setEnabled(bState);
-    ui->pushButtonRun->setEnabled(bState);
+    const bool bCanRun = bState && m_pDevice && m_pDieScript;
+    ui->pushButtonDebug->setEnabled(bCanRun);
+    ui->pushButtonRun->setEnabled(bCanRun);
 
     if (m_bCurrentEdited) {
         ui->pushButtonSave->setEnabled(bState);

@@ -34,6 +34,7 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
     m_pdStruct = XBinary::createPdStruct();
     m_pModel = nullptr;
     m_bProcess = false;
+    m_fileType = XBinary::FT_UNKNOWN;
 
     connect(&m_watcher, SIGNAL(finished()), this, SLOT(onScanFinished()));
 
@@ -66,6 +67,8 @@ DIE_Widget::~DIE_Widget()
         stop();
         m_watcher.waitForFinished();
     }
+
+    clear();
 
     delete ui;
 }
@@ -137,7 +140,9 @@ void DIE_Widget::clear()
     m_scanResult = {};
     m_bProcess = false;
 
-    ui->treeViewResult->setModel(0);
+    ui->treeViewResult->setModel(nullptr);
+    delete m_pModel;
+    m_pModel = nullptr;
 }
 
 void DIE_Widget::process()
@@ -168,6 +173,10 @@ void DIE_Widget::process()
 
         XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         XScanEngine::setDatabasesToGlobalOptions(getGlobalOptions(), nDatabases);
+
+        // Reset before publishing the worker.  A stop request immediately
+        // after launch must not be erased by a later reset inside scan().
+        m_pdStruct = XBinary::createPdStruct();
 
         m_pTimer->start(200);  // TODO const
 
@@ -203,8 +212,6 @@ void DIE_Widget::scan()
             m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
             m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
 
-            m_pdStruct = XBinary::createPdStruct();
-
             if (!m_bInitDatabase) {
                 m_bInitDatabase = m_dieScript.loadDatabase(&m_scanOptions, nullptr);
             }
@@ -222,7 +229,7 @@ void DIE_Widget::scan()
 
 void DIE_Widget::stop()
 {
-    m_pdStruct.bIsStop = true;
+    XBinary::setPdStructStopped(&m_pdStruct);
 }
 
 void DIE_Widget::onScanFinished()
@@ -250,6 +257,7 @@ void DIE_Widget::onScanFinished()
     ScanItemModel *pOldModel = m_pModel;
 
     m_pModel = new ScanItemModel(&m_scanOptions, &(m_scanResult.listRecords), 3, getGlobalOptions());
+    m_pModel->setParent(this);
     ui->treeViewResult->setModel(m_pModel);
     ui->treeViewResult->expandAll();
 
@@ -393,6 +401,10 @@ QString DIE_Widget::getInfoFileName(const QString &sName)
 
 void DIE_Widget::copyResult()
 {
+    if (!ui->treeViewResult->selectionModel()) {
+        return;
+    }
+
     QModelIndexList listIndexes = ui->treeViewResult->selectionModel()->selectedIndexes();
 
     if (listIndexes.size() > 0) {
@@ -442,6 +454,10 @@ void DIE_Widget::on_treeViewResult_clicked(const QModelIndex &index)
 
 void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 {
+    if (!ui->treeViewResult->selectionModel()) {
+        return;
+    }
+
     QModelIndexList listIndexes = ui->treeViewResult->selectionModel()->selectedIndexes();
 
     if (listIndexes.size() > 0) {
@@ -465,23 +481,27 @@ void DIE_Widget::on_treeViewResult_customContextMenuRequested(const QPoint &pos)
 
 void DIE_Widget::timerSlot()
 {
-    XFormats::setProgressBar(ui->progressBar0, m_pdStruct._pdRecord[0]);
-    XFormats::setProgressBar(ui->progressBar1, m_pdStruct._pdRecord[1]);
-    XFormats::setProgressBar(ui->progressBar2, m_pdStruct._pdRecord[2]);
-    XFormats::setProgressBar(ui->progressBar3, m_pdStruct._pdRecord[3]);
-    XFormats::setProgressBar(ui->progressBar4, m_pdStruct._pdRecord[4]);
+    const XBinary::PDSTRUCT snapshot = XBinary::getPdStructSnapshot(&m_pdStruct);
+    XFormats::setProgressBar(ui->progressBar0, snapshot._pdRecord[0]);
+    XFormats::setProgressBar(ui->progressBar1, snapshot._pdRecord[1]);
+    XFormats::setProgressBar(ui->progressBar2, snapshot._pdRecord[2]);
+    XFormats::setProgressBar(ui->progressBar3, snapshot._pdRecord[3]);
+    XFormats::setProgressBar(ui->progressBar4, snapshot._pdRecord[4]);
 
-    qint64 nOverallCurrent = 0;
-    qint64 nOverallTotal = 0;
+    long double dOverallCurrent = 0;
+    long double dOverallTotal = 0;
 
     for (int i = 0; i < 5; i++) {
-        nOverallCurrent += m_pdStruct._pdRecord[i].nCurrent;
-        nOverallTotal += m_pdStruct._pdRecord[i].nTotal;
+        const qint64 nTotal = snapshot._pdRecord[i].nTotal.loadAcquire();
+        if (nTotal > 0) {
+            dOverallCurrent += qBound((qint64)0, snapshot._pdRecord[i].nCurrent.loadAcquire(), nTotal);
+            dOverallTotal += nTotal;
+        }
     }
 
     qint32 nOverallProgress = 0;
-    if (nOverallTotal > 0) {
-        nOverallProgress = (qint32)((qreal)nOverallCurrent / nOverallTotal * 100);
+    if (dOverallTotal > 0) {
+        nOverallProgress = qBound((qint32)0, static_cast<qint32>((dOverallCurrent * 100.0L) / dOverallTotal), (qint32)100);
     }
 
     emit scanProgress(nOverallProgress);
