@@ -336,7 +336,7 @@ void DIE_Widget::showInfo(const QString &sName)
         if (XBinary::isFileExists(sFileName)) {
             DialogTextInfo dialogInfo(this);
             dialogInfo.setGlobal(getShortcuts(), getGlobalOptions());
-            dialogInfo.setFileName(sFileName);
+            dialogInfo.loadFile(sFileName, true);
 
             dialogInfo.exec();
         } else {
