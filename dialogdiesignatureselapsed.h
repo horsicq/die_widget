@@ -7,8 +7,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,33 +21,40 @@
 #ifndef DIALOGDIESIGNATURESELAPSED_H
 #define DIALOGDIESIGNATURESELAPSED_H
 
-#include "xshortcutsdialog.h"
 #include "die_script.h"
+#include "xshortcutsdialog.h"
 
 namespace Ui {
 class DialogDIESignaturesElapsed;
 }
 
+class QAction;
+
 class DialogDIESignaturesElapsed : public XShortcutsDialog {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit DialogDIESignaturesElapsed(QWidget *pParent = nullptr);
-    ~DialogDIESignaturesElapsed();
+  explicit DialogDIESignaturesElapsed(QWidget *pParent = nullptr);
+  ~DialogDIESignaturesElapsed() override;
 
-    virtual void adjustView();
+  void adjustView() override;
 
-    void setData(XScanEngine::SCAN_RESULT *pScanResult);
+  void setData(XScanEngine::SCAN_RESULT *pScanResult);
+  void setData(const XScanEngine::SCAN_RESULT &scanResult);
 
 private slots:
-    void on_pushButtonOK_clicked();
+  void on_pushButtonOK_clicked();
+  void copySelectedRows();
 
 protected:
-    virtual void registerShortcuts(bool bState);
+  void registerShortcuts(bool bState) override;
 
 private:
-    Ui::DialogDIESignaturesElapsed *ui;
-    XScanEngine::SCAN_RESULT *m_pScanResult;
+  void _setData(const XScanEngine::SCAN_RESULT *pScanResult);
+  void _updateCopyState();
+
+  Ui::DialogDIESignaturesElapsed *ui;
+  QAction *m_pActionCopy;
 };
 
-#endif  // DIALOGDIESIGNATURESELAPSED_H
+#endif // DIALOGDIESIGNATURESELAPSED_H

@@ -9,24 +9,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+   <width>400</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Elapsed</string>
+   <string>Signature timings</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="labelResults">
+     <property name="text">
+      <string>&amp;Signature timings:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTableWidget" name="tableWidgetResult">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
+      <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
@@ -34,15 +44,28 @@
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
-     <attribute name="verticalHeaderMinimumSectionSize">
-      <number>20</number>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>20</number>
-     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelStatus">
+     <property name="text">
+      <string>No timing data loaded.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -58,12 +81,28 @@
          <height>20</height>
         </size>
        </property>
-      </spacer>
+     </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy selected timing rows (Ctrl+C)</string>
+       </property>
+       <property name="text">
+        <string>&amp;Copy</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonOK">
        <property name="text">
-        <string>OK</string>
+        <string>Close</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
