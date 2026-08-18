@@ -160,7 +160,6 @@ void DIE_Widget::process() {
     // ui->progressBarProgress->setValue(0);
 
     m_scanOptions.bUseCustomDatabase = true;
-    m_scanOptions.bUseExtraDatabase = true;
     m_scanOptions.bShowType = true;
     m_scanOptions.bShowVersion = true;
     m_scanOptions.bShowInfo = true;
@@ -220,10 +219,6 @@ void DIE_Widget::scan() {
       m_scanOptions.sMainDatabasePath =
           getGlobalOptions()
               ->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH)
-              .toString();
-      m_scanOptions.sExtraDatabasePath =
-          getGlobalOptions()
-              ->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH)
               .toString();
       m_scanOptions.sCustomDatabasePath =
           getGlobalOptions()

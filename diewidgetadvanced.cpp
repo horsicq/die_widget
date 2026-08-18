@@ -61,7 +61,7 @@ void DIEWidgetAdvanced::setData(QIODevice *pDevice, bool bScan, XBinary::FT file
 {
     m_pDevice = pDevice;
 
-    XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType, XBinary::TL_OPTION_ALL);
+    XFormats::setFileTypeComboBox(fileType, pDevice, ui->comboBoxType, XBinary::FT_FLAG_FORMATS);
 
     if (bScan) {
         process();
@@ -105,7 +105,6 @@ void DIEWidgetAdvanced::process()
     }
 
     m_scanOptions.bUseCustomDatabase = true;
-    m_scanOptions.bUseExtraDatabase = true;
     m_scanOptions.bShowType = true;
     m_scanOptions.bShowVersion = true;
     m_scanOptions.bShowInfo = true;
@@ -115,7 +114,6 @@ void DIEWidgetAdvanced::process()
     m_scanOptions.bHideUnknown = getGlobalOptions()->getValue(XOptions::ID_SCAN_HIDEUNKNOWN).toBool();
     m_scanOptions.bIsSort = getGlobalOptions()->getValue(XOptions::ID_SCAN_SORT).toBool();
     m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
-    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
     m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
 
     DiE_Script dieScript;
@@ -208,7 +206,6 @@ void DIEWidgetAdvanced::on_toolButtonSignatures_clicked()
 
     DiE_Script dieScript;
     m_scanOptions.sMainDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH).toString();
-    m_scanOptions.sExtraDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH).toString();
     m_scanOptions.sCustomDatabasePath = getGlobalOptions()->getValue(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH).toString();
     dieScript.loadDatabase(&m_scanOptions, nullptr);
 

@@ -49,7 +49,6 @@ public slots:
 
 private slots:
     void on_toolButtonDIEDatabase_clicked();
-    void on_toolButtonDIEDatabaseExtra_clicked();
     void on_toolButtonDIEDatabaseCustom_clicked();
     void on_toolButtonYaraRules_clicked();
 

@@ -65,9 +65,7 @@ void DIEOptionsWidget::save()
     m_pOptions->getCheckBox(ui->checkBoxSort, XOptions::ID_SCAN_SORT);
     m_pOptions->getCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
     m_pOptions->getLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH);
-    m_pOptions->getLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH);
     m_pOptions->getLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH);
-    m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DIE_DATABASE_EXTRA_ENABLED);
     m_pOptions->getCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED);
 #ifdef USE_YARA
     if (m_pOptions->isIDPresent(XOptions::ID_SCAN_YARA_DATABASE_PATH)) {
@@ -96,10 +94,8 @@ void DIEOptionsWidget::reload()
     m_pOptions->setCheckBox(ui->checkBoxHideUnknown, XOptions::ID_SCAN_HIDEUNKNOWN);
     m_pOptions->setCheckBox(ui->checkBoxProfiling, XOptions::ID_SCAN_LOG_PROFILING);
     m_pOptions->setLineEdit(ui->lineEditDIEDatabase, XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH);
-    m_pOptions->setLineEdit(ui->lineEditDIEDatabaseExtra, XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH);
     m_pOptions->setLineEdit(ui->lineEditDIEDatabaseCustom, XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH);
     m_pOptions->setLineEdit(ui->lineEditYaraRules, XOptions::ID_SCAN_YARA_DATABASE_PATH);
-    m_pOptions->setCheckBox(ui->groupBoxDIEDatabaseExtra, XOptions::ID_SCAN_DIE_DATABASE_EXTRA_ENABLED);
     m_pOptions->setCheckBox(ui->groupBoxDIEDatabaseCustom, XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED);
 
     if (m_pOptions->isIDPresent(XOptions::ID_SCAN_YARA_DATABASE_PATH)) {
@@ -135,9 +131,7 @@ void DIEOptionsWidget::setDefaultValues(XOptions *pOptions)
     pOptions->addID(XOptions::ID_SCAN_SORT, true);
     pOptions->addID(XOptions::ID_SCAN_HIDEUNKNOWN, false);
     pOptions->addID(XOptions::ID_SCAN_DIE_DATABASE_MAIN_PATH, "$data/db");
-    pOptions->addID(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_PATH, "$data/db_extra");
     pOptions->addID(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_PATH, "$data/db_custom");
-    pOptions->addID(XOptions::ID_SCAN_DIE_DATABASE_EXTRA_ENABLED, true);
     pOptions->addID(XOptions::ID_SCAN_DIE_DATABASE_CUSTOM_ENABLED, true);
 }
 
@@ -157,18 +151,6 @@ void DIEOptionsWidget::on_toolButtonDIEDatabase_clicked()
 
     if (!sDirectoryName.isEmpty()) {
         ui->lineEditDIEDatabase->setText(sDirectoryName);
-    }
-}
-
-void DIEOptionsWidget::on_toolButtonDIEDatabaseExtra_clicked()
-{
-    QString sText = ui->lineEditDIEDatabaseExtra->text();
-    QString sInitDirectory = XOptions::convertPathName(sText);
-
-    QString sDirectoryName = QFileDialog::getExistingDirectory(this, tr("Open directory") + QString("..."), sInitDirectory, QFileDialog::ShowDirsOnly);
-
-    if (!sDirectoryName.isEmpty()) {
-        ui->lineEditDIEDatabaseExtra->setText(sDirectoryName);
     }
 }
 
