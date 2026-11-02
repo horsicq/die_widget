@@ -24,6 +24,56 @@
 
 #include "ui_die_widget.h"
 
+namespace {
+QString getSelectedTags(XComboBoxEx *pComboBox)
+{
+    QStringList listTags;
+    const QList<QVariant> listValues = pComboBox->getCustomFlags();
+
+    for (qint32 i = 0; i < listValues.count(); i++) {
+        const QString sTag = listValues.at(i).toString().trimmed();
+
+        if (!sTag.isEmpty()) {
+            listTags.append(sTag);
+        }
+    }
+
+    return listTags.join(QChar(';'));
+}
+
+QSet<QString> getTagSet(const QString &sTags)
+{
+    QSet<QString> result;
+    const QStringList listTags = sTags.split(QChar(';'), Qt::SkipEmptyParts);
+
+    for (qint32 i = 0; i < listTags.count(); i++) {
+        const QString sTag = listTags.at(i).trimmed().toCaseFolded();
+
+        if (!sTag.isEmpty()) {
+            result.insert(sTag);
+        }
+    }
+
+    return result;
+}
+
+void setTagControl(XComboBoxEx *pComboBox, const QString &sTitle, const QStringList &listAvailableTags, const QString &sSelectedTags)
+{
+    const QSet<QString> stSelectedTags = getTagSet(sSelectedTags);
+    QList<XComboBoxEx::CUSTOM_FLAG> listFlags;
+
+    for (qint32 i = 0; i < listAvailableTags.count(); i++) {
+        const QString sTag = listAvailableTags.at(i).trimmed();
+
+        if (!sTag.isEmpty()) {
+            XComboBoxEx::_addCustomFlag(&listFlags, sTag, sTag, stSelectedTags.contains(sTag.toCaseFolded()));
+        }
+    }
+
+    pComboBox->addCustomFlags(sTitle, listFlags);
+}
+}  // namespace
+
 // bool _scanEngineCallback(const QString &sCurrentSignature, qint32
 // nNumberOfSignatures, qint32 nCurrentIndex, void *pUserData)
 // {
@@ -57,6 +107,8 @@ DIE_Widget::DIE_Widget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui:
 
     ui->comboBoxFlags->setData(XScanEngine::getScanFlags(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Flags"));
     ui->comboBoxDatabases->setData(XScanEngine::getDatabases(), XComboBoxEx::CBTYPE_FLAGS, 0, tr("Database"));
+    ui->comboBoxIncludeTags->addCustomFlags(tr("Include tags"), QList<XComboBoxEx::CUSTOM_FLAG>());
+    ui->comboBoxExcludeTags->addCustomFlags(tr("Exclude tags"), QList<XComboBoxEx::CUSTOM_FLAG>());
 
     ui->comboBoxDatabases->setItemEnabled(1, false);
 
@@ -125,6 +177,8 @@ void DIE_Widget::adjustView()
 
     quint64 nDatabases = XScanEngine::getDatabasesFromGlobalOptions(getGlobalOptions());
     ui->comboBoxDatabases->setValue(nDatabases);
+
+    _refreshTagControls();
 }
 
 void DIE_Widget::setGlobal(XShortcuts *pShortcuts, XOptions *pXOptions)
@@ -177,8 +231,13 @@ void DIE_Widget::process()
         quint64 nDatabases = ui->comboBoxDatabases->getValue().toULongLong();
         XScanEngine::setDatabases(&m_scanOptions, nDatabases);
 
+        m_scanOptions.sIncludeTags = getSelectedTags(ui->comboBoxIncludeTags);
+        m_scanOptions.sExcludeTags = getSelectedTags(ui->comboBoxExcludeTags);
+
         XScanEngine::setScanFlagsToGlobalOptions(getGlobalOptions(), nFlags);
         XScanEngine::setDatabasesToGlobalOptions(getGlobalOptions(), nDatabases);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_INCLUDE_TAGS, m_scanOptions.sIncludeTags);
+        getGlobalOptions()->setValue(XOptions::ID_SCAN_EXCLUDE_TAGS, m_scanOptions.sExcludeTags);
 
         // Reset before publishing the worker.  A stop request immediately
         // after launch must not be erased by a later reset inside scan().
@@ -267,6 +326,8 @@ void DIE_Widget::onScanFinished()
     if (pOldModel) {
         delete pOldModel;
     }
+
+    _refreshTagControls();
 
     //    ui->tableWidgetResult->horizontalHeader()->setVisible(true);
     ////        ui->tableWidgetResult->horizontalHeader()->setFixedHeight(0);
@@ -382,6 +443,9 @@ void DIE_Widget::enableControls(bool bState)
 
     ui->treeViewResult->setEnabled(bState);
     ui->comboBoxFlags->setEnabled(bState);
+    ui->comboBoxDatabases->setEnabled(bState);
+    ui->comboBoxIncludeTags->setEnabled(bState);
+    ui->comboBoxExcludeTags->setEnabled(bState);
     ui->pushButtonDieSignatures->setEnabled(bState);
     ui->pushButtonDieLog->setEnabled(bState);
     ui->pushButtonDieExtraInformation->setEnabled(bState);
@@ -430,6 +494,47 @@ void DIE_Widget::_updateElapsedControl(bool bControlsEnabled)
 
     ui->toolButtonElapsedTime->setToolTip(sDescription);
     ui->toolButtonElapsedTime->setAccessibleDescription(sDescription);
+}
+
+void DIE_Widget::_refreshTagControls()
+{
+    const QString sIncludeTags = getGlobalOptions()->getValue(XOptions::ID_SCAN_INCLUDE_TAGS).toString();
+    const QString sExcludeTags = getGlobalOptions()->getValue(XOptions::ID_SCAN_EXCLUDE_TAGS).toString();
+    QStringList listAvailableTags = m_dieScript.getUsedTags().split(QChar(';'), Qt::SkipEmptyParts);
+    const QStringList listIncludeTags = sIncludeTags.split(QChar(';'), Qt::SkipEmptyParts);
+    const QStringList listExcludeTags = sExcludeTags.split(QChar(';'), Qt::SkipEmptyParts);
+    QSet<QString> stTags;
+
+    for (qint32 i = 0; i < listAvailableTags.count(); i++) {
+        const QString sKey = listAvailableTags.at(i).trimmed().toCaseFolded();
+
+        if (!sKey.isEmpty()) {
+            stTags.insert(sKey);
+        }
+    }
+
+    for (qint32 i = 0; i < listIncludeTags.count(); i++) {
+        const QString sTag = listIncludeTags.at(i).trimmed();
+        const QString sKey = sTag.toCaseFolded();
+
+        if ((!sKey.isEmpty()) && (!stTags.contains(sKey))) {
+            stTags.insert(sKey);
+            listAvailableTags.append(sTag);
+        }
+    }
+
+    for (qint32 i = 0; i < listExcludeTags.count(); i++) {
+        const QString sTag = listExcludeTags.at(i).trimmed();
+        const QString sKey = sTag.toCaseFolded();
+
+        if ((!sKey.isEmpty()) && (!stTags.contains(sKey))) {
+            stTags.insert(sKey);
+            listAvailableTags.append(sTag);
+        }
+    }
+
+    setTagControl(ui->comboBoxIncludeTags, tr("Include tags"), listAvailableTags, sIncludeTags);
+    setTagControl(ui->comboBoxExcludeTags, tr("Exclude tags"), listAvailableTags, sExcludeTags);
 }
 
 QString DIE_Widget::getInfoFileName(const QString &sName)

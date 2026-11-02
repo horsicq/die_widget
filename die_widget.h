@@ -99,6 +99,7 @@ signals:
 
 private:
     void _updateElapsedControl(bool bControlsEnabled);
+    void _refreshTagControls();
 
     Ui::DIE_Widget *ui;
     ST m_scanType;
